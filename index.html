@@ -1,0 +1,283 @@
+<script src="http://www.google.com/jsapi" type="text/javascript"></script> 
+<script type="text/javascript">google.load("jquery", "1.3.2");</script>
+
+<style type="text/css">
+	body {
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+		font-weight:300;
+		font-size:18px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 1100px;
+	}
+	
+	h1 {
+		font-weight:300;
+	}
+	
+	.disclaimerbox {
+		background-color: #eee;		
+		border: 1px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+		padding: 20px;
+	}
+
+	video.header-vid {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	img.header-img {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	img.rounded {
+		border: 1px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+	
+	a:link,a:visited
+	{
+		color: #1367a7;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #208799;
+	}
+	
+	td.dl-link {
+		height: 160px;
+		text-align: center;
+		font-size: 22px;
+	}
+	
+	.layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		        5px 5px 0 0px #fff, /* The second layer */
+		        5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		        10px 10px 0 0px #fff, /* The third layer */
+		        10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+		        15px 15px 0 0px #fff, /* The fourth layer */
+		        15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+		        20px 20px 0 0px #fff, /* The fifth layer */
+		        20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+		        25px 25px 0 0px #fff, /* The fifth layer */
+		        25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+	.paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35); /* The top layer shadow */
+
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+
+	.layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		        5px 5px 0 0px #fff, /* The second layer */
+		        5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		        10px 10px 0 0px #fff, /* The third layer */
+		        10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+		margin-top: 5px;
+		margin-left: 10px;
+		margin-right: 30px;
+		margin-bottom: 5px;
+	}
+	
+	.vert-cent {
+		position: relative;
+	    top: 50%;
+	    transform: translateY(-50%);
+	}
+	
+	hr
+	{
+		border: 0;
+		height: 1px;
+		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	}
+</style>
+
+<html>
+  <head>
+		<title>Making Convolutional Networks Shift-Invariant Again</title>
+		<meta property="og:image" content="http://richzhang.github.io/colorization/resources/images/teaser3.jpg"/>
+		<meta property="og:title" content="Colorful Image Colorization " />
+  </head>
+
+  <body>
+    <br>
+          <center>
+          	<span style="font-size:36px">Making Convolutional Networks Shift-Invariant Again</span>
+	  		  <table align=center width=600px>
+	  			  <tr>
+	  	              <td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:28px"><a href="https://richzhang.github.io/">Richard Zhang</a></span>
+		  		  		</center>
+		  		  	  </td>
+		  		  </tr>
+	  			  <tr>
+<!-- 	  	              <td align=center width=100px>
+	  					<center>
+	  						<span style="font-size:20px"><b>Adobe Research</b></span>
+		  		  		</center>
+		  		  	  </td> -->
+		  		  </tr>
+			  </table>
+
+	  		  <table align=center width=250px>
+<!-- 	  			  <tr>
+	  	              <td align=center width=150px>
+	  					<center>
+	  						<span style="font-size:24px"><a href=''>[GitHub]</a></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=150px>
+	  					<center>
+	  						<span style="font-size:24px"><a href=''>[Paper]</a></span>
+		  		  		</center>
+		  		  	  </td>
+		  		  	 </tr> -->
+	  			  <tr>
+			  </table>
+          </center>
+
+          <hr>
+
+<!--   		  <br>
+  		  <table align=center width=800px>
+  			  <tr>
+  	              <td width=400px>
+  					<center>
+  	                	<a href="./resources/fig1d.jpeg"><img class="" src = "./resources/fig1d.jpeg" height="400px"></img></href></a><br>
+					</center>
+  	              </td>
+                </tr>
+  		  </table>
+		  <hr> -->
+
+  		  <table align=center width=850px>
+	  		  <center><h1>Abstract</h1></center>
+	  		  <tr>
+	  		  	<td>
+					Modern convolutional networks are not shift-invariant, despite their convolutional nature: small shifts in the input can cause drastic changes in the output. Commonly used downsampling methods, such as max-pooling, ignore the classical sampling theorem. The well-known fix is applying a low-pass filter before downsampling. However, previous work has assumed that including such anti-aliasing filter necessarily <i>excludes</i> max-pooling. We show that when integrated correctly, these operations are in fact <i>compatible</i>. The technique is general and can be incorporated across other layer types, such as average-pooling and strided-convolution, and applications, such as image classification and translation. In addition, engineering the inductive bias of shift-equivariance largely removes the need for shift-based data augmentation at training time. Our results demonstrate that this classical signal processing technique has been overlooked in modern networks.
+	  		    </td>
+	  		  </tr>
+			</table>
+
+
+  		  <br><br>
+		  <hr>
+
+	  <!-- NETWORK ARCHITECTURE, TRY THE MODEL -->
+ 		<center><h1>Code</h1></center>
+  		  <table align=center width=700px>
+  			  <tr>
+  	              <td align=center width=700px>
+  					<center>
+						  <td><a href='https://github.com/richzhang/colorization'><img class="round" style="width:700px" src="./resources/fig1d.jpeg"/></a></td>
+	  		  		</center>
+			  </tr>
+		  </table>
+  		  <table align=center width=800px>
+<!-- 			  <tr><center>
+  	              <td width=400px>
+  					<center>
+  	                	<a href="./resources/fig1d.jpeg"><img class="" src = "./resources/fig1d.jpeg" height="400px"></img></href></a>
+					</center>
+  	              </td>
+  	          </tr> -->
+			  <!-- <tr><center> <br> -->
+				<!-- <span style="font-size:28px"></a></span> -->
+			  <br>
+			  <!-- </center></tr> -->
+			  <tr><center>
+				<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/shiftinvar'>[GitHub]</a>
+		  </table>
+
+<!-- <a href="http://www.eecs.berkeley.edu/~rich.zhang/projects/2016_colorization/files/demo_v0/colorization_release_v0.caffemodel">[Model 129MB]</span> -->
+
+      	  <br>
+		  <hr>
+
+  		  <!-- <table align=center width=550px> -->
+  		  <table align=center width=490px>
+	 		<center><h1>Paper and Supplementary Material</h1></center>
+  			  <tr>
+				  <td><a href=""><img class="layered-paper-big" style="height:175px" src="./resources/paper.png"/></a></td>
+				  <td><span style="font-size:14pt">Zhang.<br>
+				  <b>Making Convolutional Networks Shift-Invariant Again.</b><br>
+				  In <a href="">ArXiv</a>, 2019.<br>
+				  <!-- (hosted on <a href="">arXiv</a>)</a> -->
+				  <!-- <td><span style="font-size:14pt">Zhang, Isola, Efros. Colorful Image Colorization. In ECCV, 2016. (hosted on arXiv) -->
+				  <span style="font-size:4pt"><a href=""><br></a>
+				  </span>
+				  </td>
+  	              </td>
+              </tr>
+  		  </table>
+		  <br>
+
+		  <table align=center width=600px>
+			  <tr>
+				  <td><span style="font-size:14pt"><center>
+				  	<a href="./resources/bibtex_arxiv19.txt">[Bibtex]</a>
+  	              </center></td>
+              </tr>
+  		  </table>
+
+		  <hr>
+		  <br>
+		  	
+  		  <table align=center width=900px>
+  			  <tr>
+  	              <td width=400px>
+  					<left>
+	  		  <center><h1>Acknowledgements</h1></center>
+	  		  I thank <a href="https://research.adobe.com/person/eli-shechtman/">Eli Shechtman</a>, 
+	  		  <a href="http://www.mgharbi.com/">Michaël Gharbi</a>,
+	  		  <a href="http://www.oliverwang.info/">Oliver Wang</a>,
+	  		  <a href="http://andrewowens.com/">Andrew Owens</a>, 
+	  		  <a href="https://people.eecs.berkeley.edu/~efros/">Alexei A. Efros<a>,
+	  		  <a href="https://people.eecs.berkeley.edu/~kanazawa/">Angjoo Kanazawa</a>, and
+	  		  <a href="http://web.mit.edu/phillipi/">Phillip Isola<a> for their helpful discussion, comments, and encouragement.
+
+			</left>
+		</td>
+			 </tr>
+		</table>
+
+		<br><br>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-75863369-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+              
+</body>
+</html>
+ 
