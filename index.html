@@ -119,8 +119,8 @@
 <html>
   <head>
 		<title>Making Convolutional Networks Shift-Invariant Again</title>
-		<meta property="og:image" content="http://richzhang.github.io/colorization/resources/images/teaser3.jpg"/>
-		<meta property="og:title" content="Colorful Image Colorization " />
+		<meta property="og:image" content="https://richzhang.github.io/shift-invariant-cnnsresources/fig1d.jpeg"/>
+		<meta property="og:title" content="Shift-Invariant CNNs " />
   </head>
 
   <body>
@@ -131,35 +131,41 @@
 	  			  <tr>
 	  	              <td align=center width=100px>
 	  					<center>
-	  						<span style="font-size:28px"><a href="https://richzhang.github.io/">Richard Zhang</a></span>
+	  						<span style="font-size:28px"><a href="https://richzhang.github.io/">Richard Zhang</a></span><br>
+	  						<span style="font-size:22px">Adobe Research</span>
 		  		  		</center>
 		  		  	  </td>
 		  		  </tr>
 	  			  <tr>
-<!-- 	  	              <td align=center width=100px>
-	  					<center>
-	  						<span style="font-size:20px"><b>Adobe Research</b></span>
-		  		  		</center>
-		  		  	  </td> -->
 		  		  </tr>
 			  </table>
 
 	  		  <table align=center width=250px>
-<!-- 	  			  <tr>
-	  	              <td align=center width=150px>
+	  			  <tr>
+<!-- 	  	              <td align=center width=150px>
 	  					<center>
 	  						<span style="font-size:24px"><a href=''>[GitHub]</a></span>
 		  		  		</center>
-		  		  	  </td>
+		  		  	  </td> -->
 	  	              <td align=center width=150px>
 	  					<center>
 	  						<span style="font-size:24px"><a href=''>[Paper]</a></span>
 		  		  		</center>
 		  		  	  </td>
-		  		  	 </tr> -->
+		  		  	 </tr>
 	  			  <tr>
 			  </table>
           </center>
+
+  		  <table align=center width=700px>
+  			  <tr>
+  	              <td align=center width=700px>
+  					<center>
+						  <td><a href='https://github.com/richzhang/shift-invariant-cnns'><img class="round" style="width:900px" src="./resources/fig1d.jpeg"/></a></td>
+	  		  		</center>
+			  </tr>
+		  </table>
+
 
           <hr>
 
@@ -179,7 +185,7 @@
 	  		  <center><h1>Abstract</h1></center>
 	  		  <tr>
 	  		  	<td>
-					Modern convolutional networks are not shift-invariant, despite their convolutional nature: small shifts in the input can cause drastic changes in the output. Commonly used downsampling methods, such as max-pooling, ignore the classical sampling theorem. The well-known fix is applying a low-pass filter before downsampling. However, previous work has assumed that including such anti-aliasing filter necessarily <i>excludes</i> max-pooling. We show that when integrated correctly, these operations are in fact <i>compatible</i>. The technique is general and can be incorporated across other layer types, such as average-pooling and strided-convolution, and applications, such as image classification and translation. In addition, engineering the inductive bias of shift-equivariance largely removes the need for shift-based data augmentation at training time. Our results demonstrate that this classical signal processing technique has been overlooked in modern networks.
+				Modern convolutional networks are not shift-invariant, despite their convolutional nature: small shifts in the input can cause drastic changes in the output. Commonly used downsampling methods, such as max-pooling, ignore the classical sampling theorem. The well-known fix is applying a low-pass filter before downsampling. However, previous work has assumed that including such anti-aliasing filter necessarily <i>excludes</i> max-pooling. We show that when integrated correctly, these operations are in fact <i>compatible</i>. The technique is general and can be incorporated across other layer types, such as average-pooling and strided-convolution, and applications, such as image classification and translation. In addition to increased shift-invariance, we actually observe modest boosts to <i>accuracy</i> in the ImageNet classification setting, across architectures. In addition, engineering the inductive bias of shift-equivariance largely removes the need for shift-based data augmentation at training time. Our results demonstrate that this classical signal processing technique has been overlooked in modern networks.
 	  		    </td>
 	  		  </tr>
 			</table>
@@ -187,30 +193,31 @@
 		  <hr>
 
 	  <!-- NETWORK ARCHITECTURE, TRY THE MODEL -->
- 		<center><h1>Code</h1></center>
-  		  <table align=center width=700px>
+ 		<center><h1>Code (coming soon)</h1></center>
+
+  		  <table align=center width=400px>
   			  <tr>
-  	              <td align=center width=700px>
+  	              <td align=center width=400px>
   					<center>
-						  <td><a href='https://github.com/richzhang/colorization'><img class="round" style="width:700px" src="./resources/fig1d.jpeg"/></a></td>
+						  <td><a href='https://github.com/richzhang/shift-invariant-cnns'><img class="round" style="width:400px" src="./resources/imagenet_agg.jpg"/></a></td>
 	  		  		</center>
 			  </tr>
 		  </table>
-  		  <table align=center width=800px>
-<!-- 			  <tr><center>
-  	              <td width=400px>
-  					<center>
-  	                	<a href="./resources/fig1d.jpeg"><img class="" src = "./resources/fig1d.jpeg" height="400px"></img></href></a>
-					</center>
-  	              </td>
-  	          </tr> -->
-			  <!-- <tr><center> <br> -->
-				<!-- <span style="font-size:28px"></a></span> -->
-			  <br>
-			  <!-- </center></tr> -->
-			  <tr><center>
-				<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/shiftinvar'>[GitHub]</a>
+  		  <table align=center width=850px>
+		  	<center>
+		  		<tr>
+		  			<td>
+		  	As designed, adding low-pass filtering increases shift-invariance (y-axis). Surprisingly, we also observe modest increases in accuracy accross architectures (x-axis). We will release models and training code, along with instructions for making your favorite architecture more shift-invariant.
+		  			</td>
+		  		</tr>
+		  </center>
 		  </table>
+  		  <table align=center width=800px>
+			  <br>
+			  <tr><center>
+				<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/shift-invariant-cnns'>[GitHub]</a>
+		  </table>
+
 
 <!-- <a href="http://www.eecs.berkeley.edu/~rich.zhang/projects/2016_colorization/files/demo_v0/colorization_release_v0.caffemodel">[Model 129MB]</span> -->
 
@@ -222,9 +229,10 @@
 	 		<center><h1>Paper and Supplementary Material</h1></center>
   			  <tr>
 				  <td><a href=""><img class="layered-paper-big" style="height:175px" src="./resources/paper.png"/></a></td>
-				  <td><span style="font-size:14pt">Zhang.<br>
+				  <td><span style="font-size:14pt">R. Zhang.<br>
 				  <b>Making Convolutional Networks Shift-Invariant Again.</b><br>
-				  In <a href="">ArXiv</a>, 2019.<br>
+				  To appear in ICML, 2019.<br>
+				  (<a href="">ArXiv</a> preprint)<br>
 				  <!-- (hosted on <a href="">arXiv</a>)</a> -->
 				  <!-- <td><span style="font-size:14pt">Zhang, Isola, Efros. Colorful Image Colorization. In ECCV, 2016. (hosted on arXiv) -->
 				  <span style="font-size:4pt"><a href=""><br></a>
@@ -238,7 +246,7 @@
 		  <table align=center width=600px>
 			  <tr>
 				  <td><span style="font-size:14pt"><center>
-				  	<a href="./resources/bibtex_arxiv19.txt">[Bibtex]</a>
+				  	<a href="./resources/bibtex_icml19.txt">[Bibtex]</a>
   	              </center></td>
               </tr>
   		  </table>
@@ -251,13 +259,15 @@
   	              <td width=400px>
   					<left>
 	  		  <center><h1>Acknowledgements</h1></center>
-	  		  I thank <a href="https://research.adobe.com/person/eli-shechtman/">Eli Shechtman</a>, 
+<!-- 	  		  I thank <a href="https://research.adobe.com/person/eli-shechtman/">Eli Shechtman</a>, 
 	  		  <a href="http://www.mgharbi.com/">Michaël Gharbi</a>,
 	  		  <a href="http://www.oliverwang.info/">Oliver Wang</a>,
 	  		  <a href="http://andrewowens.com/">Andrew Owens</a>, 
 	  		  <a href="https://people.eecs.berkeley.edu/~efros/">Alexei A. Efros<a>,
 	  		  <a href="https://people.eecs.berkeley.edu/~kanazawa/">Angjoo Kanazawa</a>, and
 	  		  <a href="http://web.mit.edu/phillipi/">Phillip Isola<a> for their helpful discussion, comments, and encouragement.
+ -->
+				I am especially grateful to Eli Shechtman for helpful discussion and guidance. I also thank Michaël Gharbi and Andrew Owens for the beneficial feedback on earlier drafts. I thank labmates and mentors, past and present -- Sylvain Paris, Oliver Wang, Alexei A. Efros, Angjoo Kanazawa, Phillip Isola -- for their helpful comments and encouragement.
 
 			</left>
 		</td>
