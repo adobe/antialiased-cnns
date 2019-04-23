@@ -161,11 +161,20 @@
   			  <tr>
   	              <td align=center width=700px>
   					<center>
-						  <td><a href='https://github.com/richzhang/shift-invariant-cnns'><img class="round" style="width:900px" src="./resources/fig1d.jpeg"/></a></td>
+						  <td><a href='https://github.com/richzhang/shift-invariant-cnns'><img class="round" style="width:700px" src="./resources/fig1d.jpeg"/></a></td>
 	  		  		</center>
 			  </tr>
 		  </table>
-
+		  <br>
+  		  <table align=center width=850px>
+		  	<center>
+		  		<tr>
+		  			<td>
+		  	Predominant downsampling methods ignore the sampling theorem and alias. Incorporating classical signal processing makes modern deep networks more shift-invariant: <b>MaxPool&rarr;MaxBlurPool (pictured above)</b>, <b>StridedConv&rarr;ConvBlurPool</b>, and <b>AvgPool&rarr;BlurPool</b>.
+		  			</td>
+		  		</tr>
+		  </center>
+		  </table>
 
           <hr>
 
@@ -195,6 +204,15 @@
 	  <!-- NETWORK ARCHITECTURE, TRY THE MODEL -->
  		<center><h1>Code (coming soon)</h1></center>
 
+  		  <table align=center width=200px>
+		  	<center>
+		  		<tr>
+		  			<td>
+		  				<b>ImageNet Classification</b>
+		  			</td>
+		  		</tr>
+		  </center>
+		  </table>
   		  <table align=center width=400px>
   			  <tr>
   	              <td align=center width=400px>
@@ -207,7 +225,7 @@
 		  	<center>
 		  		<tr>
 		  			<td>
-		  	As designed, adding low-pass filtering increases shift-invariance (y-axis). Surprisingly, we also observe modest increases in accuracy accross architectures (x-axis). We will release models and training code, along with instructions for making your favorite architecture more shift-invariant.
+		  	As designed, adding low-pass filtering increases <b>shift-invariance (y-axis)</b>. Surprisingly, we also observe modest increases in <b>accuracy (x-axis)</b>, across architectures. We will release models and training code, along with instructions for making your favorite architecture more shift-invariant.
 		  			</td>
 		  		</tr>
 		  </center>
@@ -267,7 +285,7 @@
 	  		  <a href="https://people.eecs.berkeley.edu/~kanazawa/">Angjoo Kanazawa</a>, and
 	  		  <a href="http://web.mit.edu/phillipi/">Phillip Isola<a> for their helpful discussion, comments, and encouragement.
  -->
-				I am especially grateful to Eli Shechtman for helpful discussion and guidance. I also thank Michaël Gharbi and Andrew Owens for the beneficial feedback on earlier drafts. I thank labmates and mentors, past and present -- Sylvain Paris, Oliver Wang, Alexei A. Efros, Angjoo Kanazawa, Phillip Isola -- for their helpful comments and encouragement.
+				I am especially grateful to Eli Shechtman for helpful discussion and guidance. I also thank Michaël Gharbi and Andrew Owens for the beneficial feedback on earlier drafts. I thank labmates and mentors, past and present -- Sylvain Paris, Oliver Wang, Alexei A. Efros, Angjoo Kanazawa, Taesung Park, Phillip Isola -- for their helpful comments and encouragement.
 
 			</left>
 		</td>
