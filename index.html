@@ -119,7 +119,7 @@
 <html>
   <head>
 		<title>Making Convolutional Networks Shift-Invariant Again</title>
-		<meta property="og:image" content="https://richzhang.github.io/shift-invariant-cnnsresources/fig1d.jpeg"/>
+		<meta property="og:image" content="https://richzhang.github.io/shift-invariant-cnnsresources/fig1e.jpeg"/>
 		<meta property="og:title" content="Shift-Invariant CNNs " />
   </head>
 
@@ -139,14 +139,8 @@
 	  			  <tr>
 		  		  </tr>
 			  </table>
-
 	  		  <table align=center width=250px>
 	  			  <tr>
-<!-- 	  	              <td align=center width=150px>
-	  					<center>
-	  						<span style="font-size:24px"><a href=''>[GitHub]</a></span>
-		  		  		</center>
-		  		  	  </td> -->
 	  	              <td align=center width=150px>
 	  					<center>
 	  						<span style="font-size:24px"><a href=''>[Paper]</a></span>
@@ -157,24 +151,53 @@
 			  </table>
           </center>
 
-  		  <table align=center width=700px>
+          <center>
+  		  <table align=center width=900px>
   			  <tr>
-  	              <td align=center width=700px>
+  	              <td width=300px>
   					<center>
-						  <td><a href='https://github.com/richzhang/shift-invariant-cnns'><img class="round" style="width:700px" src="./resources/fig1d.jpeg"/></a></td>
-	  		  		</center>
-			  </tr>
-		  </table>
-		  <br>
+  	                	<a href='./resources/gifs/00810.gif'><img class="round" style="width:300px" src="./resources/gifs/00810.gif"/></a>
+	  				</center>
+  	              </td>
+    	          <td width=300px>
+  					<center>
+  	                	<a href='./resources/gifs/12911.gif'><img class="round" style="width:300px" src="./resources/gifs/12911.gif"/></a>
+	  				</center>
+  	              </td>
+                  <td width=300px>
+  					<center>
+  	                	<a href='./resources/gifs/28476.gif'><img class="round" style="width:300px" src="./resources/gifs/28476.gif"/></a>
+	  				</center>
+  	              </td>
+                </tr>
+  			  <tr>
+  	              <td width=300px>
+  					<center>
+  	                	<a href='./resources/gifs/47458.gif'><img class="round" style="width:300px" src="./resources/gifs/47458.gif"/></a>
+	  				</center>
+  	              </td>
+    	          <td width=300px>
+  					<center>
+  	                	<a href='./resources/gifs/28347.gif'><img class="round" style="width:300px" src="./resources/gifs/28347.gif"/></a>
+	  				</center>
+  	              </td>
+                  <td width=300px>
+  					<center>
+  	                	<a href='./resources/gifs/35969.gif'><img class="round" style="width:300px" src="./resources/gifs/35969.gif"/></a>
+	  				</center>
+  	              </td>
+                </tr>
+  		  </table>
   		  <table align=center width=850px>
-		  	<center>
-		  		<tr>
-		  			<td>
-		  	Predominant downsampling methods ignore the sampling theorem and alias. Incorporating classical signal processing makes modern deep networks more shift-invariant: <b>MaxPool&rarr;MaxBlurPool (pictured above)</b>, <b>StridedConv&rarr;ConvBlurPool</b>, and <b>AvgPool&rarr;BlurPool</b>.
-		  			</td>
-		  		</tr>
-		  </center>
-		  </table>
+	  		  <tr>
+	  		  	<td>
+	  		  		<!-- <center> -->
+					The classifications on the left (an off-the-shelf network) can drastically change when simply shifting the image by a pixel. We identify the cause -- aliasing during downsampling. We anti-alias modern deep networks, stablizing output classifications, as seen on the right.
+					<!-- </center> -->
+	  		    </td>
+	  		  </tr>
+	  		</table>
+  		</center>
 
           <hr>
 
@@ -194,11 +217,34 @@
 	  		  <center><h1>Abstract</h1></center>
 	  		  <tr>
 	  		  	<td>
-				Modern convolutional networks are not shift-invariant, despite their convolutional nature: small shifts in the input can cause drastic changes in the output. Commonly used downsampling methods, such as max-pooling, ignore the classical sampling theorem. The well-known fix is applying a low-pass filter before downsampling. However, previous work has assumed that including such anti-aliasing filter necessarily <i>excludes</i> max-pooling. We show that when integrated correctly, these operations are in fact <i>compatible</i>. The technique is general and can be incorporated across other layer types, such as average-pooling and strided-convolution, and applications, such as image classification and translation. In addition to increased shift-invariance, we actually observe modest boosts to <i>accuracy</i> in the ImageNet classification setting, across architectures. In addition, engineering the inductive bias of shift-equivariance largely removes the need for shift-based data augmentation at training time. Our results demonstrate that this classical signal processing technique has been overlooked in modern networks.
+					Modern convolutional networks are not shift-invariant, as small input shifts or translations can cause drastic changes in the output. Commonly used downsampling methods, such as max-pooling, strided-convolution, and average-pooling, ignore the sampling theorem. The well-known signal processing fix is anti-aliasing by low-pass filtering before downsampling. However, simply inserting this module into deep networks leads to performance degradation; as a result, it is seldomly used today. We show that when integrated correctly, it is compatible with existing architectural components, such as max-pooling. The technique is general and can be incorporated across layer types and applications, such as image classification and conditional image generation. In addition to increased shift-invariance, we also observe, surprisingly, that anti-aliasing boosts accuracy in ImageNet classification, across several commonly-used architectures. This indicates that anti-aliasing serves as effective regularization. Our results demonstrate that this classical signal processing technique has been undeservingly overlooked in modern deep networks.
 	  		    </td>
 	  		  </tr>
 			</table>
   		  <br>
+		  <hr>
+
+
+
+  		  <table align=center width=700px>
+	  		  <center><h1>Method overview</h1></center>
+  			  <tr>
+  	              <td align=center width=700px>
+  					<center>
+						  <td><a href='https://github.com/richzhang/antialiased-cnns'><img class="round" style="width:800px" src="./resources/fig1e.jpg"/></a></td>
+	  		  		</center>
+			  </tr>
+		  </table>
+		  <br>
+  		  <table align=center width=850px>
+		  	<center>
+		  		<tr>
+		  			<td>
+		  	We anti-alias modern networks with classic signal processing, making them more shift-invariant. Predominant downsampling methods ignore the Nyquist sampling theorem. We make the following replacements: <br>MaxPool&rarr;MaxBlurPool (pictured above), StridedConv&rarr;ConvBlurPool, and AvgPool&rarr;BlurPool.
+		  			</td>
+		  		</tr>
+		  </center>
+		  </table>
 		  <hr>
 
 	  <!-- NETWORK ARCHITECTURE, TRY THE MODEL -->
@@ -217,7 +263,8 @@
   			  <tr>
   	              <td align=center width=400px>
   					<center>
-						  <td><a href='https://github.com/richzhang/shift-invariant-cnns'><img class="round" style="width:400px" src="./resources/imagenet_agg_all.jpg"/></a></td>
+						  <!-- <td><a href='https://github.com/richzhang/shift-invariant-cnns'><img class="round" style="width:400px" src="./resources/imagenet_agg_all.jpg"/></a></td> -->
+						  <td><img class="round" style="width:400px" src="./resources/imagenet_agg_all.jpg"/></td>
 	  		  		</center>
 			  </tr>
 		  </table>
@@ -225,7 +272,7 @@
 		  	<center>
 		  		<tr>
 		  			<td>
-		  	As designed, adding low-pass filtering increases <b>shift-invariance (y-axis)</b>. Surprisingly, we also observe modest increases in <b>accuracy (x-axis)</b>, across architectures. We will release models and training code, along with instructions for making your favorite architecture more shift-invariant.
+		  	As designed, adding low-pass filtering increases <b>shift-invariance (y-axis)</b>. Surprisingly, we also observe modest increases in <b>accuracy (x-axis)</b>, across architectures. We will release anti-aliased models and training code, along with instructions for making your favorite architecture more shift-invariant.
 		  			</td>
 		  		</tr>
 		  </center>
@@ -233,7 +280,7 @@
   		  <table align=center width=800px>
 			  <br>
 			  <tr><center>
-				<span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/shift-invariant-cnns'>[GitHub]</a>
+				<!-- <span style="font-size:28px">&nbsp;<a href='https://github.com/richzhang/shift-invariant-cnns'>[GitHub]</a> -->
 		  </table>
 
 
@@ -251,8 +298,6 @@
 				  <b>Making Convolutional Networks Shift-Invariant Again.</b><br>
 				  To appear in ICML, 2019.<br>
 				  (<a href="">ArXiv</a> preprint)<br>
-				  <!-- (hosted on <a href="">arXiv</a>)</a> -->
-				  <!-- <td><span style="font-size:14pt">Zhang, Isola, Efros. Colorful Image Colorization. In ECCV, 2016. (hosted on arXiv) -->
 				  <span style="font-size:4pt"><a href=""><br></a>
 				  </span>
 				  </td>
