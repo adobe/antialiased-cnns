@@ -72,8 +72,8 @@ from models_lpf import *
 
 |   |Original|Anti-aliased replacement|
 |---|---|---|
-|**MaxPool->MaxBlurPool**|```nn.MaxPool2d(kernel_size=K, stride=1)```|`nn.MaxPool2d(kernel_size=K, stride=1), Downsample(filt_size=M, stride=S, channels=C)`|
-|**StridedConv->ConvBlurPool**|```nn.Conv2d(C_in, C_out, kernel_size=K, stride=S, padding=(K-1)/2), nn.ReLU(inplace=True)```|`nn.Conv2d(C_in, C_out, kernel_size=K, stride=1, padding=(K-1)/2), nn.ReLU(inplace=True), Downsample(filt_size=M, stride=S, channels=C_out)`|
+|**MaxPool->MaxBlurPool**|1nn.MaxPool2d(kernel_size=K, stride=1)1|`nn.MaxPool2d(kernel_size=K, stride=1),` <br> `Downsample(filt_size=M, stride=S, channels=C)`|
+|**StridedConv->ConvBlurPool**|1nn.Conv2d(C_in, C_out, kernel_size=K, stride=S, padding=(K-1)/2), nn.ReLU(inplace=True)1|`nn.Conv2d(C_in, C_out, kernel_size=K, stride=1, padding=(K-1)/2), nn.ReLU(inplace=True), Downsample(filt_size=M, stride=S, channels=C_out)`|
 |**AvgPool-->BlurPool**|`nn.AvgPool2d(kernel_size=K, stride=S)`|`Downsample(filt_size=M, stride=S, channels=C)`|
 
 
