@@ -68,9 +68,9 @@ We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The method
 
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
-|**MaxPool <br>--> MaxBlurPool** | `MaxPool2d(kernel_size=2, stride=2)`| `MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)`|
-|**StridedConv <br>--> ConvBlurPool**| `Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `ReLU(inplace=True)` | `Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)` |
-|**AvgPool <br>--> BlurPool**| `AvgPool2d(kernel_size=2, stride=2),` | `Downsample(filt_size=M, stride=2, channels=C)`|
+|**MaxPool --><br> MaxBlurPool** | `MaxPool2d(kernel_size=2, stride=2)`| `MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)`|
+|**StridedConv --><br> ConvBlurPool**| `Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `ReLU(inplace=True)` | `Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)` |
+|**AvgPool --><br> BlurPool**| `AvgPool2d(kernel_size=2, stride=2),` | `Downsample(filt_size=M, stride=2, channels=C)`|
 
 ### Some things to watch out for
 
