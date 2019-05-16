@@ -32,10 +32,10 @@ These line commands are very similar to the base PyTorch [repository](https://gi
 ### Evaluating classification accuracy
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf -f 5 --resume ./weights/alexnet_lpf5.pth.tar -e --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf -f 5 --resume ./weights/vgg16_lpf5.pth.tar -e
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf -f 5 --resume ./weights/resnet50_lpf5.pth.tar -e
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --resume ./weights/densenet121_lpf5.pth.tar -e
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
 
 ### Evaluating classification consistency
@@ -43,10 +43,10 @@ python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --resume ./weig
 Same as above, but flag `-es` evaluates the shift-consistency -- how often two random `224x224` crops are classified the same.
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf -f 5 --resume ./weights/alexnet_lpf5.pth.tar -b 8 -es --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf -f 5 --resume ./weights/vgg16_lpf5.pth.tar -b 8 -es
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf -f 5 --resume ./weights/resnet50_lpf5.pth.tar -b 8 -es
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --resume ./weights/densenet121_lpf5.pth.tar -b 8 -es
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
 
 ## Training
@@ -56,10 +56,10 @@ AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). I t
 Output models will be in `OUT_DIR/model_best.pth.tar`, which you can substitute in the test commands above.
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf -f 5 --out-dir alexnet_lpf5 --gpu 0 --lr .01
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf -f 5 --out-dir vgg16_lpf5 --lr .01 -b 128 -ba 2
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf -f 5 --out-dir resnet50_lpf5
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --out-dir densenet121_lpf5 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a alexnet_lpf --out-dir alexnet_lpf5 --gpu 0 --lr .01
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a vgg16_lpf --out-dir vgg16_lpf5 --lr .01 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet50_lpf --out-dir resnet50_lpf5
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a densenet121_lpf --out-dir densenet121_lpf5 -b 128 -ba 2
 ```
 
 ## Modifying your own architecture to be more shift-invariant
@@ -68,7 +68,7 @@ We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The method
 
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
-|**MaxPool --><br> MaxBlurPool** | <font size="-1">`MaxPool2d(kernel_size=2, stride=2)`</font> | `MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)`|
+|**MaxPool --><br> MaxBlurPool** | `MaxPool2d(kernel_size=2, stride=2)` | `MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)`|
 |**StridedConv --><br> ConvBlurPool**| `Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `ReLU(inplace=True)` | `Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)` |
 |**AvgPool --><br> BlurPool**| `AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
 
