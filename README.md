@@ -1,4 +1,4 @@
-## <b>Antialiased CNNs</b> [[Project Page]](http://richzhang.github.io/antialiased-cnns/) [[Paper]](https://arxiv.org/abs/1904.11486)
+# <b>Antialiased CNNs</b> [[Project Page]](http://richzhang.github.io/antialiased-cnns/) [[Paper]](https://arxiv.org/abs/1904.11486)
 
 [Richard Zhang](https://richzhang.github.io/). To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
