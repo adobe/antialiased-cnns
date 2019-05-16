@@ -102,9 +102,9 @@ We show accuracy vs consistency for various networks. We *italicize* a variant i
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
 | *Baseline* | *56.55* | *78.18* | 
-| Rect-2 | **57.24** | **81.33** | 
+| Rect-2 | **57.24** | 81.33 | 
 | Tri-3 | 56.90 | 82.15 | 
-| Bin-5 | 56.58 | 82.51 | 
+| Bin-5 | 56.58 | **82.51** | 
 
 **VGG16**
 
