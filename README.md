@@ -64,11 +64,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --out-dir dense
 
 ## Modifying your own architecture to be more shift-invariant
 
-We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding. We will use blur kernel size `M` and that the tensor has `C` channels.
-
-```python
-from models_lpf import *
-```
+We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding. We will use blur kernel size `M` and that the tensor has `C` channels. Make sure to have `from models_lpf import *` in the header.
 
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
