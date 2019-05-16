@@ -56,10 +56,10 @@ AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). I t
 Output models will be in `OUT_DIR/model_best.pth.tar`, which you can substitute in the test commands above.
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf --filter_size 5 --out-dir alexnet_lpf5 --gpu 0 --lr .01
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf --filter_size 5 --out-dir vgg16_lpf5 --lr .01 -b 128 -ba 2
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf --filter_size 5 --out-dir resnet50_lpf5
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf --filter_size 5 --out-dir densenet121_lpf5 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf -f 5 --out-dir alexnet_lpf5 --gpu 0 --lr .01
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf -f 5 --out-dir vgg16_lpf5 --lr .01 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf -f 5 --out-dir resnet50_lpf5
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --out-dir densenet121_lpf5 -b 128 -ba 2
 ```
 
 ## Modifying your own architecture to be more shift-invariant
@@ -72,12 +72,12 @@ from models_lpf import *
 
 |   |Original|Anti-aliased replacement|
 |---|---|---|
-|MaxPool|```nn.MaxPool2d(kernel_size=K, stride=1)```|`nn.MaxPool2d(kernel_size=K, stride=1), Downsample(filt_size=M, stride=S, channels=C)`|
-|StridedConv|   |   |
-|AvgPool|   |   |
+|**MaxPool->MaxBlurPool**|```nn.MaxPool2d(kernel_size=K, stride=1)```|`nn.MaxPool2d(kernel_size=K, stride=1), Downsample(filt_size=M, stride=S, channels=C)`|
+|**StridedConv->ConvBlurPool**|```nn.Conv2d(C_in, C_out, kernel_size=K, stride=S, padding=(K-1)/2), nn.ReLU(inplace=True)```|`nn.Conv2d(C_in, C_out, kernel_size=K, stride=1, padding=(K-1)/2), nn.ReLU(inplace=True), Downsample(filt_size=M, stride=S, channels=C_out)`|
+|**AvgPool-->BlurPool**|`nn.AvgPool2d(kernel_size=K, stride=S)`|`Downsample(filt_size=M, stride=S, channels=C)`|
 
 
-*`MaxPool` --> `MaxBlurPool`*
+**`MaxPool` --> `MaxBlurPool`**
 
 Replace:
 
@@ -88,7 +88,7 @@ with:
 - `nn.MaxPool2d(kernel_size=K, stride=1)`
 - `Downsample(filt_size=M, stride=S, channels=C)`
 
-*`StridedConv` --> `ConvBlurPool`*
+**`StridedConv` --> `ConvBlurPool`**
 
 Replace:
 
@@ -101,7 +101,7 @@ with:
 
 `AvgPool` is a special case of `BlurPool`. Replacing with `BlurPool` will make it more shift-invariant.
 
-*`AvgPool` --> `BlurPool`*
+**`AvgPool` --> `BlurPool`**
 
 Replace:
 
