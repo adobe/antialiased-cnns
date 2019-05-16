@@ -11,7 +11,7 @@ This repository contains examples of anti-aliased convnets. We build off publicl
 - modified AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained nets
 - code for evaluating how shift-invariant a model is (`--evaluate-shift` flag)
 
-## Getting started
+## (1) Getting started
 
 ### PyTorch + ImageNet
 - Install PyTorch ([pytorch.org](http://pytorch.org))
@@ -24,13 +24,13 @@ This repository contains examples of anti-aliased convnets. We build off publicl
 - Run `bash weights/get_antialiased_models.py`
 
 
-## Evaluating anti-aliased models
+## (2) Evaluating models
 
 We provide models with filter sizes 2,3,5 for AlexNet, VGG16, ResNet50, and DenseNet121. Substitute `-f 5` and appropriate filepath. The example commands use our weights. You can them from your own training session.
 
 These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). We simply add suffix `_lpf` to the architecture and specify `-f` for filter size.
 
-### Evaluating classification accuracy
+### Evaluating accuracy
 
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
@@ -39,7 +39,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --resume ./weig
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
 
-### Evaluating classification consistency
+### Evaluating consistency
 
 Same as above, but flag `-es` evaluates the shift-consistency -- how often two random `224x224` crops are classified the same.
 
@@ -50,7 +50,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet50_lpf --resume 
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
 
-## Training
+## (3) Training antialiasing models
 
 AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used). Default batch size is `256`. Some extra memory is added for the low-pass filter layers, so a default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches with flag `--ba 2`.
 
@@ -63,7 +63,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet50_lpf --out-dir resnet50
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a densenet121_lpf --out-dir densenet121_lpf5 -b 128 -ba 2
 ```
 
-## Modifying your own architecture to be more shift-invariant
+## (4) Modifying your own architecture to be more shift-invariant
 
 We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding. We will use blur kernel size `M` and that the tensor has `C` channels. Make sure to have `from models_lpf import *` in your file.
 
@@ -93,9 +93,11 @@ for m in self.modules():
 
 **(2) Weights may accidentally start training** When initialized, the layer freezes the weights with `p.requires_grad = False` command. If you overwrite this, the fixed weights will start training and will not anti-alias properly for you.
 
-## Results
+## (5) Results
 
 We show accuracy vs consistency for various networks. We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** highest values.
+
+Achieving better consistency, while maintaining or improving accuracy, is an open problem. We invite you to participate!
 
 **AlexNet**
 
@@ -134,11 +136,11 @@ We show accuracy vs consistency for various networks. We *italicize* a variant i
 | Bin-5 | 75.03 | **90.39** | 
 
 
-### Acknowledgments
+## (A) Acknowledgments
 
 This repository is built off the PyTorch ImageNet training [repository](https://github.com/pytorch/examples/tree/master/imagenet).
 
-### Citation
+## (B) Citation
 
 If you find this useful for your research, please consider citing this [bibtex](https://richzhang.github.io/index_files/bibtex_icml2019.txt).
 
