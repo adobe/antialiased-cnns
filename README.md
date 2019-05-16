@@ -72,44 +72,9 @@ from models_lpf import *
 
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
-|**MaxPool <br>--><br> MaxBlurPool** | `MaxPool2d(kernel_size=2, stride=2)`| `MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)`|
-|**StridedConv <br>--><br> ConvBlurPool**| `Conv2d(Cin, C, kernel_size=3, stride=2, padding=1,` <br> `ReLU(inplace=True)` | `Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)` |
-|**AvgPool <br>--><br> BlurPool**| `AvgPool2d(kernel_size=2, stride=2),` | `Downsample(filt_size=M, stride=2, channels=C)`|
-
-
-**`MaxPool` --> `MaxBlurPool`**
-
-Replace:
-
-- `nn.MaxPool2d(kernel_size=K, stride=S)`
-
-with:
-
-- `nn.MaxPool2d(kernel_size=K, stride=1)`
-- `Downsample(filt_size=M, stride=S, channels=C)`
-
-**`StridedConv` --> `ConvBlurPool`**
-
-Replace:
-
-- `nn.Conv2d(C_in, C_out, kernel_size=K, stride=S, padding=(K-1)/2), nn.ReLU(inplace=True)`
-
-with:
-
-- `nn.Conv2d(C_in, C_out, kernel_size=K, stride=1, padding=(K-1)/2)`
-- `nn.ReLU(inplace=True), Downsample(filt_size=M, stride=S, channels=C_out)`
-
-`AvgPool` is a special case of `BlurPool`. Replacing with `BlurPool` will make it more shift-invariant.
-
-**`AvgPool` --> `BlurPool`**
-
-Replace:
-
-- `nn.AvgPool2d(kernel_size=K, stride=S)`
-
-with:
-
-- `Downsample(filt_size=M, stride=S, channels=C)`
+|**MaxPool <br>--> MaxBlurPool** | `MaxPool2d(kernel_size=2, stride=2)`| `MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)`|
+|**StridedConv <br>--> ConvBlurPool**| `Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `ReLU(inplace=True)` | `Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)` |
+|**AvgPool <br>--> BlurPool**| `AvgPool2d(kernel_size=2, stride=2),` | `Downsample(filt_size=M, stride=2, channels=C)`|
 
 ### Some things to watch out for
 
