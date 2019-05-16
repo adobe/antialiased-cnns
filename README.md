@@ -115,7 +115,7 @@ for m in self.modules():
 
 ### Acknowledgments
 
-This repository is built off the PyTorch ImageNet training [repository](https://github.com/pytorch/examples/tree/master/imagenet]).
+This repository is built off the PyTorch ImageNet training [repository](https://github.com/pytorch/examples/tree/master/imagenet).
 
 ### Citation
 

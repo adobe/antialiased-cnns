@@ -49,9 +49,6 @@ class Downsample(nn.Module):
             self.ds[0] = self.ds[0].cuda()
 
     def forward(self, inp):
-        # print(self.ds[0][1].weight.device)
-        # print(self.ds[1].weight[0,0,:,:])
-        # print(inp.device)
         if(self.filt_size==1):
             if(self.pad_off==0):
                 return inp[:,:,::self.stride,::self.stride]    
@@ -70,13 +67,10 @@ class Downsample(nn.Module):
 def get_pad_layer(pad_type):
     if(pad_type in ['circ','circle']):
         PadLayer = CircPad
-        # self.ds = [CircPad(self.pad_sizes),]
     elif(pad_type in ['refl','reflect']):
         PadLayer = nn.ReflectionPad2d
-        # self.ds = [nn.ReflectionPad2d(self.pad_sizes),]
     elif(pad_type in ['repl','replicate']):
         PadLayer = nn.ReplicationPad2d
-        # self.ds = [nn.ConstantPad2d(self.pad_sizes),]
     elif(pad_type=='zero'):
         PadLayer = nn.ZeroPad2d
     else:
