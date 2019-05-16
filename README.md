@@ -95,12 +95,14 @@ for m in self.modules():
 
 ## Results
 
+We show accuracy vs consistency for various networks. We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** highest values.
+
 **AlexNet**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
-| Baseline | <span style="color:blue">56.55</span> | 78.18 | 
-| Rect-2 | 57.24 | 81.33 | 
+| *Baseline* | *56.55* | *78.18* | 
+| Rect-2 | **57.24** | **81.33** | 
 | Tri-3 | 56.90 | 82.15 | 
 | Bin-5 | 56.58 | 82.51 | 
 
@@ -108,28 +110,28 @@ for m in self.modules():
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
-| Baseline | 71.59 | 88.52 | 
-| Rect-2 | 72.15 | 89.24 | 
-| Tri-3 | 72.20 | 89.60 | 
-| Bin-5 | 72.33 | 90.19 | 
+| *Baseline* | *71.59* | *88.52* | 
+| *Rect-2* | *72.15* | *89.24* | 
+| *Tri-3* | *72.20* | *89.60* | 
+| Bin-5 | **72.33** | **90.19** | 
 
 **ResNet50**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
-| Baseline | 76.16 | 89.20 | 
-| Rect-2 | 76.81 | 89.96 | 
-| Tri-3 | 76.83 | 90.91 | 
-| Bin-5 | 77.04 | 91.31 | 
+| *Baseline* | *76.16* | *89.20* | 
+| *Rect-2* | *76.81* | *89.96* | 
+| *Tri-3* | *76.83* | *90.91* | 
+| Bin-5 | **77.04** | **91.31** | 
 
 **DenseNet121**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
-| Baseline | 74.43 | 88.81 | 
-| Rect-2 | 75.04 | 89.53 | 
-| Tri-3 | 75.14 | 89.78 | 
-| Bin-5 | 75.03 | 90.39 | 
+| *Baseline* | *74.43* | *88.81* | 
+| *Rect-2* | *75.04* | *89.53* | 
+| Tri-3 | **75.14** | 89.78 | 
+| Bin-5 | 75.03 | **90.39** | 
 
 
 ### Acknowledgments
