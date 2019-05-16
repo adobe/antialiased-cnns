@@ -25,26 +25,26 @@ This repository contains examples of anti-aliased convnets. We build off publicl
 
 ## Evaluating anti-aliased models
 
-We provide models with filter sizes 2,3,5 for AlexNet, VGG16, ResNet50, and DenseNet121. Substitute `--filter size 5` and filepath for the others. The example commands use our example weights. You can substitute weights from your own training session too.
+We provide models with filter sizes 2,3,5 for AlexNet, VGG16, ResNet50, and DenseNet121. Substitute `-f 5` and appropriate filepath. The example commands use our weights. You can them from your own training session.
 
-The line commands are very similar to the base repository. Simply add a `_lpf` suffix to the architecture and specify `--filter_size`.
+These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). Simply add a `_lpf` suffix to the architecture and specify `-f` for filter size.
 
 ### Evaluating classification accuracy
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf --filter_size 5 --resume ./weights/alexnet_lpf5.pth.tar -e --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf --filter_size 5 --resume ./weights/vgg16_lpf5.pth.tar -e
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf --filter_size 5 --resume ./weights/resnet50_lpf5.pth.tar -e
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf --filter_size 5 --resume ./weights/densenet121_lpf5.pth.tar -e
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf -f 5 --resume ./weights/alexnet_lpf5.pth.tar -e --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf -f 5 --resume ./weights/vgg16_lpf5.pth.tar -e
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf -f 5 --resume ./weights/resnet50_lpf5.pth.tar -e
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --resume ./weights/densenet121_lpf5.pth.tar -e
 ```
 
 ### Evaluating classification consistency
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf --filter_size 5 --resume ./weights/alexnet_lpf5.pth.tar -b 8 -es --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf --filter_size 5 --resume ./weights/vgg16_lpf5.pth.tar -b 8 -es
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf --filter_size 5 --resume ./weights/resnet50_lpf5.pth.tar -b 8 -es
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf --filter_size 5 --resume ./weights/densenet121_lpf5.pth.tar -b 8 -es
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf -f 5 --resume ./weights/alexnet_lpf5.pth.tar -b 8 -es --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf -f 5 --resume ./weights/vgg16_lpf5.pth.tar -b 8 -es
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf -f 5 --resume ./weights/resnet50_lpf5.pth.tar -b 8 -es
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --resume ./weights/densenet121_lpf5.pth.tar -b 8 -es
 ```
 
 ## Training
