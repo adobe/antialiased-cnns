@@ -1,12 +1,10 @@
-## <b>Making Convolutional Networks Shift-Invariant Again</b> [[Project Page]](http://richzhang.github.io/antialiased-cnns/) [[Paper]](https://arxiv.org/abs/1904.11486) <br>
+# <b>Making Convolutional Networks Shift-Invariant Again</b> [[Project Page]](http://richzhang.github.io/antialiased-cnns/) [[Paper]](https://arxiv.org/abs/1904.11486) <br>
 [Richard Zhang](https://richzhang.github.io/). To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/gifs2/video_00810.gif' align="right" width=300>
 
-# Anti-aliased convnets
-
-This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch ImageNet training and testing repository. Please see that repo for detailed description of the basic [functionality](https://github.com/pytorch/examples/tree/master/imagenet). This repository contains add-ons related to anti-aliasing:
+This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch ImageNet [repository](https://github.com/pytorch/examples/tree/master/imagenet). This repository contains add-ons related to anti-aliasing:
 
 - a [low-pass filter layer](models_lpf/__init__.py#L8) (called `BlurPool` in the paper), which can be easily plugged into any network
 - modified AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained nets
@@ -27,7 +25,7 @@ This repository contains examples of anti-aliased convnets. We build off publicl
 
 ## Evaluating anti-aliased models
 
-We provide models with filter sizes 2,3,5 for AlexNet, VGG16, ResNet50, and DenseNet121. The following example commands assume filter size 5 (and can be easily substituted with filter sizes 2 or 3). The example commands also use our provided weights. You can substitute weights from your own training session below.
+We provide models with filter sizes 2,3,5 for AlexNet, VGG16, ResNet50, and DenseNet121. Substitute `--filter size 5` and filepath for the others. The example commands use our example weights. You can substitute weights from your own training session too.
 
 The line commands are very similar to the base repository. Simply add a `_lpf` suffix to the architecture and specify `--filter_size`.
 
@@ -37,7 +35,7 @@ The line commands are very similar to the base repository. Simply add a `_lpf` s
 python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf --filter_size 5 --resume ./weights/alexnet_lpf5.pth.tar -e --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf --filter_size 5 --resume ./weights/vgg16_lpf5.pth.tar -e
 python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf --filter_size 5 --resume ./weights/resnet50_lpf5.pth.tar -e
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet_lpf --filter_size 5 --resume ./weights/densenet_lpf5.pth.tar -e
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf --filter_size 5 --resume ./weights/densenet121_lpf5.pth.tar -e
 ```
 
 ### Evaluating classification consistency
@@ -46,7 +44,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -a densenet_lpf --filter_size 5 --resum
 python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf --filter_size 5 --resume ./weights/alexnet_lpf5.pth.tar -b 8 -es --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf --filter_size 5 --resume ./weights/vgg16_lpf5.pth.tar -b 8 -es
 python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf --filter_size 5 --resume ./weights/resnet50_lpf5.pth.tar -b 8 -es
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet_lpf --filter_size 5 --resume ./weights/densenet_lpf5.pth.tar -b 8 -es
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf --filter_size 5 --resume ./weights/densenet121_lpf5.pth.tar -b 8 -es
 ```
 
 ## Training
@@ -113,4 +111,15 @@ for m in self.modules():
 ```
 
 **(2) Weights may accidentally start training** When initialized, the layer freezes the weights with `p.requires_grad = False` command. If you overwrite this, the fixed weights will start training and will not anti-alias properly for you.
+
+
+### Acknowledgments
+
+This repository is built off the PyTorch ImageNet training [repository](https://github.com/pytorch/examples/tree/master/imagenet]).
+
+### Citation
+
+If you find this useful for your research, please consider citing this [bibtex](https://richzhang.github.io/index_files/bibtex_icml2019.txt).
+
+
 
