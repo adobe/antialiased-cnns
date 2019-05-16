@@ -27,7 +27,7 @@ This repository contains examples of anti-aliased convnets. We build off publicl
 
 We provide models with filter sizes 2,3,5 for AlexNet, VGG16, ResNet50, and DenseNet121. Substitute `-f 5` and appropriate filepath. The example commands use our weights. You can them from your own training session.
 
-These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). Simply add a `_lpf` suffix to the architecture and specify `-f` for filter size.
+These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). We simply add suffix `_lpf` to the architecture and specify `-f` for filter size.
 
 ### Evaluating classification accuracy
 
@@ -40,6 +40,8 @@ python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --resume ./weig
 
 ### Evaluating classification consistency
 
+Same as above, but flag `-es` evaluates the shift-consistency -- how often two random `224x224` crops are classified the same.
+
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf -f 5 --resume ./weights/alexnet_lpf5.pth.tar -b 8 -es --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf -f 5 --resume ./weights/vgg16_lpf5.pth.tar -b 8 -es
@@ -49,7 +51,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --resume ./weig
 
 ## Training
 
-AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used). Default batch size is `256`. Some extra memory is added for the low-pass filter layers, and a default batch may no longer fit in memory any longer. We simply accumulate gradients over smaller batches. For VGG16 and DenseNet121, we use batch size `128` and update every other batch `-ba 2`.
+AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used). Default batch size is `256`. Some extra memory is added for the low-pass filter layers, so a default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches with flag `--ba 2`.
 
 Output models will be in `OUT_DIR/model_best.pth.tar`, which you can substitute in the test commands above.
 
@@ -64,27 +66,50 @@ python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf --filter_size 5 --ou
 
 We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The methodology is simple -- first evaluate with stride 1, and then use the `Downsample` layer to do the striding. To follow the paper, we will use blur kernel size `M`, pool/conv kernel size `K`, and stride `S`. Assume that the tensor as `C` channels.
 
-`from models_lpf import *`
+```python
+from models_lpf import *
+```
 
-- `MaxPool` --> `MaxBlurPool`
+|   |Original|Anti-aliased replacement|
+|---|---|---|
+|MaxPool|```nn.MaxPool2d(kernel_size=K, stride=1)```|`nn.MaxPool2d(kernel_size=K, stride=1), Downsample(filt_size=M, stride=S, channels=C)`|
+|StridedConv|   |   |
+|AvgPool|   |   |
 
-Replace: `nn.MaxPool2d(kernel_size=K, stride=S)`
 
-with: `nn.MaxPool2d(kernel_size=K, stride=1), Downsample(filt_size=M, stride=S, channels=C)`
+*`MaxPool` --> `MaxBlurPool`*
 
-- `StridedConv` --> `ConvBlurPool`
+Replace:
 
-Replace: `nn.Conv2d(C_in, C_out, kernel_size=K, stride=S, padding=(K-1)/2), nn.ReLU(inplace=True)`
+- `nn.MaxPool2d(kernel_size=K, stride=S)`
 
-with `nn.Conv2d(C_in, C_out, kernel_size=K, stride=1, padding=(K-1)/2), nn.ReLU(inplace=True), Downsample(filt_size=M, stride=S, channels=C_out)`
+with:
+
+- `nn.MaxPool2d(kernel_size=K, stride=1)`
+- `Downsample(filt_size=M, stride=S, channels=C)`
+
+*`StridedConv` --> `ConvBlurPool`*
+
+Replace:
+
+- `nn.Conv2d(C_in, C_out, kernel_size=K, stride=S, padding=(K-1)/2), nn.ReLU(inplace=True)`
+
+with:
+
+- `nn.Conv2d(C_in, C_out, kernel_size=K, stride=1, padding=(K-1)/2)`
+- `nn.ReLU(inplace=True), Downsample(filt_size=M, stride=S, channels=C_out)`
 
 `AvgPool` is a special case of `BlurPool`. Replacing with `BlurPool` will make it more shift-invariant.
 
-- `AvgPool` --> `BlurPool`
+*`AvgPool` --> `BlurPool`*
 
-Replace: `nn.AvgPool2d(kernel_size=K, stride=S)`
+Replace:
 
-with: `Downsample(filt_size=M, stride=S, channels=C)`
+- `nn.AvgPool2d(kernel_size=K, stride=S)`
+
+with:
+
+- `Downsample(filt_size=M, stride=S, channels=C)`
 
 ### Some things to watch out for
 
@@ -102,12 +127,6 @@ for m in self.modules():
                 nn.init.constant_(m.bias, 0)
         else:
             print('Not initializing')
-    elif isinstance(m, nn.BatchNorm2d):
-        nn.init.constant_(m.weight, 1)
-        nn.init.constant_(m.bias, 0)
-    elif isinstance(m, nn.Linear):
-        nn.init.normal_(m.weight, 0, 0.01)
-        nn.init.constant_(m.bias, 0)
 ```
 
 **(2) Weights may accidentally start training** When initialized, the layer freezes the weights with `p.requires_grad = False` command. If you overwrite this, the fixed weights will start training and will not anti-alias properly for you.
