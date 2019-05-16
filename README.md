@@ -5,7 +5,7 @@
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/gifs2/video_00810.gif' align="right" width=300>
 
-This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch ImageNet [repository](https://github.com/pytorch/examples/tree/master/imagenet). This repository contains add-ons related to anti-aliasing:
+This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch ImageNet [repository](https://github.com/pytorch/examples/tree/master/imagenet), with add-ons for antialiasing:
 
 - a [low-pass filter layer](models_lpf/__init__.py#L8) (called `BlurPool` in the paper), which can be easily plugged into any network
 - modified AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained nets
