@@ -64,7 +64,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf -f 5 --out-dir dense
 
 ## Modifying your own architecture to be more shift-invariant
 
-We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The methodology is simple -- first evaluate with stride 1, and then use the `Downsample` layer to do the striding. To follow the paper, we will use blur kernel size `M`, pool/conv kernel size `K`, and stride `S`. Assume that the tensor as `C` channels.
+We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding. We will use blur kernel size `M` and that the tensor has `C` channels.
 
 ```python
 from models_lpf import *
@@ -72,9 +72,9 @@ from models_lpf import *
 
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
-|**MaxPool <br>--><br> MaxBlurPool** | `MaxPool2d(kernel_size=K, stride=S)`| `MaxPool2d(kernel_size=K, stride=1),` <br> `Downsample(filt_size=M, stride=S, channels=C)`|
-|**StridedConv <br>--><br> ConvBlurPool**| `Conv2d(C_in, C_out, kernel_size=K, stride=S, padding=(K-1)/2),` <br> `ReLU(inplace=True)` | `Conv2d(C_in, C_out, kernel_size=K, stride=1, padding=(K-1)/2),` <br> `ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=S, channels=C_out)` |
-|**AvgPool <br>--><br> BlurPool**| `AvgPool2d(kernel_size=K, stride=S),` | `Downsample(filt_size=M, stride=S, channels=C)`|
+|**MaxPool <br>--><br> MaxBlurPool** | `MaxPool2d(kernel_size=2, stride=2)`| `MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)`|
+|**StridedConv <br>--><br> ConvBlurPool**| `Conv2d(Cin, C, kernel_size=3, stride=2, padding=1,` <br> `ReLU(inplace=True)` | `Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)` |
+|**AvgPool <br>--><br> BlurPool**| `AvgPool2d(kernel_size=2, stride=2),` | `Downsample(filt_size=M, stride=2, channels=C)`|
 
 
 **`MaxPool` --> `MaxBlurPool`**
