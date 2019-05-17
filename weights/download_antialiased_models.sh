@@ -11,4 +11,7 @@ wget https://www.dropbox.com/s/cmxv92f0b0cg52u/resnet50_lpf5.pth.tar?dl=0 -O ./w
 wget https://www.dropbox.com/s/e9cv1ephmlne4up/vgg16_lpf2.pth.tar?dl=0 -O ./weights/
 wget https://www.dropbox.com/s/b772puthmxvs2s4/vgg16_lpf3.pth.tar?dl=0 -O ./weights/
 wget https://www.dropbox.com/s/z80jk7hjb389ap6/vgg16_lpf5.pth.tar?dl=0 -O ./weights/
+wget https://www.dropbox.com/s/ifs3ey9ulx016hp/vgg16_bn_lpf2.pth.tar?dl=0 -O ./weights/
+wget https://www.dropbox.com/s/l29y9a3rcjcnqa9/vgg16_bn_lpf3.pth.tar?dl=0 -O ./weights/
+wget https://www.dropbox.com/s/48acph9bbr06nje/vgg16_bn_lpf5.pth.tar?dl=0 -O ./weights/
 
