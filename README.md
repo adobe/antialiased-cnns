@@ -26,7 +26,7 @@ This repository contains examples of anti-aliased convnets. We build off publicl
 
 ## (2) Evaluating models
 
-We provide models with filter sizes 2,3,5 for AlexNet, VGG16, ResNet50, and DenseNet121. Substitute `-f 5` and appropriate filepath. The example commands use our weights. You can them from your own training session.
+We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet50, and DenseNet121. Substitute `-f 5` and appropriate filepath. The example commands use our weights. You can them from your own training session.
 
 These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). We simply add suffix `_lpf` to the architecture and specify `-f` for filter size.
 
@@ -35,6 +35,7 @@ These line commands are very similar to the base PyTorch [repository](https://gi
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
@@ -46,19 +47,21 @@ Same as above, but flag `-es` evaluates the shift-consistency -- how often two r
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
 
 ## (3) Training antialiasing models
 
-AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used). Default batch size is `256`. Some extra memory is added for the low-pass filter layers, so a default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches with flag `--ba 2`.
+As suggested by the official repository, AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). VGG16_bn also required a slightly lower learning rate of `0.05`. I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used). Default batch size is `256`. Some extra memory is added for the low-pass filter layers, so a default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches with flag `--ba 2`.
 
 Output models will be in `OUT_DIR/model_best.pth.tar`, which you can substitute in the test commands above.
 
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a alexnet_lpf --out-dir alexnet_lpf5 --gpu 0 --lr .01
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a vgg16_lpf --out-dir vgg16_lpf5 --lr .01 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a vgg16_bn_lpf --out-dir vgg16_bn_lpf5 --lr .05 -b 128 -ba 2
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet50_lpf --out-dir resnet50_lpf5
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a densenet121_lpf --out-dir densenet121_lpf5 -b 128 -ba 2
 ```
@@ -116,6 +119,15 @@ Achieving better consistency, while maintaining or improving accuracy, is an ope
 | *Rect-2* | *72.15* | *89.24* | 
 | *Tri-3* | *72.20* | *89.60* | 
 | Bin-5 | **72.33** | **90.19** | 
+
+**VGG16bn**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *73.36* | *89.24* | 
+| *Rect-2* | *74.01* | *90.72* | 
+| *Tri-3* | *73.91* | *91.10* | 
+| Bin-5 | **74.05** | **91.35** | 
 
 **ResNet50**
 
