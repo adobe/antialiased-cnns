@@ -40,7 +40,7 @@ We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet50,
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
