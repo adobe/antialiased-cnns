@@ -8,7 +8,7 @@ To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
 This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch [ImageNet](https://github.com/pytorch/examples/tree/master/imagenet) and [models](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories, with add-ons for antialiasing: <br>
 - a [low-pass filter layer](models_lpf/__init__.py) (called `BlurPool` in the paper), which can be easily plugged into any network
-- modified AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained nets
+- modified AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained weights
 - code for evaluating how shift-invariant a model is (`--evaluate-shift` flag)
 
 ## Licenses
