@@ -84,7 +84,7 @@ Some notes:
 
 The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding.
 
-1. Copy [models_lpf/__init__.py](models_lpf/__init__.py) into your codebase. This contains the `Downsample` layer which does blur+subsampling.
+1. Copy [models_lpf/\_\_init\_\_.py](models_lpf/__init__.py) into your codebase. This contains the `Downsample` layer which does blur+subsampling.
 
 2. Put the following into your header to get the `Downsample` class.
 
@@ -188,6 +188,6 @@ If you find this useful for your research, please consider citing this [bibtex](
 
 ## (C) Contact
 
-Please contact Richard Zhang <rizhang at adobe dot com> with any comments or feedback.
+Please contact Richard Zhang \<rizhang at adobe dot com\> with any comments or feedback.
 
 
