@@ -97,7 +97,7 @@ from models_lpf import *
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
 |**MaxPool --><br> MaxBlurPool** | `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)]`|
-|**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)]` |
+|**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=C)]` |
 |**AvgPool --><br> BlurPool**| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
 
 We assume blur kernel size `M` (3 or 5 is typical) and that the tensor has `C` channels.
