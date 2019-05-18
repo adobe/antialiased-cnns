@@ -1,3 +1,42 @@
+# This code is built from the PyTorch examples repository: https://github.com/pytorch/examples/.
+# Copyright (c) 2017 Torch Contributors.
+# The Pytorch examples are available under the BSD 3-Clause License.
+#
+# ==========================================================================================
+#
+# Adobe’s modifications are Copyright 2019 Adobe. All rights reserved.
+# Adobe’s modifications are licensed under the Creative Commons Attribution-NonCommercial-ShareAlike
+# 4.0 International Public License (CC-NC-SA-4.0). To view a copy of the license, visit
+# https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.
+#
+# ==========================================================================================
+#
+# BSD-3 License
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# * Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# * Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
+#
+# * Neither the name of the copyright holder nor the names of its
+#   contributors may be used to endorse or promote products derived from
+#   this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+
 import argparse
 import os
 import random
@@ -218,13 +257,6 @@ def main_worker(gpu, ngpus_per_node, args):
         else:
             model = models.__dict__[args.arch]()
 
-        # if(args.arch=='alexnet_lpf0'):
-        #     model = models_lpf.alexnet.AlexNet(filter_size=args.filter_size, pool_only=False, relu_first=False)
-        # elif(args.arch=='alexnet_lpf2'):
-        #     model = models_lpf.alexnet.AlexNet(filter_size=args.filter_size, pool_only=True)
-        # elif(args.arch=='alexnet_nmp'):
-        #     model = models_lpf.alexnet.AlexNetNMP(filter_size=args.filter_size)
-
     if args.distributed:
         # For multiprocessing distributed, DistributedDataParallel constructor
         # should always set the single device scope, otherwise,
@@ -267,7 +299,7 @@ def main_worker(gpu, ngpus_per_node, args):
             print("=> loading checkpoint '{}'".format(args.resume))
             checkpoint = torch.load(args.resume)
             model.load_state_dict(checkpoint['state_dict'])
-            if('optimizer' in checkpoint.keys()):
+            if('optimizer' in checkpoint.keys()): # if no optimizer, then only load weights
                 args.start_epoch = checkpoint['epoch']
                 best_acc1 = checkpoint['best_acc1']
                 if args.gpu is not None:

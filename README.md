@@ -1,19 +1,25 @@
 # <b>Antialiased CNNs</b> [[Project Page]](http://richzhang.github.io/antialiased-cnns/) [[Paper]](https://arxiv.org/abs/1904.11486)
 
+<img src='https://richzhang.github.io/antialiased-cnns/resources/gifs2/video_00810.gif' align="right" width=300>
+
 **Making Convolutional Networks Shift-Invariant Again** <br>
 [Richard Zhang](https://richzhang.github.io/). <br>
 To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
-
-<img src='https://richzhang.github.io/antialiased-cnns/resources/gifs2/video_00810.gif' align="right" width=300>
-
-This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch ImageNet [repository](https://github.com/pytorch/examples/tree/master/imagenet), with add-ons for antialiasing:
-
-- a [low-pass filter layer](models_lpf/__init__.py#L8) (called `BlurPool` in the paper), which can be easily plugged into any network
+This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch [ImageNet](https://github.com/pytorch/examples/tree/master/imagenet) and [models](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories, with add-ons for antialiasing: <br>
+- a [low-pass filter layer](models_lpf/__init__.py) (called `BlurPool` in the paper), which can be easily plugged into any network
 - modified AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained nets
 - code for evaluating how shift-invariant a model is (`--evaluate-shift` flag)
 
-## (1) Getting started
+## Licenses
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+All material is made available under [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) license by Adobe Inc. You can **use, redistribute, and adapt** the material for **non-commercial purposes**, as long as you give appropriate credit by **citing our paper** and **indicating any changes** that you've made.
+
+The repository builds off the PyTorch [examples repository](https://github.com/pytorch/examples) and torchvision [models repository](https://github.com/pytorch/vision/tree/master/torchvision/models). It is [BSD-style licensed](https://github.com/pytorch/examples/blob/master/LICENSE).
+
+## (0) Getting started
 
 ### PyTorch + ImageNet
 - Install PyTorch ([pytorch.org](http://pytorch.org))
@@ -21,16 +27,13 @@ This repository contains examples of anti-aliased convnets. We build off publicl
 - Download the ImageNet dataset and move validation images to labeled subfolders
     - To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
 
-### Downloading anti-aliased models
+## (1) Evaluating models
+
+### Download anti-aliased models
 
 - Run `bash weights/get_antialiased_models.py`
 
-
-## (2) Evaluating models
-
-We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet50, and DenseNet121. Substitute `-f 5` and appropriate filepath. The example commands use our weights. You can them from your own training session.
-
-These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). We simply add suffix `_lpf` to the architecture and specify `-f` for filter size.
+We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet50, and DenseNet121.
 
 ### Evaluating accuracy
 
@@ -54,11 +57,14 @@ python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet50_lpf --resume 
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
 
-## (3) Training antialiasing models
+Some notes:
+- These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). We simply add suffix `_lpf` to the architecture and specify `-f` for filter size.
+- Substitute `-f 5` and appropriate filepath for different filter sizes.
+- The example commands use our weights. You can them from your own training session.
 
-As suggested by the official repository, AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). VGG16_bn also required a slightly lower learning rate of `0.05`. I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used). Default batch size is `256`. Some extra memory is added for the low-pass filter layers, so a default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches with flag `--ba 2`.
+## (2) Training antialiased models
 
-Output models will be in `OUT_DIR/model_best.pth.tar`, which you can substitute in the test commands above.
+The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet50, and Densenet121 models with filter size 5. Output models will be in `OUT_DIR/model_best.pth.tar`
 
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a alexnet_lpf --out-dir alexnet_lpf5 --gpu 0 --lr .01
@@ -68,15 +74,35 @@ python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet50_lpf --out-dir resnet50
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a densenet121_lpf --out-dir densenet121_lpf5 -b 128 -ba 2
 ```
 
-## (4) Modifying your own architecture to be more shift-invariant
+Some notes:
+- As suggested by the official repository, AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). 
+- VGG16_bn also required a slightly lower learning rate of `0.05`.
+- I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used).
+- Default batch size is `256`. Some extra memory is added for the antialiasing layers, so the default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches with flag `--ba 2`. You may find this useful, even for the default models, if you are training with smaller/fewer GPUs
 
-We show how to make your `MaxPool` and `Conv2d` more shift-invariant. The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding. We will use blur kernel size `M` and that the tensor has `C` channels. Make sure to have `from models_lpf import *` in your file.
+## (3) Make your own architecture more shift-invariant
+
+The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding.
+
+1. Copy [models_lpf/__init__.py](models_lpf/__init__.py) into your codebase. This contains the `Downsample` layer which does blur+subsampling.
+
+2. Put the following into your header to get the `Downsample` class.
+
+```python
+from models_lpf import *
+```
+
+3. Make the following architectural changes.
 
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
-|**MaxPool --><br> MaxBlurPool** | `MaxPool2d(kernel_size=2, stride=2)` | `MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)`|
-|**StridedConv --><br> ConvBlurPool**| `Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `ReLU(inplace=True)` | `Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)` |
-|**AvgPool --><br> BlurPool**| `AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
+|**MaxPool --><br> MaxBlurPool** | `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)]`|
+|**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)]` |
+|**AvgPool --><br> BlurPool**| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
+
+We assume blur kernel size `M` (3 or 5 is typical) and that the tensor has `C` channels.
+
+Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. We typically skip this step for at the highest-resolution (early in the network), to prevent large increases.
 
 ### Some things to watch out for
 
@@ -96,13 +122,15 @@ for m in self.modules():
             print('Not initializing')
 ```
 
-**(2) Weights may accidentally start training** When initialized, the layer freezes the weights with `p.requires_grad = False` command. If you overwrite this, the fixed weights will start training and will not anti-alias properly for you.
+**(2) Weights may accidentally start training** When initialized, the layer freezes the weights with `p.requires_grad = False` command. If you overwrite this accidentally, the fixed weights will start training and will not anti-alias properly for you.
 
-## (5) Results
+## (4) Results
 
-We show accuracy vs consistency for various networks. We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** highest values.
+We show accuracy vs. consistency for various networks. We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** highest values.
 
 Achieving better consistency, while maintaining or improving accuracy, is an open problem. We invite you to participate!
+
+Note that the current arxiv paper is slightly out of date; we will update soon.
 
 **AlexNet**
 
@@ -152,11 +180,14 @@ Achieving better consistency, while maintaining or improving accuracy, is an ope
 
 ## (A) Acknowledgments
 
-This repository is built off the PyTorch ImageNet training [repository](https://github.com/pytorch/examples/tree/master/imagenet).
+This repository is built off the PyTorch [ImageNet training](https://github.com/pytorch/examples/tree/master/imagenet) and [torchvision models](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories.
 
 ## (B) Citation
 
 If you find this useful for your research, please consider citing this [bibtex](https://richzhang.github.io/index_files/bibtex_icml2019.txt).
 
+## (C) Contact
+
+Please contact Richard Zhang <rizhang at adobe dot com> with any comments or feedback.
 
 
