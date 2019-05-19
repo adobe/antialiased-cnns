@@ -104,26 +104,6 @@ We assume blur kernel size `M` (3 or 5 is typical) and that the tensor has `C` c
 
 Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. We typically skip this step for at the highest-resolution (early in the network), to prevent large increases.
 
-### Some things to watch out for
-
-The `Downsample` layer is simply a wrapper around a `Conv2d` layer, with hard-coded weights. As such, two things may happen:
-
-**(1) Initialization code may accidentally overwrite the low-pass filter weights.** An example bypass is shown below.
-
-```python
-for m in self.modules():
-    if isinstance(m, nn.Conv2d):
-        if(m.in_channels!=m.out_channels or m.out_channels!=m.groups or m.bias is not None):
-            # don't want to reinitialize downsample layers, code assuming normal conv layers will not have these characteristics
-            nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-            if m.bias is not None:
-                nn.init.constant_(m.bias, 0)
-        else:
-            print('Not initializing')
-```
-
-**(2) Weights may accidentally start training** When initialized, the layer freezes the weights with `p.requires_grad = False` command. If you overwrite this accidentally, the fixed weights will start training and will not anti-alias properly for you.
-
 ## (4) Results
 
 We show accuracy vs. consistency for various networks. We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** highest values.

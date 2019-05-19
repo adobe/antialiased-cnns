@@ -298,7 +298,7 @@ def main_worker(gpu, ngpus_per_node, args):
         if os.path.isfile(args.resume):
             print("=> loading checkpoint '{}'".format(args.resume))
             checkpoint = torch.load(args.resume)
-            model.load_state_dict(checkpoint['state_dict'])
+            model.load_state_dict(checkpoint['state_dict'], strict=False)
             if('optimizer' in checkpoint.keys()): # if no optimizer, then only load weights
                 args.start_epoch = checkpoint['epoch']
                 best_acc1 = checkpoint['best_acc1']
