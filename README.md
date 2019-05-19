@@ -8,8 +8,8 @@ To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
 This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch [ImageNet](https://github.com/pytorch/examples/tree/master/imagenet) and [models](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories, with add-ons for antialiasing: <br>
 - a [low-pass filter layer](models_lpf/__init__.py) (called `BlurPool` in the paper), which can be easily plugged into any network
-- modified AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained nets
-- code for evaluating how shift-invariant a model is (`--evaluate-shift` flag)
+- antialiased AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained weights
+- benchmarking code and evaluation for shift-invariance (`-es` flag)
 
 ## Licenses
 
@@ -40,7 +40,7 @@ We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet50,
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
@@ -84,7 +84,7 @@ Some notes:
 
 The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding.
 
-1. Copy [models_lpf/__init__.py](models_lpf/__init__.py) into your codebase. This contains the `Downsample` layer which does blur+subsampling.
+1. Copy [models_lpf/\_\_init\_\_.py](models_lpf/__init__.py) into your codebase. This contains the `Downsample` layer which does blur+subsampling.
 
 2. Put the following into your header to get the `Downsample` class.
 
@@ -97,7 +97,7 @@ from models_lpf import *
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
 |**MaxPool --><br> MaxBlurPool** | `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)]`|
-|**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=128)]` |
+|**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=C)]` |
 |**AvgPool --><br> BlurPool**| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
 
 We assume blur kernel size `M` (3 or 5 is typical) and that the tensor has `C` channels.
@@ -168,6 +168,6 @@ If you find this useful for your research, please consider citing this [bibtex](
 
 ## (C) Contact
 
-Please contact Richard Zhang <rizhang at adobe dot com> with any comments or feedback.
+Please contact Richard Zhang \<rizhang at adobe dot com\> with any comments or feedback.
 
 
