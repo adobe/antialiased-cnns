@@ -170,7 +170,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | *Baseline* | *76.16* | *89.20* | 
 | *Rect-2* | *76.81* | *89.96* | 
 | *Tri-3* | *76.83* | *90.91* | 
-| Bin-5 | **77.04** | **91.31** | 
+| **Bin-5** | **77.04** | **91.31** | 
 
 **DenseNet121 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_DenseNet121.jpg)**
 
@@ -178,8 +178,8 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | :------: | :------: | :---------: |
 | *Baseline* | *74.43* | *88.81* | 
 | *Rect-2* | *75.04* | *89.53* | 
-| Tri-3 | **75.14** | 89.78 | 
-| Bin-5 | 75.03 | **90.39** | 
+| **Tri-3** | **75.14** | 89.78 | 
+| **Bin-5** | 75.03 | **90.39** | 
 
 ## (A) Acknowledgments
 
