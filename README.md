@@ -110,9 +110,9 @@ We assume blur kernel size `M` (3 or 5 is typical) and that the tensor has `C` c
 
 Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. We typically skip this step for at the highest-resolution (early in the network), to prevent large increases.
 
-<img src='https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind2_noalex.jpg' align="right" width=400>
-
 ## (4) Results
+
+<img src='https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind2_noalex.jpg' align="right" width=400>
 
 We show consistency (y-axis) vs accuracy(x-axis) for various networks. Up and to the right is good.
 
