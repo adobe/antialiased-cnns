@@ -146,6 +146,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | **Bin-5** | **74.05** | **91.35** | 
 
 **ResNet18**
+
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
 | *Baseline* | *69.74* | *85.11* | 
@@ -154,6 +155,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | **Bin-5** | 71.38 | **88.25** | 
 
 **ResNet34**
+
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
 | *Baseline* | *73.30* | *87.56* | 
