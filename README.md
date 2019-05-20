@@ -150,7 +150,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
 | *Baseline* | *69.74* | *85.11* | 
-| **Rect-2** | 71.39 | 86.90 | 
+| *Rect-2* | 71.39 | 86.90 | 
 | **Tri-3** | **71.69** | 87.51 | 
 | **Bin-5** | 71.38 | **88.25** | 
 
