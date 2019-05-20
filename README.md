@@ -182,7 +182,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | :------: | :------: | :---------: |
 | *Baseline* | *74.43* | *88.81* | 
 | *Rect-2* | *75.04* | *89.53* | 
-| Tri-3 | **75.14** | 89.78 | 
+| **Tri-3** | **75.14** | 89.78 | 
 | **Bin-5** | 75.03 | **90.39** | 
 
 ## (A) Acknowledgments
