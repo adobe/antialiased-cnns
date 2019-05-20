@@ -118,7 +118,7 @@ Achieving better consistency, while maintaining or improving accuracy, is an ope
 
 Note that the current arxiv paper is slightly out of date; we will update soon.
 
-**AlexNet**
+**AlexNet [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_AlexNet.jpg)**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
@@ -127,7 +127,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | **Tri-3** | 56.90 | 82.15 | 
 | **Bin-5** | 56.58 | **82.51** | 
 
-**VGG16**
+**VGG16 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_VGG16.jpg)**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
@@ -136,7 +136,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | *Tri-3* | *72.20* | *89.60* | 
 | **Bin-5** | **72.33** | **90.19** | 
 
-**VGG16bn**
+**VGG16bn [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_VGG16bn.jpg)**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
@@ -145,7 +145,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | *Tri-3* | *73.91* | *91.10* | 
 | **Bin-5** | **74.05** | **91.35** | 
 
-**ResNet18**
+**ResNet18 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_ResNet18.jpg)**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
@@ -154,7 +154,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | **Tri-3** | **71.69** | 87.51 | 
 | **Bin-5** | 71.38 | **88.25** | 
 
-**ResNet34**
+**ResNet34 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_ResNet34.jpg)**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
@@ -163,7 +163,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | **Tri-3** | 74.33 | 89.32 | 
 | **Bin-5** | 74.20 | **89.49** | 
 
-**ResNet50**
+**ResNet50 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_ResNet50.jpg)**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
@@ -172,7 +172,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | *Tri-3* | *76.83* | *90.91* | 
 | Bin-5 | **77.04** | **91.31** | 
 
-**DenseNet121**
+**DenseNet121 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_DenseNet121.jpg)**
 
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
@@ -180,7 +180,6 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | *Rect-2* | *75.04* | *89.53* | 
 | Tri-3 | **75.14** | 89.78 | 
 | Bin-5 | 75.03 | **90.39** | 
-
 
 ## (A) Acknowledgments
 
