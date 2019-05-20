@@ -112,6 +112,8 @@ Note that this requires computing a layer at stride 1 instead of stride 2, which
 
 ## (4) Results
 
+<img src='https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind2_noalex.jpg' align="right" width=500>
+
 We show accuracy vs. consistency for various networks. We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** a variant if it is on the Pareto front. We **bold** highest values per column.
 
 Achieving better consistency, while maintaining or improving accuracy, is an open problem. We invite you to participate!
