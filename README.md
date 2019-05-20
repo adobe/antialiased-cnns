@@ -33,7 +33,7 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 
 - Run `bash weights/get_antialiased_models.py`
 
-We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet50, and DenseNet121.
+We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,34,50, and DenseNet121.
 
 ### Evaluating accuracy
 
@@ -41,6 +41,8 @@ We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet50,
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet18_lpf --resume ./weights/resnet18_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet34_lpf --resume ./weights/resnet34_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
@@ -53,6 +55,8 @@ Same as above, but flag `-es` evaluates the shift-consistency -- how often two r
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet18_lpf --resume ./weights/resnet18_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet34_lpf --resume ./weights/resnet34_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
@@ -64,12 +68,14 @@ Some notes:
 
 ## (2) Training antialiased models
 
-The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet50, and Densenet121 models with filter size 5. Output models will be in `OUT_DIR/model_best.pth.tar`
+The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 5. Output models will be in `[[OUT_DIR]]/model_best.pth.tar`
 
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a alexnet_lpf --out-dir alexnet_lpf5 --gpu 0 --lr .01
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a vgg16_lpf --out-dir vgg16_lpf5 --lr .01 -b 128 -ba 2
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a vgg16_bn_lpf --out-dir vgg16_bn_lpf5 --lr .05 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet18_lpf --out-dir resnet18_lpf5
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet34_lpf --out-dir resnet34_lpf5
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet50_lpf --out-dir resnet50_lpf5
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a densenet121_lpf --out-dir densenet121_lpf5 -b 128 -ba 2
 ```
@@ -78,7 +84,7 @@ Some notes:
 - As suggested by the official repository, AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). 
 - VGG16_bn also required a slightly lower learning rate of `0.05`.
 - I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used).
-- Default batch size is `256`. Some extra memory is added for the antialiasing layers, so the default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches with flag `--ba 2`. You may find this useful, even for the default models, if you are training with smaller/fewer GPUs
+- Default batch size is `256`. Some extra memory is added for the antialiasing layers, so the default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches `-b 128` with flag `--ba 2`. You may find this useful, even for the default models, if you are training with smaller/fewer GPUs. It is not exactly identical to training with a large batch, as the batchnorm statistics will be computed with a smaller batch.
 
 ## (3) Make your own architecture more shift-invariant
 
@@ -106,7 +112,7 @@ Note that this requires computing a layer at stride 1 instead of stride 2, which
 
 ## (4) Results
 
-We show accuracy vs. consistency for various networks. We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** highest values.
+We show accuracy vs. consistency for various networks. We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** a variant if it is on the Pareto front. We **bold** highest values per column.
 
 Achieving better consistency, while maintaining or improving accuracy, is an open problem. We invite you to participate!
 
@@ -117,9 +123,9 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 |          | Accuracy | Consistency |
 | :------: | :------: | :---------: |
 | *Baseline* | *56.55* | *78.18* | 
-| Rect-2 | **57.24** | 81.33 | 
-| Tri-3 | 56.90 | 82.15 | 
-| Bin-5 | 56.58 | **82.51** | 
+| **Rect-2** | **57.24** | 81.33 | 
+| **Tri-3** | 56.90 | 82.15 | 
+| **Bin-5** | 56.58 | **82.51** | 
 
 **VGG16**
 
@@ -128,7 +134,7 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | *Baseline* | *71.59* | *88.52* | 
 | *Rect-2* | *72.15* | *89.24* | 
 | *Tri-3* | *72.20* | *89.60* | 
-| Bin-5 | **72.33** | **90.19** | 
+| **Bin-5** | **72.33** | **90.19** | 
 
 **VGG16bn**
 
@@ -137,7 +143,19 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | *Baseline* | *73.36* | *89.24* | 
 | *Rect-2* | *74.01* | *90.72* | 
 | *Tri-3* | *73.91* | *91.10* | 
-| Bin-5 | **74.05** | **91.35** | 
+| **Bin-5** | **74.05** | **91.35** | 
+
+**ResNet18**
+| *Baseline* | *69.74* | *85.11* | 
+| *Rect-2* | *71.39* | *86.90* | 
+| **Tri-3** | **71.69** | 87.51 | 
+| **Bin-5** | 71.38 | **88.25** | 
+
+**ResNet34**
+| *Baseline* | *73.30* | *87.56* | 
+| **Rect-2** | **74.46** | 89.14 | 
+| **Tri-3** | 74.33 | 89.32 | 
+| **Bin-5** | 74.20 | **89.49** | 
 
 **ResNet50**
 
@@ -162,12 +180,8 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 
 This repository is built off the PyTorch [ImageNet training](https://github.com/pytorch/examples/tree/master/imagenet) and [torchvision models](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories.
 
-## (B) Citation
+## (B) Citation, Contact
 
-If you find this useful for your research, please consider citing this [bibtex](https://richzhang.github.io/index_files/bibtex_icml2019.txt).
-
-## (C) Contact
-
-Please contact Richard Zhang \<rizhang at adobe dot com\> with any comments or feedback.
+If you find this useful for your research, please consider citing this [bibtex](https://richzhang.github.io/index_files/bibtex_icml2019.txt). Please contact Richard Zhang \<rizhang at adobe dot com\> with any comments or feedback.
 
 
