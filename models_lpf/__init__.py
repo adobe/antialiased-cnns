@@ -42,29 +42,19 @@ class Downsample(nn.Module):
         filt = filt/torch.sum(filt)
         self.register_buffer('filt', filt[None,None,:,:].repeat((self.channels,1,1,1)))
 
-        pad_amt = 0
-        self.ds_ind = 1
-        self.ds = [get_pad_layer(pad_type)(self.pad_sizes),
-            nn.Conv2d(channels,channels,kernel_size=self.filt_size,padding=pad_amt,stride=stride,bias=False,groups=channels),]
-
-        self.ds[self.ds_ind].weight.data[:,0,:,:] = filt[None,:,:]
-        self.ds = nn.Sequential(*self.ds)
-        for p in self.ds[1].parameters():
-            p.requires_grad = False
+        self.pad = get_pad_layer(pad_type)(self.pad_sizes)
 
     def forward(self, inp):
         if(self.filt_size==1):
             if(self.pad_off==0):
                 return inp[:,:,::self.stride,::self.stride]    
             else:
-                return self.ds[0](inp)[:,:,::self.stride,::self.stride]
+                return self.pad(inp)[:,:,::self.stride,::self.stride]
         else:
-            return F.conv2d(self.ds[0](inp), self.filt, stride=self.stride, groups=inp.shape[1])
+            return F.conv2d(self.pad(inp), self.filt, stride=self.stride, groups=inp.shape[1])
 
 def get_pad_layer(pad_type):
-    if(pad_type in ['circ','circle']):
-        PadLayer = CircPad
-    elif(pad_type in ['refl','reflect']):
+    if(pad_type in ['refl','reflect']):
         PadLayer = nn.ReflectionPad2d
     elif(pad_type in ['repl','replicate']):
         PadLayer = nn.ReplicationPad2d
