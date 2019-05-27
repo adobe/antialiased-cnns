@@ -38,14 +38,14 @@ We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,
 ### Evaluating accuracy
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet18_lpf --resume ./weights/resnet18_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet34_lpf --resume ./weights/resnet34_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet101_lpf --resume ./weights/resnet101_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a alexnet_lpf --weights ./weights/alexnet_lpf5.pth.tar --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_lpf --weights ./weights/vgg16_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_bn_lpf --weights ./weights/vgg16_bn_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet18_lpf --weights ./weights/resnet18_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet34_lpf --weights ./weights/resnet34_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --weights ./weights/resnet50_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet101_lpf --weights ./weights/resnet101_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --weights ./weights/densenet121_lpf5.pth.tar
 ```
 
 ### Evaluating consistency
@@ -53,20 +53,20 @@ python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./w
 Same as above, but flag `-es` evaluates the shift-consistency -- how often two random `224x224` crops are classified the same.
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a alexnet_lpf --resume ./weights/alexnet_lpf5.pth.tar --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_lpf --resume ./weights/vgg16_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_bn_lpf --resume ./weights/vgg16_bn_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet18_lpf --resume ./weights/resnet18_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet34_lpf --resume ./weights/resnet34_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet101_lpf --resume ./weights/resnet101_lpf5.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a alexnet_lpf --weights ./weights/alexnet_lpf5.pth.tar --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_lpf --weights ./weights/vgg16_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_bn_lpf --weights ./weights/vgg16_bn_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet18_lpf --weights ./weights/resnet18_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet34_lpf --weights ./weights/resnet34_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet50_lpf --weights ./weights/resnet50_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet101_lpf --weights ./weights/resnet101_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a densenet121_lpf --weights ./weights/densenet121_lpf5.pth.tar
 ```
 
 Some notes:
 - These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). We simply add suffix `_lpf` to the architecture and specify `-f` for filter size.
 - Substitute `-f 5` and appropriate filepath for different filter sizes.
-- The example commands use our weights. You can them from your own training session.
+- The example commands use our weights. You can them from your own training checkpoints by subsituting `--weights PTH/TO/WEIGHTS` for `--resume PTH/TO/CHECKPOINT`.
 
 ## (2) Training antialiased models
 

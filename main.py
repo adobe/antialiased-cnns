@@ -95,14 +95,14 @@ parser.add_argument('--wd', '--weight-decay', default=1e-4, type=float,
                     dest='weight_decay')
 parser.add_argument('-p', '--print-freq', default=10, type=int,
                     metavar='N', help='print frequency (default: 10)')
+parser.add_argument('--pretrained', dest='pretrained', action='store_true',
+                    help='use pre-trained model')
 parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
 parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
                     help='evaluate model on validation set')
 parser.add_argument('--evaluate-save', dest='evaluate_save', action='store_true',
                     help='save validation images off')
-parser.add_argument('--pretrained', dest='pretrained', action='store_true',
-                    help='use pre-trained model')
 parser.add_argument('--world-size', default=-1, type=int,
                     help='number of nodes for distributed training')
 parser.add_argument('--rank', default=-1, type=int,
@@ -141,6 +141,10 @@ parser.add_argument('--embed', dest='embed', action='store_true',
                     help='embed statement before anything is evaluated (for debugging)')
 parser.add_argument('--val-debug', dest='val_debug', action='store_true',
                     help='debug by training on val set')
+parser.add_argument('--weights', default=None, type=str, metavar='PATH',
+                    help='path to pretrained model weights')
+parser.add_argument('--save_weights', default=None, type=str, metavar='PATH',
+                    help='path to save model weights')
 
 best_acc1 = 0
 
@@ -199,6 +203,7 @@ def main_worker(gpu, ngpus_per_node, args):
             args.rank = args.rank * ngpus_per_node + gpu
         dist.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
                                 world_size=args.world_size, rank=args.rank)
+
     # create model
     if args.pretrained:
         print("=> using pre-trained model '{}'".format(args.arch))
@@ -257,6 +262,12 @@ def main_worker(gpu, ngpus_per_node, args):
         else:
             model = models.__dict__[args.arch]()
 
+    if args.weights is not None:
+        print("=> using saved weights [%s]"%args.weights)
+        weights = torch.load(args.weights)
+        model.load_state_dict(weights['state_dict'])
+
+
     if args.distributed:
         # For multiprocessing distributed, DistributedDataParallel constructor
         # should always set the single device scope, otherwise,
@@ -307,7 +318,7 @@ def main_worker(gpu, ngpus_per_node, args):
                     best_acc1 = best_acc1.to(args.gpu)
                 optimizer.load_state_dict(checkpoint['optimizer'])
             else:
-                print('No optimizer saved')
+                print('  No optimizer saved')
             print("=> loaded checkpoint '{}' (epoch {})"
                   .format(args.resume, checkpoint['epoch']))
         else:
@@ -369,6 +380,19 @@ def main_worker(gpu, ngpus_per_node, args):
 
     if(args.embed):
         embed()
+
+    if args.save_weights is not None: # "deparallelize" saved weights
+        print("=> saving 'deparallelized' weights [%s]"%args.save_weights)
+        # TO-DO: automatically save this during training
+        if args.gpu is not None:
+            torch.save({'state_dict': model.state_dict()}, args.save_weights)
+        else:
+            if(args.arch[:7]=='alexnet' or args.arch[:3]=='vgg'):
+                model.features = model.features.module
+                torch.save({'state_dict': model.state_dict()}, args.save_weights)
+            else:
+                torch.save({'state_dict': model.module.state_dict()}, args.save_weights)
+        return
 
     if args.evaluate:
         validate(val_loader, model, criterion, args)

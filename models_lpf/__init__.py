@@ -22,7 +22,7 @@ class Downsample(nn.Module):
         self.off = int((self.stride-1)/2.)
         self.channels = channels
 
-        print('Filter size [%i]'%filt_size)
+        # print('Filter size [%i]'%filt_size)
         if(self.filt_size==1):
             a = np.array([1.,])
         elif(self.filt_size==2):
@@ -76,7 +76,7 @@ class Downsample1D(nn.Module):
         self.off = int((self.stride - 1) / 2.)
         self.channels = channels
 
-        print('Filter size [%i]' % filt_size)
+        # print('Filter size [%i]' % filt_size)
         if(self.filt_size == 1):
             a = np.array([1., ])
         elif(self.filt_size == 2):
