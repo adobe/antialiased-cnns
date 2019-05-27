@@ -33,7 +33,7 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 
 - Run `bash weights/get_antialiased_models.py`
 
-We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,34,50, and DenseNet121.
+We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,34,50,101 and DenseNet121.
 
 ### Evaluating accuracy
 
@@ -44,6 +44,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a vgg16_bn_lpf --resume ./weig
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet18_lpf --resume ./weights/resnet18_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet34_lpf --resume ./weights/resnet34_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a resnet101_lpf --resume ./weights/resnet101_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
 
@@ -58,6 +59,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a vgg16_bn_lpf --resume 
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet18_lpf --resume ./weights/resnet18_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet34_lpf --resume ./weights/resnet34_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet50_lpf --resume ./weights/resnet50_lpf5.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a resnet101_lpf --resume ./weights/resnet101_lpf5.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 5 -a densenet121_lpf --resume ./weights/densenet121_lpf5.pth.tar
 ```
 
@@ -77,6 +79,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a vgg16_bn_lpf --out-dir vgg16_bn
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet18_lpf --out-dir resnet18_lpf5
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet34_lpf --out-dir resnet34_lpf5
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet50_lpf --out-dir resnet50_lpf5
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet101_lpf --out-dir resnet101_lpf5
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a densenet121_lpf --out-dir densenet121_lpf5 -b 128 -ba 2
 ```
 
@@ -88,7 +91,7 @@ Some notes:
 
 ## (3) Make your own architecture more shift-invariant
 
-The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do the striding.
+The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do antialiased downsampling.
 
 1. Copy [models_lpf/\_\_init\_\_.py](models_lpf/__init__.py) into your codebase. This contains the `Downsample` layer which does blur+subsampling.
 
