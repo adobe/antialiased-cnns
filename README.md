@@ -70,7 +70,7 @@ Some notes:
 
 ## (2) Training antialiased models
 
-The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 5. Output models will be in `[[OUT_DIR]]/model_best.pth.tar`
+The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 5. Best checkpoint will be saved `[[OUT_DIR]]/model_best.pth.tar`.
 
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a alexnet_lpf --out-dir alexnet_lpf5 --gpu 0 --lr .01
@@ -88,6 +88,16 @@ Some notes:
 - VGG16_bn also required a slightly lower learning rate of `0.05`.
 - I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used).
 - Default batch size is `256`. Some extra memory is added for the antialiasing layers, so the default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches `-b 128` with flag `--ba 2`. You may find this useful, even for the default models, if you are training with smaller/fewer GPUs. It is not exactly identical to training with a large batch, as the batchnorm statistics will be computed with a smaller batch.
+
+Checkpoint vs weights:
+- To resume training session, use flag `--resume [[OUT_DIR]]/checkpoint_[[NUM]].pth.tar`. This flag can be used instead of `--weights` in the evaluation scripts above.
+- Saved checkpoints include model weights and optimizer parameters. Also, if you trained with parallelization, then the weights/optimizer dicts will include parallelization. To strip optimizer parameters away and 'deparallelize' the model weights, run the following command (with appropriate substitution) afterwards:
+
+```bash
+python main.py --data /PTH/TO/ILSVRC2012 -f 5 -a resnet18_lpf --resume resnet18_lpf5/model_best.pth.tar --save_weights resnet18_lpf5/weights.pth.tar
+```
+
+I used this postprocessing step to provide the pretrained weights. As seen [here](https://github.com/adobe/antialiased-cnns/blob/master/main.py#L265), weights should be loaded *before* parallelizing the model. Meanwhile, the [checkpoint](https://github.com/adobe/antialiased-cnns/blob/master/main.py#L308) is loaded *after* parallelizing the model.
 
 ## (3) Make your own architecture more shift-invariant
 
