@@ -177,10 +177,13 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | **Bin-5** | **77.04** | **91.31** | 
 
 **ResNet101 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_ResNet101.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
 | *Baseline* | *77.37* | *89.81* | 
 | *Rect-2* | *77.82* | *91.04* | 
-| **Tri-3** | **78.13** | **91.62** | 
-| **Bin-5** | **77.92** | **91.74** | 
+| **Tri-3** | **78.13** | 91.62 | 
+| **Bin-5** | 77.92 | **91.74** | 
 
 
 **DenseNet121 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_DenseNet121.jpg)**
