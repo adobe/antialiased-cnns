@@ -19,21 +19,17 @@ All material is made available under [Creative Commons BY-NC-SA 4.0](https://cre
 
 The repository builds off the PyTorch [examples repository](https://github.com/pytorch/examples) and torchvision [models repository](https://github.com/pytorch/vision/tree/master/torchvision/models). It is [BSD-style licensed](https://github.com/pytorch/examples/blob/master/LICENSE).
 
-## (0) Getting started
+## (-1) Getting started
 
-### PyTorch + ImageNet
+### PyTorch
 - Install PyTorch ([pytorch.org](http://pytorch.org))
 - `pip install -r requirements.txt`
-- Download the ImageNet dataset and move validation images to labeled subfolders
-    - To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
 
-### Download anti-aliased models
+## (0) Quickstart: use our model as a backbone
 
-- Run `bash weights/get_antialiased_models.py`
+If you'd just like to load our antialiased model as a backbone for your application, just do the following.
 
-## (1) Load our model into your code
-
-Copy `models_lpf` and `weights` into your working directory. The following few lines gives you an antialisaed ResNet50 (filter size 5).
+Run `bash weights/get_antialiased_models.py` to get model weights. Copy `models_lpf` and `weights` into your working directory. The following few lines gives you an anti-aliased ResNet50 (filter size 5).
 
 ```python
 import torch
@@ -43,6 +39,36 @@ filter_size = 5
 model = models_lpf.resnet.resnet50(filter_size=filter_size)
 model.load_state_dict(torch.load('./weights/resnet50_lpf%i.pth.tar'%filter_size)['state_dict'])
 ```
+
+We also provide antialiased AlexNet, VGG16(bn), Resnet18,34,50,101, and Densenet121.
+
+```python
+import models_lpf.alexnet
+model = models_lpf.alexnet.AlexNet(filter_size=filter_size)
+
+import models_lpf.vgg
+model = models_lpf.vgg.vgg16(filter_size=filter_size)
+model = models_lpf.vgg.vgg16_bn(filter_size=filter_size)
+
+import models_lpf.resnet
+model = models_lpf.resnet.resnet18(filter_size=filter_size)
+model = models_lpf.resnet.resnet34(filter_size=filter_size)
+model = models_lpf.resnet.resnet50(filter_size=filter_size)
+model = models_lpf.resnet.resnet101(filter_size=filter_size)
+
+import models_lpf.densenet
+model = models_lpf.resnet.densenet121(filter_size=filter_size)
+```
+
+
+### (1) Prepare ImageNet, download our models
+
+- Download the ImageNet dataset and move validation images to labeled subfolders
+    - To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
+
+### Download anti-aliased models
+
+- Run `bash weights/get_antialiased_models.py`
 
 ## (2) Evaluating models
 
