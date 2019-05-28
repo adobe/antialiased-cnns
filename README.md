@@ -19,6 +19,7 @@ All material is made available under [Creative Commons BY-NC-SA 4.0](https://cre
 
 The repository builds off the PyTorch [examples repository](https://github.com/pytorch/examples) and torchvision [models repository](https://github.com/pytorch/vision/tree/master/torchvision/models). It is [BSD-style licensed](https://github.com/pytorch/examples/blob/master/LICENSE).
 
+
 ## (-1) Getting started
 
 ### PyTorch
@@ -26,15 +27,16 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 - `pip install -r requirements.txt`
 
 
-### Download anti-aliased models
+### Download anti-aliased models (Some models are currently being uploaded to dropbox -- please check back in a few hours if the download fails. Thanks for your patience!)
 
-- Run `bash weights/get_antialiased_models.py`
+
+- Run `bash weights/get_antialiased_models.sh`
 
 ## (0) Quickstart: use our model as a backbone
 
 If you'd just like to load our antialiased model as a backbone for your application, just do the following.
 
-Run `bash weights/get_antialiased_models.py` to get model weights. Copy `models_lpf` and `weights` into your working directory. The following few lines gives you an anti-aliased ResNet50 (filter size 5).
+Run `bash weights/get_antialiased_models.sh` to get model weights. Copy `models_lpf` and `weights` into your working directory. The following few lines gives you an anti-aliased ResNet50 (filter size 5).
 
 ```python
 import torch
