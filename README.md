@@ -36,15 +36,14 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 
 If you'd just like to load our antialiased model as a backbone for your application, just do the following.
 
-Run `bash weights/get_antialiased_models.sh` to get model weights. Copy `models_lpf` and `weights` into your working directory. The following few lines gives you an anti-aliased ResNet50 (filter size 5).
+Run `bash weights/get_antialiased_models.sh` to get model weights. Copy `models_lpf` and `weights` into your working directory. The following few lines gives you an anti-aliased ResNet50 (filter size 3).
 
 ```python
 import torch
 import models_lpf.resnet
 
-filter_size = 5
-model = models_lpf.resnet.resnet50(filter_size=filter_size)
-model.load_state_dict(torch.load('./weights/resnet50_lpf%i.pth.tar'%filter_size)['state_dict'])
+model = models_lpf.resnet.resnet50(filter_size=3)
+model.load_state_dict(torch.load('./weights/resnet50_lpf3.pth.tar')['state_dict'])
 ```
 
 We also provide weights for antialiased AlexNet, VGG16(bn), Resnet18,34,50,101, Densenet121.
