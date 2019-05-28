@@ -25,6 +25,11 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 - Install PyTorch ([pytorch.org](http://pytorch.org))
 - `pip install -r requirements.txt`
 
+
+### Download anti-aliased models
+
+- Run `bash weights/get_antialiased_models.py`
+
 ## (0) Quickstart: use our model as a backbone
 
 If you'd just like to load our antialiased model as a backbone for your application, just do the following.
@@ -40,7 +45,7 @@ model = models_lpf.resnet.resnet50(filter_size=filter_size)
 model.load_state_dict(torch.load('./weights/resnet50_lpf%i.pth.tar'%filter_size)['state_dict'])
 ```
 
-We also provide antialiased AlexNet, VGG16(bn), Resnet18,34,50,101, and Densenet121.
+We also provide weights for antialiased AlexNet, VGG16(bn), Resnet18,34,50,101, Densenet121.
 
 ```python
 import models_lpf.alexnet
@@ -60,15 +65,12 @@ import models_lpf.densenet
 model = models_lpf.resnet.densenet121(filter_size=filter_size)
 ```
 
+If you'd like to train and test models on ImageNet, you'll have to do more.
 
-### (1) Prepare ImageNet, download our models
+## (1) Prepare ImageNet
 
 - Download the ImageNet dataset and move validation images to labeled subfolders
     - To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
-
-### Download anti-aliased models
-
-- Run `bash weights/get_antialiased_models.py`
 
 ## (2) Evaluating models
 
