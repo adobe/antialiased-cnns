@@ -156,15 +156,13 @@ I used this postprocessing step to provide the pretrained weights. As seen [here
 
 The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do antialiased downsampling.
 
-1. Copy [models_lpf/\_\_init\_\_.py](models_lpf/__init__.py) into your codebase. This contains the `Downsample` layer which does blur+subsampling.
-
-2. Put the following into your header to get the `Downsample` class.
+1. Copy `models_lpf` into your codebase. This [file](models_lpf/__init__.py) This contains the `Downsample` class which does blur+subsampling. Put the following into your header to get the `Downsample` class.
 
 ```python
 from models_lpf import *
 ```
 
-3. Make the following architectural changes.
+2. Make the following architectural changes.
 
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
@@ -172,9 +170,9 @@ from models_lpf import *
 |**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=C)]` |
 |**AvgPool --><br> BlurPool**| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
 
-We assume blur kernel size `M` (3 or 5 is typical) and that the tensor has `C` channels.
+We assume tensor has `C` channels. For blur kernel size `M`, 3 or 5 is typical.
 
-Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. We typically skip this step for at the highest-resolution (early in the network), to prevent large increases.
+Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. So we typically skip this step at the highest-resolution (early in the network), to prevent large increases.
 
 ## (5) Results
 
