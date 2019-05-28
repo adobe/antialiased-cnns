@@ -31,8 +31,7 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 
 - Run `bash weights/get_antialiased_models.py`
 
-
-## (1) Load an antialiased model into your code
+## (1) Load our model into your code
 
 Copy `models_lpf` and `weights` into your working directory. The following few lines gives you an antialisaed ResNet50 (filter size 5).
 
