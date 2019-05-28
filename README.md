@@ -6,10 +6,21 @@
 [Richard Zhang](https://richzhang.github.io/). <br>
 To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
-This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch [ImageNet](https://github.com/pytorch/examples/tree/master/imagenet) and [models](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories, with add-ons for antialiasing: <br>
-- a [low-pass filter layer](models_lpf/__init__.py) (called `BlurPool` in the paper), which can be easily plugged into any network
-- antialiased AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained weights
-- benchmarking code and evaluation for shift-invariance (`-es` flag)
+This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch [ImageNet](https://github.com/pytorch/examples/tree/master/imagenet) and [model](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories, with antialiasing add-ons: <br>
+
+- antialiased AlexNet, VGG, ResNet, DenseNet architectures, along with pretrained weights. Simple two lines of code to use:
+
+```python
+import models_lpf
+model = models_lpf.resnet.resnet50(filter_size=3)
+model.load_state_dict(torch.load('./weights/resnet50_lpf3.pth.tar')['state_dict'])
+```
+
+- an [antialiasing layer](models_lpf/__init__.py) (called `BlurPool` in the paper), which can be easily plugged into your favorite architecture as a downsampling substitute
+
+- ImageNet training code, to pretrain your antialiased architecture
+
+- Shift-invariant benchmarking code (`-es` flag). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
 
 ## Licenses
 
@@ -20,7 +31,7 @@ All material is made available under [Creative Commons BY-NC-SA 4.0](https://cre
 The repository builds off the PyTorch [examples repository](https://github.com/pytorch/examples) and torchvision [models repository](https://github.com/pytorch/vision/tree/master/torchvision/models). It is [BSD-style licensed](https://github.com/pytorch/examples/blob/master/LICENSE).
 
 
-## (-1) Getting started
+## (0) Getting started
 
 ### PyTorch
 - Install PyTorch ([pytorch.org](http://pytorch.org))
@@ -32,7 +43,7 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 
 - Run `bash weights/get_antialiased_models.sh`
 
-## (0) Quickstart: use our model as a backbone
+## (1) Quickstart: use our model as a backbone
 
 If you'd just like to load our antialiased model as a backbone for your application, just do the following.
 
@@ -66,16 +77,16 @@ import models_lpf.densenet
 model = models_lpf.resnet.densenet121(filter_size=filter_size)
 ```
 
-If you'd like to train and test models on ImageNet, you'll have to do more.
-
-## (1) Prepare ImageNet
-
-- Download the ImageNet dataset and move validation images to labeled subfolders
-    - To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
+If you'd like to train and test models on ImageNet, read the following.
 
 ## (2) Evaluating models
 
 We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,34,50,101 and DenseNet121.
+
+### Prepare ImageNet
+
+- Download the ImageNet dataset and move validation images to labeled subfolders
+    - To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
 
 ### Evaluating accuracy
 
@@ -172,8 +183,6 @@ Note that this requires computing a layer at stride 1 instead of stride 2, which
 We show consistency (y-axis) vs accuracy(x-axis) for various networks. Up and to the right is good.
 
 We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** a variant if it is on the Pareto front. We **bold** highest values per column.
-
-Achieving better consistency, while maintaining or improving accuracy, is an open problem. We invite you to participate!
 
 Note that the current arxiv paper is slightly out of date; we will update soon.
 
