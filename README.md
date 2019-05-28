@@ -27,7 +27,7 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 - `pip install -r requirements.txt`
 
 
-### Download anti-aliased models (Some models are currently being uploaded to dropbox -- please check back in a few hours if the download fails. Thanks for your patience!)
+### Download anti-aliased models
 
 
 - Run `bash weights/get_antialiased_models.sh`
