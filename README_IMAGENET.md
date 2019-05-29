@@ -3,12 +3,12 @@
 
 We describe how to evaluate models for shift-invariance.
 
-## Prepare ImageNet
+## (0) Prepare ImageNet
 
 - Download the ImageNet dataset and move validation images to labeled subfolders
     - To do this, you can use the following script: https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh
 
-## Evaluating models
+## (1) Evaluating models
 
 We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,34,50,101 and DenseNet121.
 
@@ -45,7 +45,7 @@ Some notes:
 - Substitute `-f 3` and appropriate filepath for different filter sizes.
 - The example commands use our weights. You can them from your own training checkpoints by subsituting `--weights PTH/TO/WEIGHTS` for `--resume PTH/TO/CHECKPOINT`.
 
-## (3) Training antialiased models
+## (2) Training antialiased models
 
 The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 5. Best checkpoint will be saved `[[OUT_DIR]]/model_best.pth.tar`.
 
@@ -75,4 +75,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet18_lpf --resume resnet18_
 ```
 
 I used this postprocessing step to provide the pretrained weights. As seen [here](https://github.com/adobe/antialiased-cnns/blob/master/main.py#L265), weights should be loaded *before* parallelizing the model. Meanwhile, the [checkpoint](https://github.com/adobe/antialiased-cnns/blob/master/main.py#L308) is loaded *after* parallelizing the model.
- 
+
+## (3) Results
+
+Results are [here](https://github.com/adobe/antialiased-cnns#3-results).
