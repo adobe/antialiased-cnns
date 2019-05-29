@@ -60,13 +60,13 @@ We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,
 
 The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer to do antialiased downsampling.
 
-1. Copy `models_lpf` into your codebase. This [file](models_lpf/__init__.py) This contains the `Downsample` class which does blur+subsampling. Put the following into your header to get the `Downsample` class.
+1. Copy `models_lpf` into your codebase. This [file](models_lpf/__init__.py) contains the `Downsample` class, which does blur+subsampling. Put the following into your header.
 
 ```python
 from models_lpf import *
 ```
 
-2. Make the following architectural changes to antialias your strided layers.
+2. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 3 or 5.
 
 |   |Original|Anti-aliased replacement|
 |:-:|---|---|
@@ -74,9 +74,7 @@ from models_lpf import *
 |**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=C)]` |
 |**AvgPool --><br> BlurPool**| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
 
-We assume tensor has `C` channels. For blur kernel size `M`, 3 or 5 is typical.
-
-Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. We typically skip this step at the highest-resolution (early in the network), to prevent large increases.
+We assume tensor has `C` channels. Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. We typically skip this step at the highest-resolution (early in the network), to prevent large increases.
 
 ## (3) Results
 
