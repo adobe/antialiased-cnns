@@ -6,7 +6,7 @@
 [Richard Zhang](https://richzhang.github.io/). <br>
 To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
-This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch [ImageNet](https://github.com/pytorch/examples/tree/master/imagenet) and [model](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories, with antialiasing add-ons: <br>
+This repository contains examples of anti-aliased convnets. <br>
 
 [(1)](#1-quickstart-load-an-antialiased-model) Pretrained antialiased AlexNet, VGG, ResNet, DenseNet models
 
@@ -20,7 +20,7 @@ This repository contains examples of anti-aliased convnets. We build off publicl
 
 All material is made available under [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) license by Adobe Inc. You can **use, redistribute, and adapt** the material for **non-commercial purposes**, as long as you give appropriate credit by **citing our paper** and **indicating any changes** that you've made.
 
-The repository builds off the PyTorch [examples repository](https://github.com/pytorch/examples) and torchvision [models repository](https://github.com/pytorch/vision/tree/master/torchvision/models). It is [BSD-style licensed](https://github.com/pytorch/examples/blob/master/LICENSE).
+The repository builds off the PyTorch [examples repository](https://github.com/pytorch/examples) and torchvision [models repository](https://github.com/pytorch/vision/tree/master/torchvision/models). These are [BSD-style licensed](https://github.com/pytorch/examples/blob/master/LICENSE).
 
 ## (0) Getting started
 
@@ -60,13 +60,6 @@ from models_lpf import *
 
 2. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 3 or 5.
 
-<!-- |   |Original|Anti-aliased replacement|
-|:-:|---|---|
-|**MaxPool --><br> MaxBlurPool** | `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)]`|
-|**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=C)]` |
-|**AvgPool --><br> BlurPool**| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
- -->
-
 MaxPool (stride 2) → Max (stride 1) + BlurPool <br>
 Conv (stride 2) + ReLU → Conv(stride 1) + ReLU + BlurPool(stride 2) <br>
 AvgPool (stride 2) → BlurPool (stride 2) <br>
@@ -74,7 +67,7 @@ AvgPool (stride 2) → BlurPool (stride 2) <br>
 |Original|Anti-aliased replacement|
 |---|---|
 | `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(channels=C, filt_size=M, stride=2)]`|
-| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(channels=C, filt_size=M, stride=2)]` |
+| `[nn.Conv2d(Cin,C,kernel_size=3,stride=2,padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin,C,kernel_size=3,stride=1,padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(channels=C, filt_size=M, stride=2)]` |
 | `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(channels=C, filt_size=M, stride=2)`|
 
 We assume tensor has `C` channels. Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. We typically skip this step at the highest-resolution (early in the network), to prevent large increases.
