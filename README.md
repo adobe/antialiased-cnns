@@ -68,11 +68,22 @@ from models_lpf import *
 
 2. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 3 or 5.
 
-|   |Original|Anti-aliased replacement|
+<!-- |   |Original|Anti-aliased replacement|
 |:-:|---|---|
 |**MaxPool --><br> MaxBlurPool** | `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(filt_size=M, stride=2, channels=C)]`|
 |**StridedConv --><br> ConvBlurPool**| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(filt_size=M, stride=2, channels=C)]` |
 |**AvgPool --><br> BlurPool**| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(filt_size=M, stride=2, channels=C)`|
+ -->
+
+MaxPool (stride 2) → Max (stride 1) + BlurPool <br>
+Conv (stride 2) + ReLU → Conv(stride 1) + ReLU + BlurPool(stride 2) <br>
+AvgPool (stride 2) → BlurPool (stride 2) <br>
+
+|Original|Anti-aliased replacement|
+|---|---|
+| `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(channels=C, filt_size=M, stride=2)]`|
+| `[nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(channels=C, filt_size=M, stride=2)]` |
+| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(channels=C, filt_size=M, stride=2)`|
 
 We assume tensor has `C` channels. Note that this requires computing a layer at stride 1 instead of stride 2, which adds memory and run-time. We typically skip this step at the highest-resolution (early in the network), to prevent large increases.
 
