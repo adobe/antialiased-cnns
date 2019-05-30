@@ -60,7 +60,7 @@ from models_lpf import *
 
 2. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 3 or 5.
 
-MaxPool (stride 2) → Max (stride 1) + BlurPool <br>
+MaxPool (stride 2) → Max (stride 1) + BlurPool (stride 2) <br>
 Conv (stride 2) + ReLU → Conv(stride 1) + ReLU + BlurPool(stride 2) <br>
 AvgPool (stride 2) → BlurPool (stride 2) <br>
 
