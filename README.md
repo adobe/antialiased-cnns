@@ -8,17 +8,11 @@ To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
 This repository contains examples of anti-aliased convnets. We build off publicly available PyTorch [ImageNet](https://github.com/pytorch/examples/tree/master/imagenet) and [model](https://github.com/pytorch/vision/tree/master/torchvision/models) repositories, with antialiasing add-ons: <br>
 
-- antialiased AlexNet, VGG, ResNet, DenseNet architectures, along with weights. Few lines to load a pretrained antialiased model
+[(1)](#1-quickstart-load-an-antialiased-model) Pretrained antialiased AlexNet, VGG, ResNet, DenseNet models
 
-```python
-import models_lpf
-model = models_lpf.resnet.resnet50(filter_size=3)
-model.load_state_dict(torch.load('./weights/resnet50_lpf3.pth.tar')['state_dict'])
-```
+[(2)](#2-antialias-your-own-architecture) Instructions for antialiasing your own model, using the [`BlurPool`](models_lpf/__init__.py) layer
 
-- an [antialiasing layer](models_lpf/__init__.py) (called `BlurPool` in the paper), which can be easily plugged into your favorite architecture as a downsampling substitute
-
-- [ImageNet training code and evaluation code](README_IMAGENET.md). This includes shift-invariant benchmarking code (`-es` flag). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
+[(3)](#3-results) Results on Imagenet consistency + accuracy. These can be reproduced with [ImageNet training and evaluation code](README_IMAGENET.md). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
 
 ## Licenses
 
