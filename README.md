@@ -42,9 +42,7 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 
 ## (1) Quickstart: load an antialiased model
 
-If you'd just like to load a pretrained antialiased model, perhaps as a backbone for your application, just do the following.
-
-Run `bash weights/get_antialiased_models.sh` to get model weights. The following gives you an anti-aliased ResNet50 (filter size 3).
+The following loads a pretrained antialiased model, perhaps as a backbone for your application.
 
 ```python
 import torch
