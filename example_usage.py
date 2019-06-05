@@ -40,3 +40,8 @@ model.load_state_dict(torch.load('weights/vgg16_bn_lpf%i.pth.tar'%filter_size)['
 import models_lpf.densenet
 model = models_lpf.densenet.densenet121(filter_size=filter_size)
 model.load_state_dict(torch.load('weights/densenet121_lpf%i.pth.tar'%filter_size)['state_dict'])
+
+import models_lpf.mobilenet
+model = models_lpf.mobilenet.mobilenet_v2(filter_size=filter_size)
+model.load_state_dict(torch.load('weights/mobilenet_v2_lpf%i.pth.tar'%filter_size)['state_dict'])
+

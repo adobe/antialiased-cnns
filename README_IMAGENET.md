@@ -10,7 +10,7 @@ We describe how to evaluate models for shift-invariance.
 
 ## (1) Evaluating models
 
-We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,34,50,101 and DenseNet121.
+We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,34,50,101, DenseNet121, and MobileNetv2.
 
 ### Evaluating accuracy
 
@@ -23,6 +23,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a resnet34_lpf --weights ./wei
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a resnet50_lpf --weights ./weights/resnet50_lpf3.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a resnet101_lpf --weights ./weights/resnet101_lpf3.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a densenet121_lpf --weights ./weights/densenet121_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a mobilenet_v2_lpf --weights ./weights/mobilenet_v2_lpf3.pth.tar
 ```
 
 ### Evaluating consistency
@@ -38,6 +39,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a resnet34_lpf --weights
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a resnet50_lpf --weights ./weights/resnet50_lpf3.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a resnet101_lpf --weights ./weights/resnet101_lpf3.pth.tar
 python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a densenet121_lpf --weights ./weights/densenet121_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a mobilenet_v2_lpf --weights ./weights/mobilenet_v2_lpf3.pth.tar
 ```
 
 Some notes:
@@ -64,6 +66,7 @@ Some notes:
 - As suggested by the official repository, AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). 
 - VGG16_bn also required a slightly lower learning rate of `0.05`.
 - I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used).
+- MobileNet was trained with the training recipe from [here](https://github.com/tonylins/pytorch-mobilenet-v2#training-recipe), which is not currently supported in this repo.
 - Default batch size is `256`. Some extra memory is added for the antialiasing layers, so the default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches `-b 128` with flag `--ba 2`. You may find this useful, even for the default models, if you are training with smaller/fewer GPUs. It is not exactly identical to training with a large batch, as the batchnorm statistics will be computed with a smaller batch.
 
 Checkpoint vs weights:

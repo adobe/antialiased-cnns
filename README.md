@@ -50,7 +50,7 @@ model = models_lpf.resnet.resnet50(filter_size=3)
 model.load_state_dict(torch.load('weights/resnet50_lpf3.pth.tar')['state_dict'])
 ```
 
-We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,101`, `Densenet121` (see [example_usage.py](example_usage.py)).
+We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,101`, `Densenet121`, and `MobileNetv2` (see [example_usage.py](example_usage.py)).
 
 ## (2) Antialias your own architecture
 
