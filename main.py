@@ -214,6 +214,8 @@ def main_worker(gpu, ngpus_per_node, args):
         import models_lpf.vgg
         import models_lpf.resnet
         import models_lpf.densenet
+        import models_lpf.mobilenet
+        
         if(args.arch=='alexnet_lpf'):
             model = models_lpf.alexnet.AlexNet(filter_size=args.filter_size)
 
@@ -258,6 +260,9 @@ def main_worker(gpu, ngpus_per_node, args):
             model = models_lpf.densenet.densenet201(filter_size=args.filter_size)
         elif(args.arch=='densenet161_lpf'):
             model = models_lpf.densenet.densenet161(filter_size=args.filter_size)
+
+        elif(args.arch=='mobilenet_v2_lpf'):
+            model = models_lpf.mobilenet.mobilenet_v2(filter_size=args.filter_size)
 
         else:
             model = models.__dict__[args.arch]()

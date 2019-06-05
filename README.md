@@ -149,7 +149,6 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | **Tri-3** | **78.13** | 91.62 | 
 | **Bin-5** | 77.92 | **91.74** | 
 
-
 **DenseNet121 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_DenseNet121.jpg)**
 
 |          | Accuracy | Consistency |
@@ -158,6 +157,16 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | *Rect-2* | *75.04* | *89.53* | 
 | **Tri-3** | **75.14** | 89.78 | 
 | **Bin-5** | 75.03 | **90.39** | 
+
+**MobileNet-v2 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_MobileNetv2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *71.88* | *86.50* | 
+| **Rect-2** | **72.63** | 87.33 | 
+| **Tri-3** | 72.59 | 87.46 | 
+| **Bin-5** | 72.50 | **87.79** | 
+
 
 ## (A) Acknowledgments
 
