@@ -224,7 +224,7 @@
 	  		  <tr>
 	  		  	<td>
 	  		  		<!-- <center> -->
-					Small shifts -- even by a single pixel -- can drastically change the output of a deep network (bars on left). We identify the cause: aliasing during downsampling. We anti-alias modern deep networks with classic signal processing, stabilizing output classifications (bars on right). We even observe accuracy increases (see plot below).
+					Small shifts -- even by a single pixel -- can drastically change the output of a deep network (bars on left). We identify the cause: aliasing during downsampling. We anti-alias modern deep networks with classic signal processing, stabilizing output classifications (bars on right). We observe "free", unexpected improvements as well: accuracy increases and improved robustness.
 					<!-- </center> -->
 	  		    </td>
 	  		  </tr>
@@ -256,10 +256,27 @@
   		  <br>
 		  <hr>
 
-
-
   		  <table align=center width=700px>
 	  		  <center><h1>Method overview</h1></center>
+  			  <tr>
+  	              <td align=center width=700px>
+  					<center>
+						  <td><img class="round" style="width:800px" src="./resources/antialias_mod.jpg"/></td>
+	  		  		</center>
+			  </tr>
+		  </center>
+		  </table>
+  		  <table align=center width=850px>
+		  	<center>
+		  		<tr>
+		  			<td>
+				  	We anti-alias modern networks with classic signal processing, making them more shift-invariant. Predominant downsampling methods ignore the Nyquist sampling theorem. We make the following replacements: <br>MaxPool&rarr;MaxBlurPool (pictured above), StridedConv&rarr;ConvBlurPool, and AvgPool&rarr;BlurPool.
+		  			</td>
+		  		</tr>
+		  </center>
+		  </table>
+		  <br>
+<!--   		  <table align=center width=700px>
   			  <tr>
   	              <td align=center width=700px>
   					<center>
@@ -267,16 +284,7 @@
 	  		  		</center>
 			  </tr>
 		  </table>
-		  <br>
-  		  <table align=center width=850px>
-		  	<center>
-		  		<tr>
-		  			<td>
-		  	We anti-alias modern networks with classic signal processing, making them more shift-invariant. Predominant downsampling methods ignore the Nyquist sampling theorem. We make the following replacements: <br>MaxPool&rarr;MaxBlurPool (pictured above), StridedConv&rarr;ConvBlurPool, and AvgPool&rarr;BlurPool.
-		  			</td>
-		  		</tr>
-		  </center>
-		  </table>
+		  <br> -->
 		  <hr>
 
 	  <!-- NETWORK ARCHITECTURE, TRY THE MODEL -->
@@ -304,7 +312,7 @@
 		  	<center>
 		  		<tr>
 		  			<td>
-		  	As designed, adding low-pass filtering increases <b>shift-invariance (y-axis)</b>. Surprisingly, we also observe modest increases in <b>accuracy (x-axis)</b>, across architectures. We have released anti-aliased models and code, the shift-invariance benchmarking code, along with instructions for making your favorite architecture more shift-invariant.
+		  	As designed, adding low-pass filtering increases <b>shift-invariance (y-axis)</b>. Surprisingly, we also observe increases in <b>accuracy (x-axis)</b>, across architectures, as well as increased robustness. We have pretrained anti-aliased models, along with instructions for making your favorite architecture more shift-invariant.
 		  			</td>
 		  		</tr>
 		  </center>
@@ -328,10 +336,10 @@
 				  <td><a href="./resources/camera-ready.pdf"><img class="layered-paper-big" style="height:175px" src="./resources/paper.png"/></a></td>
 				  <!-- <td><a href="https://arxiv.org/abs/1904.11486"><img class="layered-paper-big" style="height:175px" src="./resources/paper.png"/></a></td> -->
 				  <td><span style="font-size:14pt">R. Zhang.<br>
-				  <b>Making Convolutional Networks Shift-Invariant Again.</b><br>
-				  To appear in ICML, 2019.<br>
+				  <a href="./resources/camera-ready.pdf"><b>Making Convolutional Networks Shift-Invariant Again.</a></b><br>
+				  In ICML, 2019.<br>
 				  <!-- (<a href="https://arxiv.org/abs/1904.11486">ArXiv</a> preprint)<br> -->
-				  (<a href="./resources/camera-ready.pdf">ArXiv</a> preprint)<br>
+				  <!-- (<a href="./resources/camera-ready.pdf">camera ready</a>)<br> -->
 				  <span style="font-size:4pt"><a href=""><br></a>
 				  </span>
 				  </td>
