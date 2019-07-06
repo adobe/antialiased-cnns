@@ -8,14 +8,10 @@ To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
 This repository contains examples of anti-aliased convnets. <br>
 
-**Table of contents**
-
-1. [Pretrained antialiased models](#1-quickstart-load-an-antialiased-model)
-
-2. [Instructions for antialiasing your own model](#2-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer
-
-3. [Results on Imagenet consistency + accuracy.](#3-results)
-
+**Table of contents**<br>
+1. [Pretrained antialiased models](#1-quickstart-load-an-antialiased-model)<br>
+2. [Instructions for antialiasing your own model](#2-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
+3. [Results on Imagenet consistency + accuracy.](#3-results)<br>
 4. [ImageNet training and evaluation code](README_IMAGENET.md). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
 
 ## Licenses
