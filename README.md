@@ -32,7 +32,7 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 ### Download anti-aliased models
 
 
-- Run `bash weights/get_antialiased_models.sh`
+- Run `bash weights/download_antialiased_models.sh`
 
 ## (1) Quickstart: load an antialiased model
 
