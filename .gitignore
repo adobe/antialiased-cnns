@@ -1,4 +1,4 @@
-weights/*.tar
-.vscode/
-.python-version
 *pycache*
+.python-version
+.vscode/
+weights/*.tar
