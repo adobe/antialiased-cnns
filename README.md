@@ -4,7 +4,7 @@
 
 **Making Convolutional Networks Shift-Invariant Again** <br>
 [Richard Zhang](https://richzhang.github.io/). <br>
-To appear in [ICML, 2019](https://arxiv.org/abs/1904.11486).
+In [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
 This repository contains examples of anti-aliased convnets. <br>
 
@@ -54,7 +54,7 @@ The methodology is simple -- first evaluate with stride 1, and then use our `Dow
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/antialias_mod.jpg' width=800><br>
 
-1. Copy `models_lpf` into your codebase. This [file](models_lpf/__init__.py) contains the `Downsample` class, which does blur+subsampling. Put the following into your header.
+1. Copy `models_lpf` into your codebase, which contains the `Downsample` [class](models_lpf/__init__.py), which does blur+subsampling. Put the following into your header.
 
 ```python
 from models_lpf import *
@@ -72,13 +72,11 @@ We assume incoming tensor has `C` channels. Computing a layer at stride 1 instea
 
 ## (3) Results
 
-<img src='https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind2_noalex.jpg' align="right" width=400>
+<img src='https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind2_noalex.jpg' align="right" width=380>
 
 We show consistency (y-axis) vs accuracy (x-axis) for various networks. Up and to the right is good. Training and testing instructions are [here](README_IMAGENET.md).
 
 We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** a variant if it is on the Pareto front. We **bold** highest values per column.
-
-Note that the current arxiv paper is slightly out of date; we will update soon.
 
 **AlexNet [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_AlexNet.jpg)**
 
@@ -161,6 +159,9 @@ Note that the current arxiv paper is slightly out of date; we will update soon.
 | **Tri-3** | 72.59 | 87.46 | 
 | **Bin-5** | 72.50 | **87.79** | 
 
+## (4) Training and Evaluation
+
+To reduce clutter, this is linked [here](README_IMAGENET.md). Help improve the results!
 
 ## (A) Acknowledgments
 
