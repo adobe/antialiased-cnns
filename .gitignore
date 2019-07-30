@@ -1,0 +1,4 @@
+*pycache*
+.python-version
+.vscode/
+weights/*.tar
