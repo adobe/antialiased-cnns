@@ -159,6 +159,12 @@ We *italicize* a variant if it is not on the Pareto front -- that is, it is stri
 | **Tri-3** | 72.59 | 87.46 | 
 | **Bin-5** | 72.50 | **87.79** | 
 
+**Extra Run-Time**
+
+Antialiasing requires increased computation (but no extra parameters). Below, we measure run-time (x-axis, both plots) on a forward pass of batch of 48 images of 224x224 resolution on a GTX 2080. In this case, the accuracy (y-axis, left) and consistency (y-axis, right) gains end up justifying the increased computation.
+
+<img src='https://richzhang.github.io/antialiased-cnns/resources/resnet_timing.jpg' width=800><br>
+
 ## (4) Training and Evaluation
 
 To reduce clutter, this is linked [here](README_IMAGENET.md). Help improve the results!
