@@ -161,7 +161,7 @@ We *italicize* a variant if it is not on the Pareto front -- that is, it is stri
 
 **Extra Run-Time**
 
-Antialiasing requires extra computation (but no extra parameters). Below, we measure run-time (x-axis, both plots) on a forward pass of batch of 48 images of 224x224 resolution on a GTX 2080. In this case, gains in accuracy (y-axis, left) and consistency (y-axis, right) end up justifying the increased computation.
+Antialiasing requires extra computation (but no extra parameters). Below, we measure run-time (x-axis, both plots) on a forward pass of batch of 48 images of 224x224 resolution on a RTX 2080 Ti. In this case, gains in accuracy (y-axis, left) and consistency (y-axis, right) end up justifying the increased computation.
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/resnet_timing.jpg' width=800><br>
 
