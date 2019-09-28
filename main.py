@@ -46,6 +46,7 @@ import warnings
 import sys
 import numpy as np
 import os
+import wandb
 
 import torch
 import torch.nn as nn
@@ -415,10 +416,15 @@ def main_worker(gpu, ngpus_per_node, args):
         validate_save(val_loader, mean, std, args)
         return
 
+    wandb.init(project='antialiased-cnns')
+    wandb.config.update(args)
+    wandb.watch(model)
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
             train_sampler.set_epoch(epoch)
         adjust_learning_rate(optimizer, epoch, args)
+        wandb.log({'learning_rate': optimizer.param_groups[0]['lr']},
+                  commit=False)
 
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args)
@@ -486,6 +492,17 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         end = time.time()
 
         if i % args.print_freq == 0:
+            global_step = i + (epoch * len(train_loader))
+            wandb.log(
+                {
+                    'train_loss': losses.val,
+                    'train_avg_loss': losses.avg,
+                    'train_acc@1': top1.val,
+                    'train_avg_acc@1': top1.avg,
+                    'train_acc@5': top5.val,
+                    'train_avg_acc@5': top5.avg
+                },
+                step=global_step)
             print('Epoch: [{0}][{1}/{2}]\t'
                   'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
                   'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
@@ -535,6 +552,14 @@ def validate(val_loader, model, criterion, args):
                        i, len(val_loader), batch_time=batch_time, loss=losses,
                        top1=top1, top5=top5))
 
+        if wandb.run:
+            wandb.log(
+                {
+                    'val_avg_loss': losses.avg,
+                    'val_avg_acc@1': top1.avg,
+                    'val_avg_acc@5': top5.avg
+                },
+                commit=False)
         print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
               .format(top1=top1, top5=top5))
 
