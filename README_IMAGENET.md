@@ -59,7 +59,7 @@ python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet18_lpf --out-dir resnet18
 python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet34_lpf --out-dir resnet34_lpf3
 python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet50_lpf --out-dir resnet50_lpf3
 python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet101_lpf --out-dir resnet101_lpf3
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a densenet121_lpf --out-dir densenet121_lpf3 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a densenet121_lpf --out-dir densenet121_lpf3
 ```
 
 Some notes:
