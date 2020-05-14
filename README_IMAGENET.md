@@ -60,13 +60,14 @@ python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet34_lpf --out-dir resnet34
 python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet50_lpf --out-dir resnet50_lpf3
 python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet101_lpf --out-dir resnet101_lpf3
 python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a densenet121_lpf --out-dir densenet121_lpf3
+python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a mobilenet_v2_lpf --out-dir mobilenet_v2_lpf3 --lr .05 --cos_lr --wd 4e-5 --ep 150
 ```
 
 Some notes:
 - As suggested by the official repository, AlexNet and VGG16 require lower learning rates of `0.01` (default is `0.1`). 
 - VGG16_bn also required a slightly lower learning rate of `0.05`.
 - I train AlexNet on a single GPU (the network is fast, so preprocessing becomes the limiting factor if multiple GPUs are used).
-- MobileNet was trained with the training recipe from [here](https://github.com/tonylins/pytorch-mobilenet-v2#training-recipe), which is not currently supported in this repo.
+- MobileNet was trained with the training recipe from [here](https://github.com/tonylins/pytorch-mobilenet-v2#training-recipe).
 - Default batch size is `256`. Some extra memory is added for the antialiasing layers, so the default batchsize may no longer fit in memory. To get around this, we simply accumulate gradients over 2 smaller batches `-b 128` with flag `--ba 2`. You may find this useful, even for the default models, if you are training with smaller/fewer GPUs. It is not exactly identical to training with a large batch, as the batchnorm statistics will be computed with a smaller batch.
 
 Checkpoint vs weights:
@@ -74,7 +75,7 @@ Checkpoint vs weights:
 - Saved checkpoints include model weights and optimizer parameters. Also, if you trained with parallelization, then the weights/optimizer dicts will include parallelization. To strip optimizer parameters away and 'deparallelize' the model weights, run the following command (with appropriate substitution) afterwards:
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet18_lpf --resume resnet18_lpf3/model_best.pth.tar --save_weights resnet18_lpf3/weights.pth.tar
+python main.py -f 3 -a resnet18_lpf --resume resnet18_lpf3/model_best.pth.tar --save_weights resnet18_lpf3/weights.pth.tar
 ```
 
 I used this postprocessing step to provide the pretrained weights. As seen [here](https://github.com/adobe/antialiased-cnns/blob/master/main.py#L265), weights should be loaded *before* parallelizing the model. Meanwhile, the [checkpoint](https://github.com/adobe/antialiased-cnns/blob/master/main.py#L308) is loaded *after* parallelizing the model.

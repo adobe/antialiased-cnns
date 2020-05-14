@@ -77,7 +77,7 @@ parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet18',
                         ' (default: resnet18)')
 parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
-parser.add_argument('--epochs', default=90, type=int, metavar='N',
+parser.add_argument('-ep', '--epochs', default=90, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
                     help='manual epoch number (useful on restarts)')
@@ -88,6 +88,8 @@ parser.add_argument('-b', '--batch-size', default=256, type=int,
                          'using Data Parallel or Distributed Data Parallel')
 parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
                     metavar='LR', help='initial learning rate', dest='lr')
+parser.add_argument('--cos_lr', action='store_true',
+                    help='use cosine learning rate')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
 parser.add_argument('--wd', '--weight-decay', default=1e-4, type=float,
@@ -216,53 +218,53 @@ def main_worker(gpu, ngpus_per_node, args):
         import models_lpf.densenet
         import models_lpf.mobilenet
         
-        if(args.arch=='alexnet_lpf'):
-            model = models_lpf.alexnet.AlexNet(filter_size=args.filter_size)
+        if(args.arch[:-1]=='alexnet_lpf'):
+            model = models_lpf.alexnet.AlexNet(filter_size=int(args.arch[-1]))
 
-        elif(args.arch=='vgg11_bn_lpf'):
-            model = models_lpf.vgg.vgg11_bn(filter_size=args.filter_size)
-        elif(args.arch=='vgg13_bn_lpf'):
-            model = models_lpf.vgg.vgg13_bn(filter_size=args.filter_size)
-        elif(args.arch=='vgg16_bn_lpf'):
-            model = models_lpf.vgg.vgg16_bn(filter_size=args.filter_size)
-        elif(args.arch=='vgg19_bn_lpf'):
-            model = models_lpf.vgg.vgg19_bn(filter_size=args.filter_size)
+        elif(args.arch[:-1]=='vgg11_bn_lpf'):
+            model = models_lpf.vgg.vgg11_bn(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='vgg13_bn_lpf'):
+            model = models_lpf.vgg.vgg13_bn(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='vgg16_bn_lpf'):
+            model = models_lpf.vgg.vgg16_bn(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='vgg19_bn_lpf'):
+            model = models_lpf.vgg.vgg19_bn(filter_size=int(args.arch[-1]))
 
-        elif(args.arch=='vgg11_lpf'):
-            model = models_lpf.vgg.vgg11(filter_size=args.filter_size)
-        elif(args.arch=='vgg13_lpf'):
-            model = models_lpf.vgg.vgg13(filter_size=args.filter_size)
-        elif(args.arch=='vgg16_lpf'):
-            model = models_lpf.vgg.vgg16(filter_size=args.filter_size)
-        elif(args.arch=='vgg19_lpf'):
-            model = models_lpf.vgg.vgg19(filter_size=args.filter_size)
+        elif(args.arch[:-1]=='vgg11_lpf'):
+            model = models_lpf.vgg.vgg11(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='vgg13_lpf'):
+            model = models_lpf.vgg.vgg13(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='vgg16_lpf'):
+            model = models_lpf.vgg.vgg16(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='vgg19_lpf'):
+            model = models_lpf.vgg.vgg19(filter_size=int(args.arch[-1]))
 
-        elif(args.arch=='resnet18_lpf'):
-            model = models_lpf.resnet.resnet18(filter_size=args.filter_size)
-        elif(args.arch=='resnet34_lpf'):
-            model = models_lpf.resnet.resnet34(filter_size=args.filter_size)
-        elif(args.arch=='resnet50_lpf'):
-            model = models_lpf.resnet.resnet50(filter_size=args.filter_size)
-        elif(args.arch=='resnet101_lpf'):
-            model = models_lpf.resnet.resnet101(filter_size=args.filter_size)
-        elif(args.arch=='resnet152_lpf'):
-            model = models_lpf.resnet.resnet152(filter_size=args.filter_size)
-        elif(args.arch=='resnext50_32x4d_lpf'):
-            model = models_lpf.resnet.resnext50_32x4d(filter_size=args.filter_size)
-        elif(args.arch=='resnext101_32x8d_lpf'):
-            model = models_lpf.resnet.resnext101_32x8d(filter_size=args.filter_size)
+        elif(args.arch[:-1]=='resnet18_lpf'):
+            model = models_lpf.resnet.resnet18(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='resnet34_lpf'):
+            model = models_lpf.resnet.resnet34(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='resnet50_lpf'):
+            model = models_lpf.resnet.resnet50(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='resnet101_lpf'):
+            model = models_lpf.resnet.resnet101(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='resnet152_lpf'):
+            model = models_lpf.resnet.resnet152(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='resnext50_32x4d_lpf'):
+            model = models_lpf.resnet.resnext50_32x4d(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='resnext101_32x8d_lpf'):
+            model = models_lpf.resnet.resnext101_32x8d(filter_size=int(args.arch[-1]))
 
-        elif(args.arch=='densenet121_lpf'):
-            model = models_lpf.densenet.densenet121(filter_size=args.filter_size)
-        elif(args.arch=='densenet169_lpf'):
-            model = models_lpf.densenet.densenet169(filter_size=args.filter_size)
-        elif(args.arch=='densenet201_lpf'):
-            model = models_lpf.densenet.densenet201(filter_size=args.filter_size)
-        elif(args.arch=='densenet161_lpf'):
-            model = models_lpf.densenet.densenet161(filter_size=args.filter_size)
+        elif(args.arch[:-1]=='densenet121_lpf'):
+            model = models_lpf.densenet.densenet121(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='densenet169_lpf'):
+            model = models_lpf.densenet.densenet169(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='densenet201_lpf'):
+            model = models_lpf.densenet.densenet201(filter_size=int(args.arch[-1]))
+        elif(args.arch[:-1]=='densenet161_lpf'):
+            model = models_lpf.densenet.densenet161(filter_size=int(args.arch[-1]))
 
-        elif(args.arch=='mobilenet_v2_lpf'):
-            model = models_lpf.mobilenet.mobilenet_v2(filter_size=args.filter_size)
+        elif(args.arch[:-1]=='mobilenet_v2_lpf'):
+            model = models_lpf.mobilenet.mobilenet_v2(filter_size=int(args.arch[-1]))
 
         else:
             model = models.__dict__[args.arch]()
@@ -415,10 +417,20 @@ def main_worker(gpu, ngpus_per_node, args):
         validate_save(val_loader, mean, std, args)
         return
 
+    if(args.cosine_lr):
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs)
+        for epoch in range(args.start_epoch):
+            scheduler.step()
+
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
             train_sampler.set_epoch(epoch)
-        adjust_learning_rate(optimizer, epoch, args)
+
+        if(not args.cosine_lr):
+            adjust_learning_rate(optimizer, epoch, args)
+        else:
+            scheduler.step()
+            print('[%03d] %.5f'%(epoch, scheduler.get_lr()[0]))
 
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args)
@@ -596,6 +608,7 @@ def validate_diagonal(val_loader, model, args):
     diag_probs = np.zeros((len(val_loader.dataset),D))
     diag_probs2 = np.zeros((len(val_loader.dataset),D)) # save highest probability, not including ground truth
     diag_corrs = np.zeros((len(val_loader.dataset),D))
+    diag_preds = np.zeros((len(val_loader.dataset),D))
 
     with torch.no_grad():
         end = time.time()
@@ -609,7 +622,8 @@ def validate_diagonal(val_loader, model, args):
                 inputs.append(input[:,:,off:off+224,off:off+224])
             inputs = torch.cat(inputs, dim=0)
             probs = torch.nn.Softmax(dim=1)(model(inputs))
-            corrs = probs.argmax(dim=1).cpu().data.numpy() == target.item()
+            preds = probs.argmax(dim=1).cpu().data.numpy()
+            corrs = preds == target.item()
             outputs = 100.*probs[:,target.item()]
             
             acc1, acc5 = accuracy(probs, target.repeat(D), topk=(1, 5))
@@ -620,6 +634,7 @@ def validate_diagonal(val_loader, model, args):
             diag_probs[i,:] = outputs.cpu().data.numpy()
             diag_probs2[i,:] = probs2
             diag_corrs[i,:] = corrs
+            diag_preds[i,:] = preds
 
             # measure agreement and record
             prob.update(np.mean(diag_probs[i,:]), input.size(0))
@@ -644,6 +659,7 @@ def validate_diagonal(val_loader, model, args):
     np.save(os.path.join(args.out_dir,'diag_probs'),diag_probs)
     np.save(os.path.join(args.out_dir,'diag_probs2'),diag_probs2)
     np.save(os.path.join(args.out_dir,'diag_corrs'),diag_corrs)
+    np.save(os.path.join(args.out_dir,'diag_preds'),diag_preds)
 
 def validate_save(val_loader, mean, std, args):
     import matplotlib.pyplot as plt
