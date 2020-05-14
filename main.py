@@ -128,8 +128,6 @@ parser.add_argument('--no-data-aug', dest='no_data_aug', action='store_true',
                     help='no shift-based data augmentation')
 parser.add_argument('--out-dir', dest='out_dir', default='./', type=str,
                     help='output directory')
-parser.add_argument('-f','--filter_size', default=1, type=int,
-                    help='anti-aliasing filter size')
 parser.add_argument('-es', '--evaluate-shift', dest='evaluate_shift', action='store_true',
                     help='evaluate model on shift-invariance')
 parser.add_argument('--epochs-shift', default=5, type=int, metavar='N',
@@ -274,6 +272,7 @@ def main_worker(gpu, ngpus_per_node, args):
         weights = torch.load(args.weights)
         model.load_state_dict(weights['state_dict'])
 
+    embed()
 
     if args.distributed:
         # For multiprocessing distributed, DistributedDataParallel constructor

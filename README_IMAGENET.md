@@ -15,15 +15,15 @@ We provide models with filter sizes 2,3,5 for AlexNet, VGG16, VGG16bn, ResNet18,
 ### Evaluating accuracy
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a alexnet_lpf --weights ./weights/alexnet_lpf3.pth.tar --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a vgg16_lpf --weights ./weights/vgg16_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a vgg16_bn_lpf --weights ./weights/vgg16_bn_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a resnet18_lpf --weights ./weights/resnet18_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a resnet34_lpf --weights ./weights/resnet34_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a resnet50_lpf --weights ./weights/resnet50_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a resnet101_lpf --weights ./weights/resnet101_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a densenet121_lpf --weights ./weights/densenet121_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a mobilenet_v2_lpf --weights ./weights/mobilenet_v2_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -a alexnet_lpf3 --weights ./weights/alexnet_lpf3.pth.tar --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -e -a vgg16_lpf3 --weights ./weights/vgg16_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -a vgg16_bn_lpf3 --weights ./weights/vgg16_bn_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet18_lpf3 --weights ./weights/resnet18_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet34_lpf3 --weights ./weights/resnet34_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet50_lpf3 --weights ./weights/resnet50_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet101_lpf3 --weights ./weights/resnet101_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -a densenet121_lpf3 --weights ./weights/densenet121_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -e -a mobilenet_v2_lpf3 --weights ./weights/mobilenet_v2_lpf3.pth.tar
 ```
 
 ### Evaluating consistency
@@ -31,15 +31,15 @@ python main.py --data /PTH/TO/ILSVRC2012 -e -f 3 -a mobilenet_v2_lpf --weights .
 Same as above, but flag `-es` evaluates the shift-consistency -- how often two random `224x224` crops are classified the same.
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a alexnet_lpf --weights ./weights/alexnet_lpf3.pth.tar --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a vgg16_lpf --weights ./weights/vgg16_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a vgg16_bn_lpf --weights ./weights/vgg16_bn_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a resnet18_lpf --weights ./weights/resnet18_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a resnet34_lpf --weights ./weights/resnet34_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a resnet50_lpf --weights ./weights/resnet50_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a resnet101_lpf --weights ./weights/resnet101_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a densenet121_lpf --weights ./weights/densenet121_lpf3.pth.tar
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -f 3 -a mobilenet_v2_lpf --weights ./weights/mobilenet_v2_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a alexnet_lpf3 --weights ./weights/alexnet_lpf3.pth.tar --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a vgg16_lpf3 --weights ./weights/vgg16_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a vgg16_bn_lpf3 --weights ./weights/vgg16_bn_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a resnet18_lpf3 --weights ./weights/resnet18_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a resnet34_lpf3 --weights ./weights/resnet34_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a resnet50_lpf3 --weights ./weights/resnet50_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a resnet101_lpf3 --weights ./weights/resnet101_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a densenet121_lpf3 --weights ./weights/densenet121_lpf3.pth.tar
+python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a mobilenet_v2_lpf3 --weights ./weights/mobilenet_v2_lpf3.pth.tar
 ```
 
 Some notes:
@@ -52,15 +52,15 @@ Some notes:
 The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 5. Best checkpoint will be saved `[[OUT_DIR]]/model_best.pth.tar`.
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a alexnet_lpf --out-dir alexnet_lpf3 --gpu 0 --lr .01
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a vgg16_lpf --out-dir vgg16_lpf3 --lr .01 -b 128 -ba 2
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a vgg16_bn_lpf --out-dir vgg16_bn_lpf3 --lr .05 -b 128 -ba 2
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet18_lpf --out-dir resnet18_lpf3
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet34_lpf --out-dir resnet34_lpf3
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet50_lpf --out-dir resnet50_lpf3
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a resnet101_lpf --out-dir resnet101_lpf3
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a densenet121_lpf --out-dir densenet121_lpf3
-python main.py --data /PTH/TO/ILSVRC2012 -f 3 -a mobilenet_v2_lpf --out-dir mobilenet_v2_lpf3 --lr .05 --cos_lr --wd 4e-5 --ep 150
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf3 --out-dir alexnet_lpf3 --gpu 0 --lr .01
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf3 --out-dir vgg16_lpf3 --lr .01 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf3 --out-dir vgg16_bn_lpf3 --lr .05 -b 128 -ba 2
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet18_lpf3 --out-dir resnet18_lpf3
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet34_lpf3 --out-dir resnet34_lpf3
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf3 --out-dir resnet50_lpf3
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf3 --out-dir resnet101_lpf3
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf3 --out-dir densenet121_lpf3
+python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf3 --out-dir mobilenet_v2_lpf3 --lr .05 --cos_lr --wd 4e-5 --ep 150
 ```
 
 Some notes:
@@ -75,7 +75,7 @@ Checkpoint vs weights:
 - Saved checkpoints include model weights and optimizer parameters. Also, if you trained with parallelization, then the weights/optimizer dicts will include parallelization. To strip optimizer parameters away and 'deparallelize' the model weights, run the following command (with appropriate substitution) afterwards:
 
 ```bash
-python main.py -f 3 -a resnet18_lpf --resume resnet18_lpf3/model_best.pth.tar --save_weights resnet18_lpf3/weights.pth.tar
+python main.py -a resnet18_lpf3 --resume resnet18_lpf3/model_best.pth.tar --save_weights resnet18_lpf3/weights.pth.tar
 ```
 
 I used this postprocessing step to provide the pretrained weights. As seen [here](https://github.com/adobe/antialiased-cnns/blob/master/main.py#L265), weights should be loaded *before* parallelizing the model. Meanwhile, the [checkpoint](https://github.com/adobe/antialiased-cnns/blob/master/main.py#L308) is loaded *after* parallelizing the model.
