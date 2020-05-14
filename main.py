@@ -409,7 +409,7 @@ def main_worker(gpu, ngpus_per_node, args):
         validate_save(val_loader, mean, std, args)
         return
 
-    if(args.cosine_lr):
+    if(args.cos_lr):
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, args.epochs)
         for epoch in range(args.start_epoch):
             scheduler.step()
@@ -418,7 +418,7 @@ def main_worker(gpu, ngpus_per_node, args):
         if args.distributed:
             train_sampler.set_epoch(epoch)
 
-        if(not args.cosine_lr):
+        if(not args.cos_lr):
             adjust_learning_rate(optimizer, epoch, args)
         else:
             scheduler.step()
