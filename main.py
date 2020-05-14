@@ -126,8 +126,6 @@ parser.add_argument('--no-data-aug', dest='no_data_aug', action='store_true',
                     help='no shift-based data augmentation')
 parser.add_argument('--out-dir', dest='out_dir', default='./', type=str,
                     help='output directory')
-parser.add_argument('-f','--filter_size', default=1, type=int,
-                    help='anti-aliasing filter size')
 parser.add_argument('-es', '--evaluate-shift', dest='evaluate_shift', action='store_true',
                     help='evaluate model on shift-invariance')
 parser.add_argument('--epochs-shift', default=5, type=int, metavar='N',
@@ -205,67 +203,64 @@ def main_worker(gpu, ngpus_per_node, args):
                                 world_size=args.world_size, rank=args.rank)
 
     # create model
-    if args.pretrained:
-        print("=> using pre-trained model '{}'".format(args.arch))
-        model = models.__dict__[args.arch](pretrained=True)
+    print("=> creating model '{}'".format(args.arch))
+    
+    import models_lpf.alexnet
+    import models_lpf.resnet
+    import models_lpf.vgg
+    import models_lpf.mobilenet
+    import models_lpf.densenet
+
+    if(args.arch[:-1]=='alexnet_lpf'):
+        model = models_lpf.AlexNet(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+
+    elif(args.arch[:-1]=='vgg11_bn_lpf'):
+        model = models_lpf.vgg11_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='vgg13_bn_lpf'):
+        model = models_lpf.vgg13_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='vgg16_bn_lpf'):
+        model = models_lpf.vgg16_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='vgg19_bn_lpf'):
+        model = models_lpf.vgg19_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+
+    elif(args.arch[:-1]=='vgg11_lpf'):
+        model = models_lpf.vgg11(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='vgg13_lpf'):
+        model = models_lpf.vgg13(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='vgg16_lpf'):
+        model = models_lpf.vgg16(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='vgg19_lpf'):
+        model = models_lpf.vgg19(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+
+    elif(args.arch[:-1]=='resnet18_lpf'):
+        model = models_lpf.resnet.resnet18(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='resnet34_lpf'):
+        model = models_lpf.resnet34(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='resnet50_lpf'):
+        model = models_lpf.resnet50(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='resnet101_lpf'):
+        model = models_lpf.resnet101(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='resnet152_lpf'):
+        model = models_lpf.resnet152(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='resnext50_32x4d_lpf'):
+        model = models_lpf.resnext50_32x4d(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='resnext101_32x8d_lpf'):
+        model = models_lpf.resnext101_32x8d(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+
+    elif(args.arch[:-1]=='densenet121_lpf'):
+        model = models_lpf.densenet121(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='densenet169_lpf'):
+        model = models_lpf.densenet169(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='densenet201_lpf'):
+        model = models_lpf.densenet201(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='densenet161_lpf'):
+        model = models_lpf.densenet161(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+
+    elif(args.arch[:-1]=='mobilenet_v2_lpf'):
+        model = models_lpf.mobilenet_v2(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+
     else:
-        print("=> creating model '{}'".format(args.arch))
-        import models_lpf.alexnet
-        import models_lpf.vgg
-        import models_lpf.resnet
-        import models_lpf.densenet
-        import models_lpf.mobilenet
-        
-        if(args.arch=='alexnet_lpf'):
-            model = models_lpf.alexnet.AlexNet(filter_size=args.filter_size)
-
-        elif(args.arch=='vgg11_bn_lpf'):
-            model = models_lpf.vgg.vgg11_bn(filter_size=args.filter_size)
-        elif(args.arch=='vgg13_bn_lpf'):
-            model = models_lpf.vgg.vgg13_bn(filter_size=args.filter_size)
-        elif(args.arch=='vgg16_bn_lpf'):
-            model = models_lpf.vgg.vgg16_bn(filter_size=args.filter_size)
-        elif(args.arch=='vgg19_bn_lpf'):
-            model = models_lpf.vgg.vgg19_bn(filter_size=args.filter_size)
-
-        elif(args.arch=='vgg11_lpf'):
-            model = models_lpf.vgg.vgg11(filter_size=args.filter_size)
-        elif(args.arch=='vgg13_lpf'):
-            model = models_lpf.vgg.vgg13(filter_size=args.filter_size)
-        elif(args.arch=='vgg16_lpf'):
-            model = models_lpf.vgg.vgg16(filter_size=args.filter_size)
-        elif(args.arch=='vgg19_lpf'):
-            model = models_lpf.vgg.vgg19(filter_size=args.filter_size)
-
-        elif(args.arch=='resnet18_lpf'):
-            model = models_lpf.resnet.resnet18(filter_size=args.filter_size)
-        elif(args.arch=='resnet34_lpf'):
-            model = models_lpf.resnet.resnet34(filter_size=args.filter_size)
-        elif(args.arch=='resnet50_lpf'):
-            model = models_lpf.resnet.resnet50(filter_size=args.filter_size)
-        elif(args.arch=='resnet101_lpf'):
-            model = models_lpf.resnet.resnet101(filter_size=args.filter_size)
-        elif(args.arch=='resnet152_lpf'):
-            model = models_lpf.resnet.resnet152(filter_size=args.filter_size)
-        elif(args.arch=='resnext50_32x4d_lpf'):
-            model = models_lpf.resnet.resnext50_32x4d(filter_size=args.filter_size)
-        elif(args.arch=='resnext101_32x8d_lpf'):
-            model = models_lpf.resnet.resnext101_32x8d(filter_size=args.filter_size)
-
-        elif(args.arch=='densenet121_lpf'):
-            model = models_lpf.densenet.densenet121(filter_size=args.filter_size)
-        elif(args.arch=='densenet169_lpf'):
-            model = models_lpf.densenet.densenet169(filter_size=args.filter_size)
-        elif(args.arch=='densenet201_lpf'):
-            model = models_lpf.densenet.densenet201(filter_size=args.filter_size)
-        elif(args.arch=='densenet161_lpf'):
-            model = models_lpf.densenet.densenet161(filter_size=args.filter_size)
-
-        elif(args.arch=='mobilenet_v2_lpf'):
-            model = models_lpf.mobilenet.mobilenet_v2(filter_size=args.filter_size)
-
-        else:
-            model = models.__dict__[args.arch]()
+        model = models.__dict__[args.arch](pretrained=args.pretrained)
 
     if args.weights is not None:
         print("=> using saved weights [%s]"%args.weights)
