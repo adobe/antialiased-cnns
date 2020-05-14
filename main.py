@@ -272,8 +272,6 @@ def main_worker(gpu, ngpus_per_node, args):
         weights = torch.load(args.weights)
         model.load_state_dict(weights['state_dict'])
 
-    embed()
-
     if args.distributed:
         # For multiprocessing distributed, DistributedDataParallel constructor
         # should always set the single device scope, otherwise,
