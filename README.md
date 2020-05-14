@@ -31,7 +31,6 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 
 ### Download anti-aliased models
 
-
 - Run `bash weights/download_antialiased_models.sh`
 
 ## (1) Quickstart: load an antialiased model
@@ -40,9 +39,9 @@ The following loads a pretrained antialiased model, perhaps as a backbone for yo
 
 ```python
 import torch
-import models_lpf.resnet
+import models_lpf
 
-model = models_lpf.resnet.resnet50(filter_size=3)
+model = models_lpf.resnet50(filter_size=3)
 model.load_state_dict(torch.load('weights/resnet50_lpf3.pth.tar')['state_dict'])
 ```
 
@@ -54,7 +53,7 @@ The methodology is simple -- first evaluate with stride 1, and then use our `Dow
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/antialias_mod.jpg' width=800><br>
 
-1. Copy `models_lpf` into your codebase, which contains the `Downsample` [class](models_lpf/__init__.py), which does blur+subsampling. Put the following into your header.
+1. Copy `models_lpf` into your codebase, which contains the `Downsample` [class](models_lpf/downsample.py), which does blur+subsampling. Put the following into your header.
 
 ```python
 from models_lpf import *
