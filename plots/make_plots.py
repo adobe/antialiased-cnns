@@ -49,7 +49,7 @@ labels = ['Baseline','Rect-2','Tri-3','Bin-5']
 chars = ['','o',[(-.125,-.5),(.125,-.5),(.125,.5),(-.125,.5),(-.125,-.5)]
 	,'^','d','p','h',(7,0,0)] # by filter size
 keys = ['alexnet', 'vgg16', 'vgg16bn', 'resnet18', 'resnet34', 'resnet50', 'resnet101', 'densenet121', 'mobilenet']
-# chars = ['o','|','^','p']
+
 
 fills = ['k','w','w','w']
 sizes = [6,12,10,12]
@@ -89,7 +89,6 @@ plt.xlim((69, 80))
 plt.ylim((84, 93))
 plt.savefig('imagenet_ind2_noalex.pdf',bbox_inches='tight')
 plt.savefig('imagenet_ind2_noalex.jpg',bbox_inches='tight',dpi=750)
-# plt.show()
 plt.close()
 
 
@@ -107,26 +106,17 @@ for (kk,key) in enumerate(keys):
 	plt.ylabel('Consistency')
 	plt.savefig('imagenet_ind_%s.pdf'%names[key],bbox_inches='tight')
 	plt.savefig('imagenet_ind_%s.jpg'%names[key],bbox_inches='tight')
-# plt.show()
 plt.close()
 
 
 
 sizes = [6,10,8,10]
 
-# plt.figure(figsize=(16,3))
 plt.figure(figsize=(5,4))
 for (kk,key) in enumerate(keys):
 	for tt, tap in enumerate(taps):
 		plt.plot(accs[key][tt], cons[key][tt], linestyle='', marker=chars[tap], color=net_colors[key], 
 			markersize=sizes[tt], markerfacecolor='None' if tt>0 else net_colors[key])
-	# plt.plot(accs[key], cons[key], 'o', markerfacecolor='w')
-	# plt.plot(accs[key], cons[key], 'o')
-	# plt.xlim((np.round(2*accs[key][0]-1.)/2., np.round(2*accs[key][0]-1.)/2.+2. ))
-	# plt.ylim((np.round(cons[key][0]-1), np.round(cons[key][0]-1)+6. ))
-	# plt.xlim((55, 80))
-	# plt.ylim((77, 92))
-	# plt.title(names[key])
 	plt.xlabel('Accuracy')
 	plt.plot(0, 0, marker='o', linestyle='', color=net_colors[key], markerfacecolor='w', label=names[key])
 plt.ylabel('Consistency')
@@ -143,7 +133,6 @@ plt.savefig('imagenet_agg_all2.pdf',bbox_inches='tight')
 
 sizes = [6,10,8,10]
 
-# plt.figure(figsize=(16,3))
 plt.figure(figsize=(5,4))
 for (kk,key) in enumerate(keys):
 	# plt.plot(accs[key], cons[key], '-')
@@ -164,7 +153,6 @@ plt.legend(loc=4, fontsize='small', labelspacing=.5, ncol=1)
 plt.xlim((55, 81))
 plt.ylim((77, 93))
 plt.savefig('imagenet_agg_all_line2_colored.pdf',bbox_inches='tight')
-# plt.show()
 
 
 plt.close()
@@ -188,11 +176,7 @@ plt.savefig('imagenet_agg2.pdf',bbox_inches='tight')
 # **** print table ****
 for tt in range(4):
 	print('{\\bf %s}'%labels[tt])
-	# for key in ['alexnet','vgg16','vgg16bn','densenet121','mobilenetv2']:
-	# for key in ['resnet18','resnet34','resnet50','resnet101']:
 	for key in ['alexnet','vgg16','vgg16bn']:
-	# for key in ['resnet18','resnet34','resnet50']:
-	# for key in ['resnet101','densenet121','mobilenetv2']:
 		print_str = '& '
 		if(np.argmax(accs[key])==tt):
 			print_str += '{\\bf %.1f}'%accs[key][tt]
@@ -211,10 +195,7 @@ for tt in range(4):
 # **** print big table ****
 for tt in range(4):
 	print('{\\bf %s}'%labels[tt])
-	# for key in keys:
-	# for key in ['alexnet','vgg16','vgg16bn']:
 	for key in ['resnet18','resnet34','resnet50','resnet101',]:
-	# for key in ['densenet121','mobilenet']:
 		print_str = '& '
 		acc_diff = (accs[key][tt]-accs[key][0])
 		con_diff = (cons[key][tt]-cons[key][0])
