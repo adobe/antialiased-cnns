@@ -45,13 +45,14 @@ __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
            'resnet152', 'resnext50_32x4d', 'resnext101_32x8d']
 
 
-# model_urls = {
-#     'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
-#     'resnet34': 'https://download.pytorch.org/models/resnet34-333f7ec4.pth',
-#     'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
-#     'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
-#     'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
-# }
+model_urls = {
+    'resnet18_lpf4': 'https://www.dropbox.com/s/bz9wvc1pey5hy8t/resnet18_lpf4-8c77af40.pth.tar',
+    # 'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
+    # 'resnet34': 'https://download.pytorch.org/models/resnet34-333f7ec4.pth',
+    # 'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
+    # 'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
+    # 'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
+}
 
 
 def conv3x3(in_planes, out_planes, stride=1, groups=1):
@@ -251,7 +252,7 @@ def resnet18(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     """
     model = ResNet(BasicBlock, [2, 2, 2, 2], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet18']))
+        model.load_state_dict(model_zoo.load_url(model_urls['resnet18_lpf%i'%filter_size]), check_hash=True)
     return model
 
 

@@ -1,3 +1,8 @@
+
+**Diffs**
+- Adding pre-trained flag
+
+
 # <b>Antialiased CNNs</b> [[Project Page]](http://richzhang.github.io/antialiased-cnns/) [[Paper]](https://arxiv.org/abs/1904.11486) [[Talk]](https://www.youtube.com/watch?v=HjewNBZz00w)
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/gifs2/video_00810.gif' align="right" width=300>
@@ -13,6 +18,8 @@ This repository contains examples of anti-aliased convnets. <br>
 2. [Instructions for antialiasing your own model](#2-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
 3. [Results on Imagenet consistency + accuracy.](#3-results)<br>
 4. [ImageNet training and evaluation code](README_IMAGENET.md). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
+
+**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
 
 ## Licenses
 
