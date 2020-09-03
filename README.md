@@ -5,7 +5,7 @@
 **Making Convolutional Networks Shift-Invariant Again** <br>
 [Richard Zhang](https://richzhang.github.io/). In [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
-**Quick & easy start** To access antialiased models or BlurPool layer, simply do the following.
+**Quick & easy start** Load an antialiased model. This could be the backbone of your model.
 
 ```python
 import torch
@@ -14,7 +14,11 @@ import models_lpf
 # load an antialiased model
 model = models_lpf.resnet50(filter_size=4) # Resnet50 network
 model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0
+```
 
+The BlurPool layer does antialiased downsampling.
+
+```python
 # BlurPool to downsample
 C = 10
 dummy_tens = torch.Tensor(1,C,128,128)
@@ -56,23 +60,37 @@ We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,
 
 The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer (also referred to as `BlurPool`) to do antialiased downsampling.
 
-<img src='https://richzhang.github.io/antialiased-cnns/resources/antialias_mod.jpg' width=800><br>
-
-1. Copy `models_lpf` into your codebase, which contains the `Downsample` [class](models_lpf/downsample.py), which does blur+subsampling. Put the following into your header.
+The `models_lpf` module contains the `Downsample` [class](models_lpf/downsample.py), which does blur+subsampling. Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory into your directory.
 
 ```python
 from models_lpf import *
 ```
 
-2. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
+Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
 
-|Baseline|Anti-aliased replacement|
-|---|---|
-| `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(channels=C, filt_size=M, stride=2)]`|
-| `[nn.Conv2d(Cin,C,kernel_size=4,stride=2,padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin,C,kernel_size=4,stride=1,padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(channels=C, filt_size=M, stride=2)]` |
-| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(channels=C, filt_size=M, stride=2)`|
+```python
+import models_lpf
+
+# MaxPool --> MaxBlurPool
+baseline = nn.MaxPool2d(kernel_size=2, stride=2)
+antialiased = [nn.MaxPool2d(kernel_size=2, stride=1), 
+    models_lpf.Downsample(channels=C, filt_size=M, stride=2)]
+    
+# Conv --> ConvBlurPool
+baseline = [nn.Conv2d(Cin,C,kernel_size=4,stride=2,padding=1), 
+    nn.ReLU(inplace=True)]
+antialiased = [nn.Conv2d(Cin,C,kernel_size=4,stride=1,padding=1),
+    nn.ReLU(inplace=True),
+    Downsample(channels=C, filt_size=M, stride=2)]
+
+# AvgPool --> BlurPool
+baseline = nn.AvgPool2d(kernel_size=2, stride=2)
+antialiased = Downsample(channels=C, filt_size=M, stride=2)
+```
 
 We assume incoming tensor has `C` channels. Computing a layer at stride 1 instead of stride 2 adds memory and run-time. As such, we typically skip antialiasing at the highest-resolution (early in the network), to prevent large increases.
+
+<img src='https://richzhang.github.io/antialiased-cnns/resources/antialias_mod.jpg' width=800><br>
 
 ## (3) Imagenet Results
 
