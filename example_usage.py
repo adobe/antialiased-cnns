@@ -9,9 +9,10 @@ import torch
 
 # Run `bash weights/get_antialiased_models.sh` to get weights.
 
-# filter_size = 2;
-filter_size = 3;
-# filter_size = 5;
+# filter_size = 2
+# filter_size = 3
+filter_size = 4
+# filter_size = 5
 
 import models_lpf.resnet
 model = models_lpf.resnet.resnet18(filter_size=filter_size)

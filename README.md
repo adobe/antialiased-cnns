@@ -3,39 +3,50 @@
 <img src='https://richzhang.github.io/antialiased-cnns/resources/gifs2/video_00810.gif' align="right" width=300>
 
 **Making Convolutional Networks Shift-Invariant Again** <br>
-[Richard Zhang](https://richzhang.github.io/). <br>
-In [ICML, 2019](https://arxiv.org/abs/1904.11486).
+[Richard Zhang](https://richzhang.github.io/). In [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
-This repository contains examples of anti-aliased convnets. <br>
+### Quick & easy start
 
-**Table of contents**<br>
-1. [Pretrained antialiased models](#1-quickstart-load-an-antialiased-model)<br>
-2. [Instructions for antialiasing your own model](#2-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
-3. [Results on Imagenet consistency + accuracy.](#3-results)<br>
+Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory into your project.
+
+Load an antialiased model. This could be the backbone of your model.
+
+```python
+import torch
+import models_lpf
+
+# load an antialiased model
+model = models_lpf.resnet50(filter_size=4) # Resnet50 network
+model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0
+```
+
+The BlurPool layer does antialiased downsampling. You can use it to antialias your model.
+
+```python
+# BlurPool to downsample
+C = 10
+dummy_tens = torch.Tensor(1,C,128,128)
+ds = models_lpf.Downsample(channels=C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
+print ds(dummy_tens).shape # 1xCx64x64 tensor
+```
+
+More information about our provided models and how to use BlurPool is below.
+
+**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting. You can also now `pip install antialiased-cnns`.
+
+### Table of contents
+
+1. [More information about antialiased models](#1-more-information-loading-an-antialiased-model)<br>
+2. [Instructions for antialiasing your own model](#2-more-information-how-to-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
+3. [Results on Imagenet](#3-imagenet-results)<br>
 4. [ImageNet training and evaluation code](README_IMAGENET.md). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
 
-**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
+## (0) Preliminaries
 
-## Licenses
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
-
-All material is made available under [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) license by Adobe Inc. You can **use, redistribute, and adapt** the material for **non-commercial purposes**, as long as you give appropriate credit by **citing our paper** and **indicating any changes** that you've made.
-
-The repository builds off the PyTorch [examples repository](https://github.com/pytorch/examples) and torchvision [models repository](https://github.com/pytorch/vision/tree/master/torchvision/models). These are [BSD-style licensed](https://github.com/pytorch/examples/blob/master/LICENSE).
-
-## (0) Getting started
-
-### PyTorch
 - Install PyTorch ([pytorch.org](http://pytorch.org))
 - `pip install -r requirements.txt`
 
-
-### Download anti-aliased models
-
-- Run `bash weights/download_antialiased_models.sh`
-
-## (1) Quickstart: load an antialiased model
+## (1) More information: loading an antialiased model
 
 The following loads a pretrained antialiased model, perhaps as a backbone for your application.
 
@@ -47,31 +58,39 @@ model = models_lpf.resnet50(filter_size=4)
 model.load_state_dict(torch.load('weights/resnet50_lpf4.pth.tar')['state_dict'])
 ```
 
-We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,101`, `Densenet121`, and `MobileNetv2` (see [example_usage.py](example_usage.py)).
+We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,101`, `Densenet121`, and `MobileNetv2` (see [example_usage.py](example_usage.py)). Run `bash weights/download_antialiased_models.sh` or look through the script and download the individual models you want manually.
 
-## (2) Antialias your own architecture
+## (2) More information: how to antialias your own architecture
 
-The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer (also referred to as `BlurPool`) to do antialiased downsampling.
+The `models_lpf` module contains the `Downsample` [class](models_lpf/downsample.py), which does blur+subsampling. Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory.
 
-<img src='https://richzhang.github.io/antialiased-cnns/resources/antialias_mod.jpg' width=800><br>
-
-1. Copy `models_lpf` into your codebase, which contains the `Downsample` [class](models_lpf/downsample.py), which does blur+subsampling. Put the following into your header.
+The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer (also referred to as `BlurPool`) to do antialiased downsampling. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
 
 ```python
-from models_lpf import *
+import models_lpf
+
+# MaxPool --> MaxBlurPool
+baseline = nn.MaxPool2d(kernel_size=2, stride=2)
+antialiased = [nn.MaxPool2d(kernel_size=2, stride=1), 
+    models_lpf.Downsample(channels=C, filt_size=M, stride=2)]
+    
+# Conv --> ConvBlurPool
+baseline = [nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1), 
+    nn.ReLU(inplace=True)]
+antialiased = [nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),
+    nn.ReLU(inplace=True),
+    models_lpf.Downsample(channels=C, filt_size=M, stride=2)]
+
+# AvgPool --> BlurPool
+baseline = nn.AvgPool2d(kernel_size=2, stride=2)
+antialiased = models_lpf.Downsample(channels=C, filt_size=M, stride=2)
 ```
-
-2. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
-
-|Baseline|Anti-aliased replacement|
-|---|---|
-| `[nn.MaxPool2d(kernel_size=2, stride=2),]` | `[nn.MaxPool2d(kernel_size=2, stride=1),` <br> `Downsample(channels=C, filt_size=M, stride=2)]`|
-| `[nn.Conv2d(Cin,C,kernel_size=4,stride=2,padding=1),` <br> `nn.ReLU(inplace=True)]` | `[nn.Conv2d(Cin,C,kernel_size=4,stride=1,padding=1),` <br> `nn.ReLU(inplace=True),` <br> `Downsample(channels=C, filt_size=M, stride=2)]` |
-| `nn.AvgPool2d(kernel_size=2, stride=2)` | `Downsample(channels=C, filt_size=M, stride=2)`|
 
 We assume incoming tensor has `C` channels. Computing a layer at stride 1 instead of stride 2 adds memory and run-time. As such, we typically skip antialiasing at the highest-resolution (early in the network), to prevent large increases.
 
-## (3) Results
+<img src='https://richzhang.github.io/antialiased-cnns/resources/antialias_mod.jpg' width=800><br>
+
+## (3) Imagenet Results
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind2_noalex_v2.jpg' align="right" width=380>
 
@@ -178,6 +197,14 @@ Antialiasing requires extra computation (but no extra parameters). Below, we mea
 ## (4) Training and Evaluation
 
 To reduce clutter, this is linked [here](README_IMAGENET.md). Help improve the results!
+
+## Licenses
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+
+All material is made available under [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) license by Adobe Inc. You can **use, redistribute, and adapt** the material for **non-commercial purposes**, as long as you give appropriate credit by **citing our paper** and **indicating any changes** that you've made.
+
+The repository builds off the PyTorch [examples repository](https://github.com/pytorch/examples) and torchvision [models repository](https://github.com/pytorch/vision/tree/master/torchvision/models). These are [BSD-style licensed](https://github.com/pytorch/examples/blob/master/LICENSE).
 
 ## (A) Acknowledgments
 
