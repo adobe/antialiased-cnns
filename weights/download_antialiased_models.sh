@@ -9,7 +9,7 @@ wget https://www.dropbox.com/s/1vuhh5cx6rhv0hk/densenet121_lpf4-edeaab00.pth.tar
 wget https://www.dropbox.com/s/mcz88e4twszw8hn/densenet121_lpf5-ebc7880c.pth.tar?dl=0 -O ./weights/densenet121_lpf5.pth.tar
 wget https://www.dropbox.com/s/t1gsne44caq9xd8/mobilenet_v2_lpf2-f4379012.pth.tar?dl=0 -O ./weights/mobilenet_v2_lpf2.pth.tar
 wget https://www.dropbox.com/s/bhb48h6d9vi79he/mobilenet_v2_lpf3-23b2e2ee.pth.tar?dl=0 -O ./weights/mobilenet_v2_lpf3.pth.tar
-wget https://www.dropbox.com/s/okpvrhmhc9vv3g1/mobilenet_v2_lpf4-2bbb08d8.pth.tar?dl=0 -O ./weights/mobilenet_v2_lpf4.pth.tar
+wget https://www.dropbox.com/s/bspn0vx41n3v780/mobilenet_v2_lpf4-c259d536.pth.tar?dl=0 -O ./weights/mobilenet_v2_lpf4.pth.tar
 wget https://www.dropbox.com/s/xoqu3b2nd1doxo5/mobilenet_v2_lpf5-ab8fe968.pth.tar?dl=0 -O ./weights/mobilenet_v2_lpf5.pth.tar
 wget https://www.dropbox.com/s/2ghe3mvncxvx3rg/resnet18_lpf2-6e2ee76f.pth.tar?dl=0 -O ./weights/resnet18_lpf2.pth.tar
 wget https://www.dropbox.com/s/yi4av82suamy0sj/resnet18_lpf3-449351b9.pth.tar?dl=0 -O ./weights/resnet18_lpf3.pth.tar
