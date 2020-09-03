@@ -54,7 +54,7 @@ __all__ = ['AlexNet', 'alexnet']
 
 class AlexNet(nn.Module):
 
-    def __init__(self, num_classes=1000, filter_size=1, pool_only=False, relu_first=True):
+    def __init__(self, num_classes=1000, filter_size=4, pool_only=False, relu_first=True):
         super(AlexNet, self).__init__()
 
         if(pool_only): # only apply LPF to pooling layers, so run conv1 at stride 4 as before

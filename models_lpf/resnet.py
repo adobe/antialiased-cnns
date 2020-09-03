@@ -256,7 +256,7 @@ def resnet18(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     return model
 
 
-def resnet34(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def resnet34(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """Constructs a ResNet-34 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
@@ -267,7 +267,7 @@ def resnet34(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     return model
 
 
-def resnet50(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def resnet50(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """Constructs a ResNet-50 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
@@ -278,7 +278,7 @@ def resnet50(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     return model
 
 
-def resnet101(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def resnet101(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """Constructs a ResNet-101 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
@@ -289,7 +289,7 @@ def resnet101(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     return model
 
 
-def resnet152(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def resnet152(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """Constructs a ResNet-152 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
@@ -300,14 +300,14 @@ def resnet152(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     return model
 
 
-def resnext50_32x4d(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def resnext50_32x4d(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = ResNet(Bottleneck, [3, 4, 6, 3], groups=4, width_per_group=32, filter_size=filter_size, pool_only=pool_only, **kwargs)
     # if pretrained:
     #     model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
     return model
 
 
-def resnext101_32x8d(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def resnext101_32x8d(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = ResNet(Bottleneck, [3, 4, 23, 3], groups=8, width_per_group=32, filter_size=filter_size, pool_only=pool_only, **kwargs)
     # if pretrained:
     #     model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))

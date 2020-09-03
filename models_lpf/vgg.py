@@ -127,7 +127,7 @@ cfg = {
     'E': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512, 'M'],
 }
 
-def vgg11(pretrained=False, filter_size=1, **kwargs):
+def vgg11(pretrained=False, filter_size=4, **kwargs):
     """VGG 11-layer model (configuration "A")
 
     Args:
@@ -141,7 +141,7 @@ def vgg11(pretrained=False, filter_size=1, **kwargs):
     return model
 
 
-def vgg11_bn(pretrained=False, filter_size=1, **kwargs):
+def vgg11_bn(pretrained=False, filter_size=4, **kwargs):
     """VGG 11-layer model (configuration "A") with batch normalization
 
     Args:
@@ -155,7 +155,7 @@ def vgg11_bn(pretrained=False, filter_size=1, **kwargs):
     return model
 
 
-def vgg13(pretrained=False, filter_size=1, **kwargs):
+def vgg13(pretrained=False, filter_size=4, **kwargs):
     """VGG 13-layer model (configuration "B")
 
     Args:
@@ -169,7 +169,7 @@ def vgg13(pretrained=False, filter_size=1, **kwargs):
     return model
 
 
-def vgg13_bn(pretrained=False, filter_size=1, **kwargs):
+def vgg13_bn(pretrained=False, filter_size=4, **kwargs):
     """VGG 13-layer model (configuration "B") with batch normalization
 
     Args:
@@ -183,7 +183,7 @@ def vgg13_bn(pretrained=False, filter_size=1, **kwargs):
     return model
 
 
-def vgg16(pretrained=False, filter_size=1, **kwargs):
+def vgg16(pretrained=False, filter_size=4, **kwargs):
     """VGG 16-layer model (configuration "D")
 
     Args:
@@ -197,7 +197,7 @@ def vgg16(pretrained=False, filter_size=1, **kwargs):
     return model
 
 
-def vgg16_bn(pretrained=False, filter_size=1, **kwargs):
+def vgg16_bn(pretrained=False, filter_size=4, **kwargs):
     """VGG 16-layer model (configuration "D") with batch normalization
 
     Args:
@@ -211,7 +211,7 @@ def vgg16_bn(pretrained=False, filter_size=1, **kwargs):
     return model
 
 
-def vgg19(pretrained=False, filter_size=1, **kwargs):
+def vgg19(pretrained=False, filter_size=4, **kwargs):
     """VGG 19-layer model (configuration "E")
 
     Args:
@@ -225,7 +225,7 @@ def vgg19(pretrained=False, filter_size=1, **kwargs):
     return model
 
 
-def vgg19_bn(pretrained=False, filter_size=1, **kwargs):
+def vgg19_bn(pretrained=False, filter_size=4, **kwargs):
     """VGG 19-layer model (configuration 'E') with batch normalization
 
     Args:

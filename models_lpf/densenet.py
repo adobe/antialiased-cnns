@@ -190,7 +190,7 @@ def _load_state_dict(model, model_url):
     model.load_state_dict(state_dict)
 
 
-def densenet121(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def densenet121(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-121 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -203,7 +203,7 @@ def densenet121(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     return model
 
 
-def densenet169(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def densenet169(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-169 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -216,7 +216,7 @@ def densenet169(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     return model
 
 
-def densenet201(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def densenet201(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-201 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -229,7 +229,7 @@ def densenet201(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     return model
 
 
-def densenet161(pretrained=False, filter_size=1, pool_only=True, **kwargs):
+def densenet161(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-161 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:

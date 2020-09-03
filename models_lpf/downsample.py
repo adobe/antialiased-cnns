@@ -12,7 +12,7 @@ import torch.nn.functional as F
 from IPython import embed
 
 class Downsample(nn.Module):
-    def __init__(self, pad_type='reflect', filt_size=3, stride=2, channels=None, pad_off=0):
+    def __init__(self, pad_type='reflect', filt_size=4, stride=2, channels=None, pad_off=0):
         super(Downsample, self).__init__()
         self.filt_size = filt_size
         self.pad_off = pad_off
