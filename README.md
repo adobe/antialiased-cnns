@@ -9,15 +9,15 @@ In [ICML, 2019](https://arxiv.org/abs/1904.11486).
 This repository contains examples of anti-aliased convnets. <br>
 
 **Table of contents**<br>
-0. [Getting started](0-getting-started)<br>
-1. [Pretrained antialiased models](#1-quickstart-load-an-antialiased-model)<br>
-2. [Instructions for antialiasing your own model](#2-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
+0. [Getting started](#0-getting-started) -- easy access to our models and BlurPool layer<br>
+1. [Pretrained antialiased models](#1-more-information-loading-an-antialiased-model)<br>
+2. [Instructions for antialiasing your own model](#2-more-information-how-to-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
 3. [Results on Imagenet consistency + accuracy.](#3-results)<br>
 4. [ImageNet training and evaluation code](README_IMAGENET.md). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
 
 **Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting. You can also now `pip install antialiased-cnns` to get access to models and BlurPool layer.
 
-## (0) Getting started
+## (0) Preliminaries
 
 ### PyTorch
 - Install PyTorch ([pytorch.org](http://pytorch.org))
