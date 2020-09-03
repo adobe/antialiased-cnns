@@ -73,9 +73,9 @@ antialiased = [nn.MaxPool2d(kernel_size=2, stride=1),
     models_lpf.Downsample(channels=C, filt_size=M, stride=2)]
     
 # Conv --> ConvBlurPool
-baseline = [nn.Conv2d(Cin,C,kernel_size=4,stride=2,padding=1), 
+baseline = [nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1), 
     nn.ReLU(inplace=True)]
-antialiased = [nn.Conv2d(Cin,C,kernel_size=4,stride=1,padding=1),
+antialiased = [nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),
     nn.ReLU(inplace=True),
     models_lpf.Downsample(channels=C, filt_size=M, stride=2)]
 
