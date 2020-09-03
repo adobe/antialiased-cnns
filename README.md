@@ -7,7 +7,7 @@
 
 ### Quick & easy start
 
-Run `pip install antialiased-cnns` if you want to be able to import the module from anywhere. Or copy the `models_lpf` subdirectory into your project.
+Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory into your project.
 
 Load an antialiased model. This could be the backbone of your model.
 
@@ -20,7 +20,7 @@ model = models_lpf.resnet50(filter_size=4) # Resnet50 network
 model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0
 ```
 
-The BlurPool layer does antialiased downsampling.
+The BlurPool layer does antialiased downsampling. You can use it to antialias your model.
 
 ```python
 # BlurPool to downsample
