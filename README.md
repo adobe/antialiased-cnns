@@ -5,7 +5,9 @@
 **Making Convolutional Networks Shift-Invariant Again** <br>
 [Richard Zhang](https://richzhang.github.io/). In [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
-**Quick & easy start** Load an antialiased model. This could be the backbone of your model.
+### Quick & easy start
+
+Load an antialiased model. This could be the backbone of your model.
 
 ```python
 import torch
@@ -28,17 +30,17 @@ print ds(dummy_tens).shape # 1xCx64x64 tensor
 
 Run `pip install antialiased-cnns` if you want to be able to import the module from anywhere. Or copy the `models_lpf` subdirectory into your project. More information about our provided models and how to use BlurPool is below.
 
-**Table of contents**<br>
+**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting. You can also now `pip install antialiased-cnns`.
+
+### Table of contents
+
 1. [More information about antialiased models](#1-more-information-loading-an-antialiased-model)<br>
 2. [Instructions for antialiasing your own model](#2-more-information-how-to-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
 3. [Results on Imagenet](#3-imagenet-results)<br>
 4. [ImageNet training and evaluation code](README_IMAGENET.md). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
 
-**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting. You can also now `pip install antialiased-cnns`.
-
 ## (0) Preliminaries
 
-### PyTorch
 - Install PyTorch ([pytorch.org](http://pytorch.org))
 - `pip install -r requirements.txt`
 
