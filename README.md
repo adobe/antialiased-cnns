@@ -7,6 +7,8 @@
 
 ### Quick & easy start
 
+Run `pip install antialiased-cnns` if you want to be able to import the module from anywhere. Or copy the `models_lpf` subdirectory into your project.
+
 Load an antialiased model. This could be the backbone of your model.
 
 ```python
@@ -28,7 +30,7 @@ ds = models_lpf.Downsample(channels=C, filt_size=4, stride=2) # BlurPool layer; 
 print ds(dummy_tens).shape # 1xCx64x64 tensor
 ```
 
-Run `pip install antialiased-cnns` if you want to be able to import the module from anywhere. Or copy the `models_lpf` subdirectory into your project. More information about our provided models and how to use BlurPool is below.
+More information about our provided models and how to use BlurPool is below.
 
 **Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting. You can also now `pip install antialiased-cnns`.
 
