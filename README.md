@@ -14,7 +14,7 @@ This repository contains examples of anti-aliased convnets. <br>
 3. [Results on Imagenet consistency + accuracy.](#3-results)<br>
 4. [ImageNet training and evaluation code](README_IMAGENET.md). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
 
-**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
+**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting. You can also now `pip install antialiased-cnns` to get access to models and BlurPool layer.
 
 ## Licenses
 
@@ -30,14 +30,22 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 - Install PyTorch ([pytorch.org](http://pytorch.org))
 - `pip install -r requirements.txt`
 
+### Download all anti-aliased models
 
-### Download anti-aliased models
-
-- Run `bash weights/download_antialiased_models.sh` or look through the script and download the models you want manually
+- Run `bash weights/download_antialiased_models.sh` or look through the script and download the individual models you want manually
 
 ### Pip install (optional)
 
-- Run `pip install antialiased-cnns`. Simply `import models_lpf` in python code and you will have access to antialiased models and `BlurPool` layer.
+- Run `pip install antialiased-cnns`.
+
+```python
+
+import models_lpf
+model = models_lpf.resnet50(filter_size=4) # Resnet50 network
+model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; downloaded from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0
+
+models_lpf.Downsample(channels=C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
+```
 
 ## (1) Quickstart: load an antialiased model
 
