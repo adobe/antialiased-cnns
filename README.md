@@ -8,8 +8,22 @@ In [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
 This repository contains examples of anti-aliased convnets. <br>
 
+### Quickstart
+
+To access models or BlurPool layer, simply do the following.
+
+```python
+
+import models_lpf
+model = models_lpf.resnet50(filter_size=4) # Resnet50 network
+model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; downloaded from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0
+
+models_lpf.Downsample(channels=C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
+```
+
+Run `pip install antialiased-cnns` if you want to be able to import the module anywhere. More information about our provided models and how to use BlurPool is below.
+
 **Table of contents**<br>
-0. [Getting started](#0-getting-started) -- easy access to our models and BlurPool layer<br>
 1. [Pretrained antialiased models](#1-more-information-loading-an-antialiased-model)<br>
 2. [Instructions for antialiasing your own model](#2-more-information-how-to-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
 3. [Results on Imagenet consistency + accuracy.](#3-results)<br>
@@ -22,21 +36,6 @@ This repository contains examples of anti-aliased convnets. <br>
 ### PyTorch
 - Install PyTorch ([pytorch.org](http://pytorch.org))
 - `pip install -r requirements.txt`
-
-### Pip install (optional)
-
-Run `pip install antialiased-cnns`. Primary functionalities -- antialiased models and `BlurPool` layer -- are quickly shown below.
-
-```python
-
-import models_lpf
-model = models_lpf.resnet50(filter_size=4) # Resnet50 network
-model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; downloaded from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0
-
-models_lpf.Downsample(channels=C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
-```
-
-More information about our provided models and how to use BlurPool is below.
 
 ## (1) More information: loading an antialiased model
 
