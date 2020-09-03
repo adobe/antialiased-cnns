@@ -6,11 +6,9 @@
 [Richard Zhang](https://richzhang.github.io/). <br>
 In [ICML, 2019](https://arxiv.org/abs/1904.11486).
 
-This repository contains examples of anti-aliased convnets. <br>
-
 ### Quickstart
 
-To access models or BlurPool layer, simply do the following.
+To access antialiased models or BlurPool layer, simply do the following.
 
 ```python
 
