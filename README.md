@@ -60,15 +60,9 @@ We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,
 
 ## (2) More information: how to antialias your own architecture
 
-The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer (also referred to as `BlurPool`) to do antialiased downsampling.
+The `models_lpf` module contains the `Downsample` [class](models_lpf/downsample.py), which does blur+subsampling. Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory.
 
-The `models_lpf` module contains the `Downsample` [class](models_lpf/downsample.py), which does blur+subsampling. Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory into your directory.
-
-```python
-from models_lpf import *
-```
-
-Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
+The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer (also referred to as `BlurPool`) to do antialiased downsampling. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
 
 ```python
 import models_lpf
