@@ -81,11 +81,11 @@ baseline = [nn.Conv2d(Cin,C,kernel_size=4,stride=2,padding=1),
     nn.ReLU(inplace=True)]
 antialiased = [nn.Conv2d(Cin,C,kernel_size=4,stride=1,padding=1),
     nn.ReLU(inplace=True),
-    Downsample(channels=C, filt_size=M, stride=2)]
+    models_lpf.Downsample(channels=C, filt_size=M, stride=2)]
 
 # AvgPool --> BlurPool
 baseline = nn.AvgPool2d(kernel_size=2, stride=2)
-antialiased = Downsample(channels=C, filt_size=M, stride=2)
+antialiased = models_lpf.Downsample(channels=C, filt_size=M, stride=2)
 ```
 
 We assume incoming tensor has `C` channels. Computing a layer at stride 1 instead of stride 2 adds memory and run-time. As such, we typically skip antialiasing at the highest-resolution (early in the network), to prevent large increases.
