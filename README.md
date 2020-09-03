@@ -33,7 +33,11 @@ The repository builds off the PyTorch [examples repository](https://github.com/p
 
 ### Download anti-aliased models
 
-- Run `bash weights/download_antialiased_models.sh`
+- Run `bash weights/download_antialiased_models.sh` or look through the script and download the models you want manually
+
+### Pip install (optional)
+
+- Run `pip install antialiased-cnns`. Simply `import models_lpf` in python code and you will have access to antialiased models and `BlurPool` layer.
 
 ## (1) Quickstart: load an antialiased model
 
