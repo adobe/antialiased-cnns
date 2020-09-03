@@ -214,7 +214,7 @@ def main_worker(gpu, ngpus_per_node, args):
     import models_lpf.densenet
 
     if(args.arch[:-1]=='alexnet_lpf'):
-        model = models_lpf.AlexNet(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+        model = models_lpf.AlexNet(filter_size=int(args.arch[-1]))
 
     elif(args.arch[:-1]=='vgg11_bn_lpf'):
         model = models_lpf.vgg11_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
