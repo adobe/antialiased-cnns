@@ -47,16 +47,16 @@ __all__ = [
 ]
 
 
-# model_urls = {
-#     'vgg11': 'https://download.pytorch.org/models/vgg11-bbd30ac9.pth',
-#     'vgg13': 'https://download.pytorch.org/models/vgg13-c768596a.pth',
-#     'vgg16': 'https://download.pytorch.org/models/vgg16-397923af.pth',
-#     'vgg19': 'https://download.pytorch.org/models/vgg19-dcbb9e9d.pth',
-#     'vgg11_bn': 'https://download.pytorch.org/models/vgg11_bn-6002323d.pth',
-#     'vgg13_bn': 'https://download.pytorch.org/models/vgg13_bn-abd245e5.pth',
-#     'vgg16_bn': 'https://download.pytorch.org/models/vgg16_bn-6c64b313.pth',
-#     'vgg19_bn': 'https://download.pytorch.org/models/vgg19_bn-c79401a0.pth',
-# }
+model_urls = {
+    'vgg16_bn_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_bn_lpf2-2c2052a8.pth',
+    'vgg16_bn_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_bn_lpf3-1782878a.pth',
+    'vgg16_bn_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_bn_lpf4-a1c3559b.pth',
+    'vgg16_bn_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_bn_lpf5-c500b52f.pth',
+    'vgg16_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_lpf2-60268e0c.pth',
+    'vgg16_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_lpf3-e9b0ce42.pth',
+    'vgg16_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_lpf4-de9267ac.pth',
+    'vgg16_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_lpf5-1391f70c.pth',
+}
 
 
 class VGG(nn.Module):
@@ -136,8 +136,8 @@ def vgg11(pretrained=False, filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['A'], filter_size=filter_size), **kwargs)
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg11']))
+    # if pretrained:
+        # model.load_state_dict(model_zoo.load_url(model_urls['vgg11']))
     return model
 
 
@@ -150,8 +150,8 @@ def vgg11_bn(pretrained=False, filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['A'], filter_size=filter_size, batch_norm=True), **kwargs)
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg11_bn']))
+    # if pretrained:
+        # model.load_state_dict(model_zoo.load_url(model_urls['vgg11_bn']))
     return model
 
 
@@ -164,8 +164,8 @@ def vgg13(pretrained=False, filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['B'], filter_size=filter_size), **kwargs)
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg13']))
+    # if pretrained:
+        # model.load_state_dict(model_zoo.load_url(model_urls['vgg13']))
     return model
 
 
@@ -178,8 +178,8 @@ def vgg13_bn(pretrained=False, filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['B'], filter_size=filter_size, batch_norm=True), **kwargs)
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg13_bn']))
+    # if pretrained:
+        # model.load_state_dict(model_zoo.load_url(model_urls['vgg13_bn']))
     return model
 
 
@@ -193,7 +193,8 @@ def vgg16(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['D'], filter_size=filter_size), **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg16']))
+        # model.load_state_dict(model_zoo.load_url(model_urls['vgg16']))
+        model.load_state_dict(model_zoo.load_url(model_urls['vgg16_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
@@ -207,7 +208,8 @@ def vgg16_bn(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['D'], filter_size=filter_size, batch_norm=True), **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg16_bn']))
+        # model.load_state_dict(model_zoo.load_url(model_urls['vgg16_bn']))
+        model.load_state_dict(model_zoo.load_url(model_urls['vgg16_bn_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
@@ -220,8 +222,8 @@ def vgg19(pretrained=False, filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['E'], filter_size=filter_size), **kwargs)
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg19']))
+    # if pretrained:
+        # model.load_state_dict(model_zoo.load_url(model_urls['vgg19']))
     return model
 
 
@@ -234,7 +236,7 @@ def vgg19_bn(pretrained=False, filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['E'], filter_size=filter_size, batch_norm=True), **kwargs)
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg19_bn']))
+    # if pretrained:
+        # model.load_state_dict(model_zoo.load_url(model_urls['vgg19_bn']))
     return model
 

@@ -3,7 +3,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 setuptools.setup(
      name='antialiased-cnns',  
-     version='0.0',
+     version='0.1',
      scripts=['ex_exec'] ,
      author="Richard Zhang",
      author_email="rizhang@adobe.com",

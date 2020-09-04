@@ -39,13 +39,17 @@
 
 from torch import nn
 from models_lpf import *
+import torch.utils.model_zoo as model_zoo
 
 __all__ = ['MobileNetV2', 'mobilenet_v2']
 
 
-# model_urls = {
-    # 'mobilenet_v2': 'https://download.pytorch.org/models/mobilenet_v2-b0353104.pth',
-# }
+model_urls = {
+    'mobilenet_v2_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf2-f4379012.pth',
+    'mobilenet_v2_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf3-23b2e2ee.pth',
+    'mobilenet_v2_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf4-c259d536.pth',
+    'mobilenet_v2_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf5-ab8fe968.pth',
+}
 
 
 class ConvBNReLU(nn.Sequential):
@@ -165,7 +169,9 @@ def mobilenet_v2(pretrained=False, progress=True, filter_size=4, **kwargs):
         progress (bool): If True, displays a progress bar of the download to stderr
     """
     model = MobileNetV2(filter_size=filter_size, **kwargs)
-    # if pretrained:
+    if pretrained:
+        embed()
+        model.load_state_dict(model_zoo.load_url(model_urls['mobilenet_v2_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
         # state_dict = load_state_dict_from_url(model_urls['mobilenet_v2'],
                                               # progress=progress)
         # model.load_state_dict(state_dict)

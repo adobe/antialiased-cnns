@@ -47,9 +47,12 @@ from IPython import embed
 __all__ = ['AlexNet', 'alexnet']
 
 
-# model_urls = {
-    # 'alexnet': 'https://download.pytorch.org/models/alexnet-owt-4df8aa71.pth',
-# }
+model_urls = {
+    'alexnet_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/alexnet_lpf2-da8aca74.pth',
+    'alexnet_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/alexnet_lpf3-f9bbc410.pth',
+    'alexnet_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/alexnet_lpf4-0114fe25.pth',
+    'alexnet_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/alexnet_lpf5-4fa3706a.pth',
+}
 
 
 class AlexNet(nn.Module):
@@ -104,16 +107,16 @@ class AlexNet(nn.Module):
         return x
 
 
-def alexnet(pretrained=False, **kwargs):
+def alexnet(pretrained=False, filter_size=4, **kwargs):
     """AlexNet model architecture from the
     `"One weird trick..." <https://arxiv.org/abs/1404.5997>`_ paper.
 
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
-    model = AlexNet(**kwargs)
+    model = AlexNet(filter_size=filter_size, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['alexnet']))
+        model.load_state_dict(model_zoo.load_url(model_urls['alexnet_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
@@ -165,8 +168,8 @@ def alexnetnmp(pretrained=False, **kwargs):
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
     model = AlexNetNMP(**kwargs)
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['alexnet']))
+    # if pretrained:
+        # model.load_state_dict(model_zoo.load_url(model_urls['alexnet']))
     return model
 
 

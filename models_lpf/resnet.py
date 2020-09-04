@@ -40,18 +40,29 @@
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 from models_lpf import *
+from IPython import embed
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
            'resnet152', 'resnext50_32x4d', 'resnext101_32x8d']
 
 
 model_urls = {
-    'resnet18_lpf4': 'https://www.dropbox.com/s/bz9wvc1pey5hy8t/resnet18_lpf4-8c77af40.pth.tar',
-    # 'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
-    # 'resnet34': 'https://download.pytorch.org/models/resnet34-333f7ec4.pth',
-    # 'resnet50': 'https://download.pytorch.org/models/resnet50-19c8e357.pth',
-    # 'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
-    # 'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
+    'resnet18_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet18_lpf2-6e2ee76f.pth',
+    'resnet18_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet18_lpf3-449351b9.pth',
+    'resnet18_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet18_lpf4-8c77af40.pth',
+    'resnet18_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet18_lpf5-c1eed0a1.pth',
+    'resnet34_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet34_lpf2-4707aed9.pth',
+    'resnet34_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet34_lpf3-16aa6c48.pth',
+    'resnet34_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet34_lpf4-55747267.pth',
+    'resnet34_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet34_lpf5-85283561.pth',
+    'resnet50_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet50_lpf2-f0f7589d.pth',
+    'resnet50_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet50_lpf3-a4e868d2.pth',
+    'resnet50_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet50_lpf4-994b528f.pth',
+    'resnet50_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet50_lpf5-9953c9ad.pth',
+    'resnet101_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf2-3d00941d.pth',
+    'resnet101_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf3-928f1444.pth',
+    'resnet101_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf4-f8a116ff.pth',
+    'resnet101_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf5-1f3745af.pth',
 }
 
 
@@ -252,7 +263,7 @@ def resnet18(pretrained=False, filter_size=1, pool_only=True, **kwargs):
     """
     model = ResNet(BasicBlock, [2, 2, 2, 2], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet18_lpf%i'%filter_size]), check_hash=True)
+        model.load_state_dict(model_zoo.load_url(model_urls['resnet18_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
@@ -263,7 +274,7 @@ def resnet34(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """
     model = ResNet(BasicBlock, [3, 4, 6, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet34']))
+        model.load_state_dict(model_zoo.load_url(model_urls['resnet34_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
@@ -274,7 +285,7 @@ def resnet50(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
+        model.load_state_dict(model_zoo.load_url(model_urls['resnet50_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
@@ -285,7 +296,7 @@ def resnet101(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """
     model = ResNet(Bottleneck, [3, 4, 23, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet101']))
+        model.load_state_dict(model_zoo.load_url(model_urls['resnet101_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
@@ -295,8 +306,8 @@ def resnet152(pretrained=False, filter_size=4, pool_only=True, **kwargs):
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
     model = ResNet(Bottleneck, [3, 8, 36, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
-    if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet152']))
+    # if pretrained:
+        # model.load_state_dict(model_zoo.load_url(model_urls['resnet152']))
     return model
 
 

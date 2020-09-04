@@ -48,12 +48,12 @@ from models_lpf import *
 __all__ = ['DenseNet', 'densenet121', 'densenet169', 'densenet201', 'densenet161']
 
 
-# model_urls = {
-#     'densenet121': 'https://download.pytorch.org/models/densenet121-a639ec97.pth',
-#     'densenet169': 'https://download.pytorch.org/models/densenet169-b2777c0a.pth',
-#     'densenet201': 'https://download.pytorch.org/models/densenet201-c1103571.pth',
-#     'densenet161': 'https://download.pytorch.org/models/densenet161-8d451a50.pth',
-# }
+model_urls = {
+    'densenet121_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet121_lpf2-7da7d4cd.pth',
+    'densenet121_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet121_lpf3-0f267ad8.pth',
+    'densenet121_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet121_lpf4-edeaab00.pth',
+    'densenet121_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet121_lpf5-ebc7880c.pth',
+}
 
 
 class _DenseLayer(nn.Sequential):
@@ -180,7 +180,8 @@ def _load_state_dict(model, model_url):
     # to find such keys.
     pattern = re.compile(
         r'^(.*denselayer\d+\.(?:norm|relu|conv))\.((?:[12])\.(?:weight|bias|running_mean|running_var))$')
-    state_dict = model_zoo.load_url(model_url)
+    # state_dict = model_zoo.load_url(model_url)
+    state_dict = model_zoo.load_url(model_url, map_location='cpu', check_hash=True)['state_dict']
     for key in list(state_dict.keys()):
         res = pattern.match(key)
         if res:
@@ -199,7 +200,7 @@ def densenet121(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 24, 16),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        _load_state_dict(model, model_urls['densenet121'])
+        _load_state_dict(model, model_urls['densenet121_lpf%i'%filter_size])
     return model
 
 
@@ -211,8 +212,8 @@ def densenet169(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 32, 32),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
-    if pretrained:
-        _load_state_dict(model, model_urls['densenet169'])
+    # if pretrained:
+        # _load_state_dict(model, model_urls['densenet169'])
     return model
 
 
@@ -224,8 +225,8 @@ def densenet201(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
-    if pretrained:
-        _load_state_dict(model, model_urls['densenet201'])
+    # if pretrained:
+        # _load_state_dict(model, model_urls['densenet201'])
     return model
 
 
@@ -237,6 +238,6 @@ def densenet161(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """
     model = DenseNet(num_init_features=96, growth_rate=48, block_config=(6, 12, 36, 24),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
-    if pretrained:
-        _load_state_dict(model, model_urls['densenet161'])
+    # if pretrained:
+        # _load_state_dict(model, model_urls['densenet161'])
     return model
