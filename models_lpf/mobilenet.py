@@ -160,17 +160,15 @@ class MobileNetV2(nn.Module):
         return x
 
 
-def mobilenet_v2(pretrained=False, progress=True, filter_size=4, **kwargs):
+def mobilenet_v2(pretrained=False, filter_size=4, **kwargs):
     """
     Constructs a MobileNetV2 architecture from
     `"MobileNetV2: Inverted Residuals and Linear Bottlenecks" <https://arxiv.org/abs/1801.04381>`_.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
-        progress (bool): If True, displays a progress bar of the download to stderr
     """
     model = MobileNetV2(filter_size=filter_size, **kwargs)
     if pretrained:
-        embed()
         model.load_state_dict(model_zoo.load_url(model_urls['mobilenet_v2_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
         # state_dict = load_state_dict_from_url(model_urls['mobilenet_v2'],
                                               # progress=progress)
