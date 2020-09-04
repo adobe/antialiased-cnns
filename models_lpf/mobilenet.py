@@ -47,7 +47,7 @@ __all__ = ['MobileNetV2', 'mobilenet_v2']
 model_urls = {
     'mobilenet_v2_lpf2': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf2-f4379012.pth',
     'mobilenet_v2_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf3-23b2e2ee.pth',
-    'mobilenet_v2_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf4-c259d536.pth',
+    'mobilenet_v2_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf4-2e0b9cb9.pth',
     'mobilenet_v2_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf5-ab8fe968.pth',
 }
 
