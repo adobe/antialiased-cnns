@@ -15,7 +15,9 @@ model = antialiased_cnns.resnet50(pretrained=True)
 ```
 <!-- model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0 -->
 
-The BlurPool layer does antialiased downsampling. You can use it to antialias your model.
+Now you are antialiased!
+
+If you want to antialias your own model, use the BlurPool layer.
 
 ```python
 C = 10
