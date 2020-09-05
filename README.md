@@ -63,18 +63,18 @@ import antialiased_cnns
 # MaxPool --> MaxBlurPool
 baseline = nn.MaxPool2d(kernel_size=2, stride=2)
 antialiased = [nn.MaxPool2d(kernel_size=2, stride=1), 
-    antialiased_cnns.BlurPool(channels=C, filt_size=M, stride=2)]
+    antialiased_cnns.BlurPool(C, filt_size=M, stride=2)]
     
 # Conv --> ConvBlurPool
 baseline = [nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1), 
     nn.ReLU(inplace=True)]
 antialiased = [nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),
     nn.ReLU(inplace=True),
-    antialiased_cnns.BlurPool(channels=C, filt_size=M, stride=2)]
+    antialiased_cnns.BlurPool(C, filt_size=M, stride=2)]
 
 # AvgPool --> BlurPool
 baseline = nn.AvgPool2d(kernel_size=2, stride=2)
-antialiased = antialiased_cnns.BlurPool(channels=C, filt_size=M, stride=2)
+antialiased = antialiased_cnns.BlurPool(C, filt_size=M, stride=2)
 ```
 
 We assume incoming tensor has `C` channels. Computing a layer at stride 1 instead of stride 2 adds memory and run-time. As such, we typically skip antialiasing at the highest-resolution (early in the network), to prevent large increases.
