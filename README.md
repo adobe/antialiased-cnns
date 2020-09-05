@@ -19,9 +19,9 @@ The BlurPool layer does antialiased downsampling. You can use it to antialias yo
 
 ```python
 C = 10
-ds = antialiased_cnns.BlurPool(C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
-dummy_tens = torch.Tensor(1,C,128,128)
-print ds(dummy_tens).shape # 1xCx64x64 tensor
+blurpool = antialiased_cnns.BlurPool(C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
+ex_tens = torch.Tensor(1,C,128,128)
+print blurpool(ex_tens).shape # 1xCx64x64 tensor
 ```
 
 More information about our provided models and how to use BlurPool is below.
