@@ -29,7 +29,7 @@ print ds(dummy_tens).shape # 1xCx64x64 tensor
 
 More information about our provided models and how to use BlurPool is below.
 
-**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting. You can also now `pip install antialiased-cnns`.
+**Update (Sept 2020)** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting. You can also now `pip install antialiased-cnns` and load models with the `pretrained=True` flag.
 
 ### Table of contents
 
