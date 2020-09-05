@@ -7,14 +7,12 @@
 
 ### Quick & easy start
 
-Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory into your project.
-
-Load an antialiased model. This could be the backbone of your model.
+Run `pip install antialiased-cnns` (or copy the `models_lpf` subdirectory into your project, or work off this directory).
 
 ```python
 import models_lpf
 
-# load an antialiased model
+# load an antialiased model; this could be the backbone of your model
 model = models_lpf.resnet50(pretrained=True) # Resnet50 network
 ```
 <!-- model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0 -->
