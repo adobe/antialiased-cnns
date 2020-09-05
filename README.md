@@ -12,13 +12,12 @@ Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory into yo
 Load an antialiased model. This could be the backbone of your model.
 
 ```python
-import torch
 import models_lpf
 
 # load an antialiased model
-model = models_lpf.resnet50(filter_size=4) # Resnet50 network
-model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0
+model = models_lpf.resnet50(pretrained=True) # Resnet50 network
 ```
+<!-- model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0 -->
 
 The BlurPool layer does antialiased downsampling. You can use it to antialias your model.
 
@@ -54,8 +53,7 @@ The following loads a pretrained antialiased model, perhaps as a backbone for yo
 import torch
 import models_lpf
 
-model = models_lpf.resnet50(filter_size=4)
-model.load_state_dict(torch.load('weights/resnet50_lpf4.pth.tar')['state_dict'])
+model = models_lpf.resnet50(pretrained=True, filter_size=4)
 ```
 
 We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,101`, `Densenet121`, and `MobileNetv2` (see [example_usage.py](example_usage.py)). Run `bash weights/download_antialiased_models.sh` or look through the script and download the individual models you want manually.

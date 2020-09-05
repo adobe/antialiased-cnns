@@ -14,35 +14,24 @@ import torch
 filter_size = 4
 # filter_size = 5
 
+pretrained = True
+
 import models_lpf.resnet
-model = models_lpf.resnet.resnet18(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/resnet18_lpf%i.pth.tar'%filter_size)['state_dict'])
-
-model = models_lpf.resnet.resnet34(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/resnet34_lpf%i.pth.tar'%filter_size)['state_dict'])
-
-model = models_lpf.resnet.resnet50(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/resnet50_lpf%i.pth.tar'%filter_size)['state_dict'])
-
-model = models_lpf.resnet.resnet101(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/resnet101_lpf%i.pth.tar'%filter_size)['state_dict'])
+model = models_lpf.resnet.resnet18(pretrained=pretrained, filter_size=filter_size)
+model = models_lpf.resnet.resnet34(pretrained=pretrained, filter_size=filter_size)
+model = models_lpf.resnet.resnet50(pretrained=pretrained, filter_size=filter_size)
+model = models_lpf.resnet.resnet101(pretrained=pretrained, filter_size=filter_size)
 
 import models_lpf.alexnet
-model = models_lpf.alexnet.AlexNet(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/alexnet_lpf%i.pth.tar'%filter_size)['state_dict'])
+model = models_lpf.alexnet.AlexNet(pretrained=pretrained, filter_size=filter_size)
 
 import models_lpf.vgg
-model = models_lpf.vgg.vgg16(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/vgg16_lpf%i.pth.tar'%filter_size)['state_dict'])
-
-model = models_lpf.vgg.vgg16_bn(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/vgg16_bn_lpf%i.pth.tar'%filter_size)['state_dict'])
+model = models_lpf.vgg.vgg16(pretrained=pretrained, filter_size=filter_size)
+model = models_lpf.vgg.vgg16_bn(pretrained=pretrained, filter_size=filter_size)
 
 import models_lpf.densenet
-model = models_lpf.densenet.densenet121(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/densenet121_lpf%i.pth.tar'%filter_size)['state_dict'])
+model = models_lpf.densenet.densenet121(pretrained=pretrained, filter_size=filter_size)
 
 import models_lpf.mobilenet
-model = models_lpf.mobilenet.mobilenet_v2(filter_size=filter_size)
-model.load_state_dict(torch.load('weights/mobilenet_v2_lpf%i.pth.tar'%filter_size)['state_dict'])
+model = models_lpf.mobilenet.mobilenet_v2(pretrained=pretrained, filter_size=filter_size)
 
