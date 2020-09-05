@@ -43,7 +43,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.model_zoo as model_zoo
 from collections import OrderedDict
-from models_lpf import *
+from antialiased_cnns import *
 
 __all__ = ['DenseNet', 'densenet121', 'densenet169', 'densenet201', 'densenet161']
 
@@ -92,7 +92,7 @@ class _Transition(nn.Sequential):
         self.add_module('conv', nn.Conv2d(num_input_features, num_output_features,
                                           kernel_size=1, stride=1, bias=False))
         # self.add_module('pool', nn.AvgPool2d(kernel_size=2, stride=2))
-        self.add_module('pool', Downsample(filt_size=filter_size, stride=2, channels=num_output_features))
+        self.add_module('pool', BlurPool(num_output_features, filt_size=filter_size, stride=2))
 
 
 class DenseNet(nn.Module):
@@ -121,16 +121,16 @@ class DenseNet(nn.Module):
                 ('norm0', nn.BatchNorm2d(num_init_features)),
                 ('relu0', nn.ReLU(inplace=True)),
                 ('max0', nn.MaxPool2d(kernel_size=3, stride=1, padding=1)),
-                ('pool0', Downsample(filt_size=filter_size, stride=2, channels=num_init_features)),
+                ('pool0', BlurPool(num_init_features, filt_size=filter_size, stride=2)),
             ]))
         else:
             self.features = nn.Sequential(OrderedDict([
                 ('conv0', nn.Conv2d(3, num_init_features, kernel_size=7, stride=1, padding=3, bias=False)),
                 ('norm0', nn.BatchNorm2d(num_init_features)),
                 ('relu0', nn.ReLU(inplace=True)),
-                ('ds0', Downsample(filt_size=filter_size, stride=2, channels=num_init_features)),
+                ('ds0', BlurPool(num_init_features, filt_size=filter_size, stride=2)),
                 ('max0', nn.MaxPool2d(kernel_size=3, stride=1, padding=1)),
-                ('pool0', Downsample(filt_size=filter_size, stride=2, channels=num_init_features)),
+                ('pool0', BlurPool(num_init_features, filt_size=filter_size, stride=2)),
             ]))
 
         # Each denseblock
@@ -155,7 +155,7 @@ class DenseNet(nn.Module):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 if(m.in_channels!=m.out_channels or m.out_channels!=m.groups or m.bias is not None):
-                    # don't want to reinitialize downsample layers, code assuming normal conv layers will not have these characteristics
+                    # don't want to reinitialize BlurPool layers, code assuming normal conv layers will not have these characteristics
                     nn.init.kaiming_normal_(m.weight)
                 else:
                     print('Not initializing')

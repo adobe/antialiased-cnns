@@ -38,7 +38,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 
 from torch import nn
-from models_lpf import *
+from antialiased_cnns import *
 import torch.utils.model_zoo as model_zoo
 
 __all__ = ['MobileNetV2', 'mobilenet_v2']
@@ -87,7 +87,7 @@ class InvertedResidual(nn.Module):
             layers.extend([
                 # dw
                 ConvBNReLU(hidden_dim, hidden_dim, stride=1, groups=hidden_dim),
-                Downsample(filt_size=filter_size, stride=stride, channels=hidden_dim), 
+                BlurPool(hidden_dim, filt_size=filter_size, stride=stride), 
                 # pw-linear
                 nn.Conv2d(hidden_dim, oup, 1, 1, 0, bias=False),
                 nn.BatchNorm2d(oup),

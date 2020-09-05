@@ -39,7 +39,7 @@
 
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
-from models_lpf import *
+from antialised_cnns import *
 
 __all__ = [
     'VGG', 'vgg11', 'vgg11_bn', 'vgg13', 'vgg13_bn', 'vgg16', 'vgg16_bn',
@@ -109,7 +109,7 @@ def make_layers(cfg, batch_norm=False, filter_size=1):
     for v in cfg:
         if v == 'M':
             # layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
-            layers += [nn.MaxPool2d(kernel_size=2, stride=1), Downsample(filt_size=filter_size, stride=2, channels=in_channels)]
+            layers += [nn.MaxPool2d(kernel_size=2, stride=1), BlurPool(in_channels, filt_size=filter_size, stride=2)]
         else:
             conv2d = nn.Conv2d(in_channels, v, kernel_size=3, padding=1)
             if batch_norm:

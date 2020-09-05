@@ -7,23 +7,20 @@
 
 ### Quick & easy start
 
-Run `pip install antialiased-cnns` (or copy the `models_lpf` subdirectory into your project, or work off this directory).
+Run `pip install antialiased-cnns`
 
 ```python
-import models_lpf
-
-# load an antialiased model; this could be the backbone of your model
-model = models_lpf.resnet50(pretrained=True) # Resnet50 network
+import antialiased_cnns
+model = antialiased_cnns.resnet50(pretrained=True) 
 ```
 <!-- model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0 -->
 
 The BlurPool layer does antialiased downsampling. You can use it to antialias your model.
 
 ```python
-# BlurPool to downsample
 C = 10
+ds = antialiased_cnns.BlurPool(C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
 dummy_tens = torch.Tensor(1,C,128,128)
-ds = models_lpf.Downsample(channels=C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
 print ds(dummy_tens).shape # 1xCx64x64 tensor
 ```
 
@@ -34,7 +31,7 @@ More information about our provided models and how to use BlurPool is below.
 ### Table of contents
 
 1. [More information about antialiased models](#1-more-information-loading-an-antialiased-model)<br>
-2. [Instructions for antialiasing your own model](#2-more-information-how-to-antialias-your-own-architecture), using the [`BlurPool`](models_lpf/__init__.py) layer<br>
+2. [Instructions for antialiasing your own model](#2-more-information-how-to-antialias-your-own-architecture), using the [`BlurPool`](antialiased_cnns/__init__.py) layer<br>
 3. [Results on Imagenet](#3-imagenet-results)<br>
 4. [ImageNet training and evaluation code](README_IMAGENET.md). Achieving better consistency, while maintaining or improving accuracy, is an open problem. Help improve the results!
 
@@ -48,36 +45,36 @@ More information about our provided models and how to use BlurPool is below.
 The following loads a pretrained antialiased model, perhaps as a backbone for your application.
 
 ```python
-import models_lpf
-model = models_lpf.resnet50(pretrained=True, filter_size=4)
+import antialiased_cnns
+model = antialiased_cnns.resnet50(pretrained=True, filter_size=4)
 ```
 
 We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,101`, `Densenet121`, and `MobileNetv2` (see [example_usage.py](example_usage.py)). Run `bash weights/download_antialiased_models.sh` or look through the script and download the individual models you want manually.
 
 ## (2) More information: how to antialias your own architecture
 
-The `models_lpf` module contains the `Downsample` [class](models_lpf/downsample.py), which does blur+subsampling. Run `pip install antialiased-cnns` or copy the `models_lpf` subdirectory.
+The `antialiased_cnns` module contains the `BlurPool` [class](antialiased_cnns/downsample.py), which does blur+subsampling. Run `pip install antialiased-cnns` or copy the `antialiased_cnns` subdirectory.
 
-The methodology is simple -- first evaluate with stride 1, and then use our `Downsample` layer (also referred to as `BlurPool`) to do antialiased downsampling. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
+The methodology is simple -- first evaluate with stride 1, and then use our `BlurPool` layer (also referred to as `BlurPool`) to do antialiased downsampling. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
 
 ```python
-import models_lpf
+import antialiased_cnns
 
 # MaxPool --> MaxBlurPool
 baseline = nn.MaxPool2d(kernel_size=2, stride=2)
 antialiased = [nn.MaxPool2d(kernel_size=2, stride=1), 
-    models_lpf.Downsample(channels=C, filt_size=M, stride=2)]
+    antialiased_cnns.BlurPool(channels=C, filt_size=M, stride=2)]
     
 # Conv --> ConvBlurPool
 baseline = [nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1), 
     nn.ReLU(inplace=True)]
 antialiased = [nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),
     nn.ReLU(inplace=True),
-    models_lpf.Downsample(channels=C, filt_size=M, stride=2)]
+    antialiased_cnns.BlurPool(channels=C, filt_size=M, stride=2)]
 
 # AvgPool --> BlurPool
 baseline = nn.AvgPool2d(kernel_size=2, stride=2)
-antialiased = models_lpf.Downsample(channels=C, filt_size=M, stride=2)
+antialiased = antialiased_cnns.BlurPool(channels=C, filt_size=M, stride=2)
 ```
 
 We assume incoming tensor has `C` channels. Computing a layer at stride 1 instead of stride 2 adds memory and run-time. As such, we typically skip antialiasing at the highest-resolution (early in the network), to prevent large increases.

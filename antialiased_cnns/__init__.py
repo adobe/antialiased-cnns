@@ -4,7 +4,7 @@
 # 4.0 International Public License. To view a copy of this license, visit
 # https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.
 
-from .downsample import *
+from .blurpool import *
 from .alexnet import *
 from .densenet import *
 from .mobilenet import *

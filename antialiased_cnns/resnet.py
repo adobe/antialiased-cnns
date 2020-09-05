@@ -39,7 +39,7 @@
 
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
-from models_lpf import *
+from antialiased_cnns import *
 from IPython import embed
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
@@ -91,7 +91,7 @@ class BasicBlock(nn.Module):
         if(stride==1):
             self.conv2 = conv3x3(planes,planes)
         else:
-            self.conv2 = nn.Sequential(Downsample(filt_size=filter_size, stride=stride, channels=planes),
+            self.conv2 = nn.Sequential(BlurPool(planes, filt_size=filter_size, stride=stride),
                 conv3x3(planes, planes),)
         self.bn2 = norm_layer(planes)
         self.downsample = downsample
@@ -131,7 +131,7 @@ class Bottleneck(nn.Module):
         if(stride==1):
             self.conv3 = conv1x1(planes, planes * self.expansion)
         else:
-            self.conv3 = nn.Sequential(Downsample(filt_size=filter_size, stride=stride, channels=planes),
+            self.conv3 = nn.Sequential(BlurPool(planes, filt_size=filter_size, stride=stride),
                 conv1x1(planes, planes * self.expansion))
         self.bn3 = norm_layer(planes * self.expansion)
         self.relu = nn.ReLU(inplace=True)
@@ -180,11 +180,11 @@ class ResNet(nn.Module):
 
         if(pool_only):
             self.maxpool = nn.Sequential(*[nn.MaxPool2d(kernel_size=2, stride=1), 
-                Downsample(filt_size=filter_size, stride=2, channels=planes[0])])
+                BlurPool(planes[0], filt_size=filter_size, stride=2,)])
         else:
-            self.maxpool = nn.Sequential(*[Downsample(filt_size=filter_size, stride=2, channels=planes[0]), 
+            self.maxpool = nn.Sequential(*[BlurPool(planes[0], filt_size=filter_size, stride=2,), 
                 nn.MaxPool2d(kernel_size=2, stride=1), 
-                Downsample(filt_size=filter_size, stride=2, channels=planes[0])])
+                BlurPool(planes[0], filt_size=filter_size, stride=2,)])
 
         self.layer1 = self._make_layer(block, planes[0], layers[0], groups=groups, norm_layer=norm_layer)
         self.layer2 = self._make_layer(block, planes[1], layers[1], stride=2, groups=groups, norm_layer=norm_layer, filter_size=filter_size)
@@ -224,7 +224,7 @@ class ResNet(nn.Module):
             #     norm_layer(planes * block.expansion),
             # )
 
-            downsample = [Downsample(filt_size=filter_size, stride=stride, channels=self.inplanes),] if(stride !=1) else []
+            downsample = [BlurPool(filt_size=filter_size, stride=stride, channels=self.inplanes),] if(stride !=1) else []
             downsample += [conv1x1(self.inplanes, planes * block.expansion, 1),
                 norm_layer(planes * block.expansion)]
             # print(downsample)
