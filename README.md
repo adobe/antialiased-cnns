@@ -50,9 +50,7 @@ More information about our provided models and how to use BlurPool is below.
 The following loads a pretrained antialiased model, perhaps as a backbone for your application.
 
 ```python
-import torch
 import models_lpf
-
 model = models_lpf.resnet50(pretrained=True, filter_size=4)
 ```
 
