@@ -15,15 +15,15 @@ We provide models with filter sizes 2,3,4,5 for AlexNet, VGG16, VGG16bn, ResNet1
 ### Evaluating accuracy
 
 ```bash
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a alexnet_lpf4 --pretrained --gpu 0
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a vgg16_lpf4 --pretrained
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a vgg16_bn_lpf4 --pretrained
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a resnet18_lpf4 --pretrained
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a resnet34_lpf4 --pretrained
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a resnet50_lpf4 --pretrained
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a resnet101_lpf4 --pretrained
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a densenet121_lpf4 --pretrained
-~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang -e -a mobilenet_v2_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -e -a alexnet_lpf4 --pretrained --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -e -a vgg16_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -e -a vgg16_bn_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet18_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet34_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet50_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet101_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -e -a densenet121_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -e -a mobilenet_v2_lpf4 --pretrained
 ```
 
 <!-- **Ensembling**
