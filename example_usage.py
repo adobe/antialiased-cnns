@@ -10,7 +10,6 @@ import antialiased_cnns
 filter_size = 4 # can be 2,3,4,5
 pretrained = True
 
-
 model = antialiased_cnns.resnet.resnet18(pretrained=pretrained, filter_size=filter_size)
 model = antialiased_cnns.resnet.resnet34(pretrained=pretrained, filter_size=filter_size)
 model = antialiased_cnns.resnet.resnet50(pretrained=pretrained, filter_size=filter_size)
