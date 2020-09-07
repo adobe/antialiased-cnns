@@ -15,7 +15,7 @@ model = antialiased_cnns.resnet.resnet34(pretrained=pretrained, filter_size=filt
 model = antialiased_cnns.resnet.resnet50(pretrained=pretrained, filter_size=filter_size)
 model = antialiased_cnns.resnet.resnet101(pretrained=pretrained, filter_size=filter_size)
 
-model = antialiased_cnns.alexnet.AlexNet(pretrained=pretrained, filter_size=filter_size)
+model = antialiased_cnns.alexnet.alexnet(pretrained=pretrained, filter_size=filter_size)
 
 model = antialiased_cnns.vgg.vgg16(pretrained=pretrained, filter_size=filter_size)
 model = antialiased_cnns.vgg.vgg16_bn(pretrained=pretrained, filter_size=filter_size)
