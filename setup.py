@@ -4,7 +4,6 @@ with open("README.md", "r") as fh:
 setuptools.setup(
      name='antialiased-cnns',  
      version='0.2',
-     scripts=['ex_exec'] ,
      author="Richard Zhang",
      author_email="rizhang@adobe.com",
      description="Antialiased models and pooling layer from Zhang. Making Convnets Shift-Invariant Again. ICML 2019.",
