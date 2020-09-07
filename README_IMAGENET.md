@@ -55,6 +55,110 @@ Some notes:
 - These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). Change `_lpf#` with filter size (2,3,4,5).
 - The example commands use our pretrained. You can them from your own training checkpoints by subsituting `--weights PTH/TO/WEIGHTS` for `--resume PTH/TO/CHECKPOINT`.
 
+### Imagenet Results
+
+<img src='https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind2_noalex_v2.jpg' align="right" width=380>
+
+We show consistency (y-axis) vs accuracy (x-axis) for various networks. Up and to the right is good. Training and testing instructions are [here](README_IMAGENET.md).
+
+We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** a variant if it is on the Pareto front. We **bold** highest values per column.
+
+**AlexNet [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_AlexNet_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *56.55* | *78.18* | 
+| **Rect-2** | **57.24** | 81.33 | 
+| **Tri-3** | 56.90 | 82.15 | 
+| **Tri-4** | 56.72 | **82.54** | 
+| *Bin-5* | *56.58* | *82.51* | 
+
+**VGG16 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_VGG16_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *71.59* | *88.52* | 
+| *Rect-2* | *72.15* | *89.24* | 
+| *Tri-3* | *72.20* | *89.60* | 
+| **Tri-4** | **72.43** | 89.92 | 
+| **Bin-5** | 72.33 | **90.19** | 
+
+**VGG16bn [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_VGG16bn_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *73.36* | *89.24* | 
+| *Rect-2* | *74.01* | *90.72* | 
+| *Tri-3* | *73.91* | *91.10* | 
+| **Tri-4** | **74.12** | 91.22 | 
+| **Bin-5** | 74.05 | **91.35** | 
+
+**ResNet18 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_ResNet18_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *69.74* | *85.11* | 
+| *Rect-2* | 71.39 | 86.90 | 
+| **Tri-3** | **71.69** | 87.51 | 
+| **Tri-4** | 71.48 | 88.07 | 
+| **Bin-5** | 71.38 | **88.25** | 
+
+**ResNet34 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_ResNet34_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *73.30* | *87.56* | 
+| **Rect-2** | **74.46** | 89.14 | 
+| *Tri-3* | *74.33* | *89.32* | 
+| **Tri-4** | 74.38 | 89.53 | 
+| *Bin-5* | *74.20* | *89.49* | 
+
+**ResNet50 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_ResNet50_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *76.16* | *89.20* | 
+| *Rect-2* | *76.81* | *89.96* | 
+| *Tri-3* | *76.83* | *90.91* | 
+| **Tri-4** | **77.23** | 91.29 | 
+| **Bin-5** | 77.04 | **91.31** | 
+
+**ResNet101 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_ResNet101_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *77.37* | *89.81* | 
+| *Rect-2* | *77.82* | *91.04* | 
+| *Tri-3* | *78.13* | *91.62* | 
+| **Tri-4** | **78.22** | **91.85** | 
+| *Bin-5* | *77.92* | *91.74* | 
+
+**DenseNet121 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_DenseNet121_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *74.43* | *88.81* | 
+| *Rect-2* | *75.04* | *89.53* | 
+| *Tri-3* | *75.14* | 89.78 | 
+| **Tri-4** | **75.29** | 90.29 | 
+| **Bin-5** | 75.03 | **90.39** | 
+
+**MobileNet-v2 [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_MobileNetv2_v2.jpg)**
+
+|          | Accuracy | Consistency |
+| :------: | :------: | :---------: |
+| *Baseline* | *71.88* | *86.50* | 
+| *Rect-2* | *72.63* | *87.33* | 
+| *Tri-3* | 72.59 | 87.46 | 
+| **Tri-4** | **72.72** | 87.72 | 
+| **Bin-5** | 72.50 | **87.79** | 
+
+**Extra Run-Time**
+
+Antialiasing requires extra computation (but no extra parameters). Below, we measure run-time (x-axis, both plots) on a forward pass of batch of 48 images of 224x224 resolution on a RTX 2080 Ti. In this case, gains in accuracy (y-axis, left) and consistency (y-axis, right) end up justifying the increased computation.
+
+<img src='https://richzhang.github.io/antialiased-cnns/resources/resnet_timing.jpg' width=800><br>
+
 
 ## (2) Training antialiased models
 
