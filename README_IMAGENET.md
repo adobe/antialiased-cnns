@@ -15,15 +15,15 @@ We provide models with filter sizes 2,3,4,5 for AlexNet, VGG16, VGG16bn, ResNet1
 ### Evaluating accuracy
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -e -a alexnet_lpf4 --pretrained --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -e -a vgg16_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -e -a vgg16_bn_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet18_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet34_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet50_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -e -a resnet101_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -e -a densenet121_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -e -a mobilenet_v2_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --pretrained --gpu 0 -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf4 --pretrained -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf4 --pretrained -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet18_lpf4 --pretrained -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet34_lpf4 --pretrained -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --pretrained -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf4 --pretrained -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --pretrained -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --pretrained -e 
 ```
 
 <!-- **Ensembling**
@@ -40,20 +40,20 @@ python main.py --data /PTH/TO/ILSVRC2012 -e  -ens 5 -ens_sm -a resnet34_lpf4 --w
 Same as above, but flag `-es` evaluates the shift-consistency -- how often two random `224x224` crops are classified the same.
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a alexnet_lpf4 --pretrained --gpu 0
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a vgg16_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a vgg16_bn_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a resnet18_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a resnet34_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a resnet50_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a resnet101_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a densenet121_lpf4 --pretrained
-python main.py --data /PTH/TO/ILSVRC2012 -es -b 8 -a mobilenet_v2_lpf4 --pretrained
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --pretrained --gpu 0 -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf4 --pretrained -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf4 --pretrained -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet18_lpf4 --pretrained -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet34_lpf4 --pretrained -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --pretrained -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf4 --pretrained -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --pretrained -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --pretrained -es -b 8 
 ```
 
 Some notes:
 - These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). Change `_lpf#` with filter size (2,3,4,5).
-- The example commands use our pretrained. You can them from your own training checkpoints by subsituting `--weights PTH/TO/WEIGHTS` for `--resume PTH/TO/CHECKPOINT`.
+- The example commands use our pretrained. You can them from your own training checkpoints by subsituting `--pretrained` for `--resume PTH/TO/CHECKPOINT`.
 
 ### Imagenet Results
 

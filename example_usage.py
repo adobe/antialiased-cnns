@@ -4,7 +4,6 @@
 # 4.0 International Public License. To view a copy of this license, visit
 # https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.
 
-import torch
 import antialiased_cnns
 
 filter_size = 4 # can be 2,3,4,5
@@ -22,5 +21,5 @@ model = antialiased_cnns.vgg.vgg16_bn(pretrained=pretrained, filter_size=filter_
 
 model = antialiased_cnns.densenet.densenet121(pretrained=pretrained, filter_size=filter_size)
 
-model = models_lpf.mobilenet.mobilenet_v2(pretrained=pretrained, filter_size=filter_size)
+model = antialiased_cnns.mobilenet.mobilenet_v2(pretrained=pretrained, filter_size=filter_size)
 
