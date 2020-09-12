@@ -65,7 +65,7 @@ We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,
 
 The `antialiased_cnns` module contains the `BlurPool` [class](antialiased_cnns/downsample.py), which does blur+subsampling. Run `pip install antialiased-cnns` or copy the `antialiased_cnns` subdirectory.
 
-The methodology is simple -- first evaluate with stride 1, and then use our `BlurPool` layer (also referred to as `BlurPool`) to do antialiased downsampling. Make the following architectural changes to antialias your strided layers. Typically, blur kernel `M` is 4.
+The methodology is simple -- first evaluate with stride 1, and then use our `BlurPool` layer to do antialiased downsampling. Make the following architectural changes. Typically, blur kernel `M` is 4.
 
 ```python
 import antialiased_cnns
