@@ -113,6 +113,7 @@ def alexnet(pretrained=False, filter_size=4, **kwargs):
 
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     model = AlexNet(filter_size=filter_size, **kwargs)
     if pretrained:

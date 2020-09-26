@@ -127,11 +127,11 @@ cfg = {
     'E': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512, 'M'],
 }
 
-def vgg11(pretrained=False, filter_size=4, **kwargs):
+def vgg11(filter_size=4, **kwargs):
     """VGG 11-layer model (configuration "A")
 
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     if pretrained:
         kwargs['init_weights'] = False
@@ -141,11 +141,11 @@ def vgg11(pretrained=False, filter_size=4, **kwargs):
     return model
 
 
-def vgg11_bn(pretrained=False, filter_size=4, **kwargs):
+def vgg11_bn(filter_size=4, **kwargs):
     """VGG 11-layer model (configuration "A") with batch normalization
 
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     if pretrained:
         kwargs['init_weights'] = False
@@ -155,11 +155,11 @@ def vgg11_bn(pretrained=False, filter_size=4, **kwargs):
     return model
 
 
-def vgg13(pretrained=False, filter_size=4, **kwargs):
+def vgg13(filter_size=4, **kwargs):
     """VGG 13-layer model (configuration "B")
 
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     if pretrained:
         kwargs['init_weights'] = False
@@ -169,11 +169,11 @@ def vgg13(pretrained=False, filter_size=4, **kwargs):
     return model
 
 
-def vgg13_bn(pretrained=False, filter_size=4, **kwargs):
+def vgg13_bn(filter_size=4, **kwargs):
     """VGG 13-layer model (configuration "B") with batch normalization
 
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     if pretrained:
         kwargs['init_weights'] = False
@@ -188,6 +188,7 @@ def vgg16(pretrained=False, filter_size=4, **kwargs):
 
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     if pretrained:
         kwargs['init_weights'] = False
@@ -203,6 +204,7 @@ def vgg16_bn(pretrained=False, filter_size=4, **kwargs):
 
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     if pretrained:
         kwargs['init_weights'] = False
@@ -213,11 +215,11 @@ def vgg16_bn(pretrained=False, filter_size=4, **kwargs):
     return model
 
 
-def vgg19(pretrained=False, filter_size=4, **kwargs):
+def vgg19(filter_size=4, **kwargs):
     """VGG 19-layer model (configuration "E")
 
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     if pretrained:
         kwargs['init_weights'] = False
@@ -227,11 +229,11 @@ def vgg19(pretrained=False, filter_size=4, **kwargs):
     return model
 
 
-def vgg19_bn(pretrained=False, filter_size=4, **kwargs):
+def vgg19_bn(filter_size=4, **kwargs):
     """VGG 19-layer model (configuration 'E') with batch normalization
 
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     if pretrained:
         kwargs['init_weights'] = False

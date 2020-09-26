@@ -196,6 +196,8 @@ def densenet121(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
+        pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
     """
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 24, 16),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
@@ -204,11 +206,12 @@ def densenet121(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     return model
 
 
-def densenet169(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def densenet169(filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-169 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
+        pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
     """
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 32, 32),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
@@ -217,11 +220,12 @@ def densenet169(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     return model
 
 
-def densenet201(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def densenet201(filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-201 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
+        pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
     """
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
@@ -230,11 +234,12 @@ def densenet201(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     return model
 
 
-def densenet161(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def densenet161(filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-161 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
+        pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
     """
     model = DenseNet(num_init_features=96, growth_rate=48, block_config=(6, 12, 36, 24),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)

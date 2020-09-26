@@ -166,6 +166,7 @@ def mobilenet_v2(pretrained=False, filter_size=4, **kwargs):
     `"MobileNetV2: Inverted Residuals and Linear Bottlenecks" <https://arxiv.org/abs/1801.04381>`_.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
+        filter_size (int): [4] Antialiasing filter size
     """
     model = MobileNetV2(filter_size=filter_size, **kwargs)
     if pretrained:
