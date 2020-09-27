@@ -11,3 +11,4 @@ from .mobilenet import *
 from .resnet import *
 from .vgg import *
 from .squeezenet import *
+from .mnasnet import *
