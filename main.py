@@ -267,9 +267,9 @@ def main_worker(gpu, ngpus_per_node, args):
         model = antialiased_cnns.squeezenet1_0(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
 
     elif(args.arch[:-1]=='mnasnet0_5_lpf'):
-        model = antialiased_cnns.squeezenet(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+        model = antialiased_cnns.mnasnet0_5(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
     elif(args.arch[:-1]=='mnasnet1_0_lpf'):
-        model = antialiased_cnns.squeezenet(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+        model = antialiased_cnns.mnasnet1_0(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
 
     else:
         model = models.__dict__[args.arch](pretrained=args.pretrained)
