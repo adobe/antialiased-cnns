@@ -261,10 +261,10 @@ def main_worker(gpu, ngpus_per_node, args):
     elif(args.arch[:-1]=='mobilenet_v2_lpf'):
         model = antialiased_cnns.mobilenet_v2(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
 
-    elif(args.arch[:-1] in ['squeezenet_lpf', 'squeezenet1_1_lpf']):
-        model = antialiased_cnns.squeezenet(pretrained=args.pretrained, version='1_1', filter_size=int(args.arch[-1]))
+    elif(args.arch[:-1]=='squeezenet_lpf' or args.arch[:-1]=='squeezenet1_1_lpf'):
+        model = antialiased_cnns.squeezenet1_1(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
     elif(args.arch[:-1]=='squeezenet1_0_lpf'):
-        model = antialiased_cnns.squeezenet(pretrained=args.pretrained, version='1_0', filter_size=int(args.arch[-1]))
+        model = antialiased_cnns.squeezenet1_0(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
 
     elif(args.arch[:-1]=='mnasnet0_5'):
         model = antialiased_cnns.squeezenet(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
