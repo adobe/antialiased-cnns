@@ -268,7 +268,7 @@ def main_worker(gpu, ngpus_per_node, args):
     if args.finetune: # finetune from baseline "aliased" model
         print("=> copying over pretrained weights from [%s]"%args.arch[:-5])
         model_baseline = models.__dict__[args.arch[:-5]](pretrained=True)
-        antialiased_cnns.copy_params(model_baseline, model)
+        antialiased_cnns.copy_params_buffers(model_baseline, model)
 
     if args.weights is not None:
         print("=> using saved weights [%s]"%args.weights)
