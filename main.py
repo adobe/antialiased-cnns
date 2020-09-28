@@ -269,12 +269,7 @@ def main_worker(gpu, ngpus_per_node, args):
         model_baseline = models.__dict__[args.arch[:-5]](pretrained=True)
 
         print("=> copying over pretrained weights from [%s]"%args.arch[:-5])
-        baseline_params = list(model_baseline.parameters())
-        our_params = list(model.parameters())
-        assert(len(baseline_params)==len(our_params))
-        with torch.no_grad():
-            for params in zip(baseline_params, our_params):
-                params[1][...] = params[0][...]
+        antialiased_cnns.copy_model_params(model_baseline, model)
 
     if args.weights is not None:
         print("=> using saved weights [%s]"%args.weights)
