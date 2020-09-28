@@ -4,7 +4,9 @@
 # 4.0 International Public License. To view a copy of this license, visit
 # https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.
 
-def copy_model_params(src_model, dest_model):
+import torch
+
+def copy_params(src_model, dest_model):
     src_params = list(src_model.parameters())
     dest_params = list(dest_model.parameters())
     assert(len(src_params)==len(dest_params))
