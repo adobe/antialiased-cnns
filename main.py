@@ -271,6 +271,7 @@ def main_worker(gpu, ngpus_per_node, args):
         print("=> copying over pretrained weights from [%s]"%args.arch[:-5])
         baseline_params = list(model_baseline.parameters())
         our_params = list(model.parameters())
+        assert(len(baseline_params)==len(our_params))
         with torch.no_grad():
             for params in zip(baseline_params, our_params):
                 params[1][...] = params[0][...]
