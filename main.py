@@ -145,6 +145,7 @@ parser.add_argument('--weights', default=None, type=str, metavar='PATH',
                     help='path to pretrained model weights')
 parser.add_argument('--save_weights', default=None, type=str, metavar='PATH',
                     help='path to save model weights')
+parser.add_argument('--finetune', action='store_true', help='finetune from baseline model')
 
 best_acc1 = 0
 
@@ -263,6 +264,16 @@ def main_worker(gpu, ngpus_per_node, args):
 
     else:
         model = models.__dict__[args.arch](pretrained=args.pretrained)
+
+    if args.finetune: # finetune from baseline "aliased" model
+        model_baseline = models.__dict__[args.arch[:-5]](pretrained=True)
+
+        print("=> copying over pretrained weights from [%s]"%args.arch[:-5])
+        baseline_params = list(model_baseline.parameters())
+        our_params = list(model.parameters())
+        with torch.no_grad():
+            for params in zip(baseline_params, our_params):
+                params[1][...] = params[0][...]
 
     if args.weights is not None:
         print("=> using saved weights [%s]"%args.weights)
