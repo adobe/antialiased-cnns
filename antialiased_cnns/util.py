@@ -26,7 +26,7 @@ def copy_buffers(src_model, dest_model):
 		while(not cond): # antialiasing adds buffers, so these lists won't match
 			cond = buffer.shape==dest_buffers[cc].shape
 			cc+=1
-			if(cc==len(dest_buffers)):
+			if(cc==len(dest_buffers) and not cond):
 				raise ValueError('Could not find matching buffer in [dest_model]')
 		with torch.no_grad():
 			dest_buffers[cc-1][...] = buffer[...]
