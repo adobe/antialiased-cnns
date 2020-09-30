@@ -88,6 +88,8 @@ parser.add_argument('-b', '--batch-size', default=256, type=int,
                          'using Data Parallel or Distributed Data Parallel')
 parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
                     metavar='LR', help='initial learning rate', dest='lr')
+parser.add_argument('--lr_step', default=30, type=float,
+                    help='number of epochs before stepping down learning rate')
 parser.add_argument('--cos_lr', action='store_true',
                     help='use cosine learning rate')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
@@ -145,6 +147,7 @@ parser.add_argument('--weights', default=None, type=str, metavar='PATH',
                     help='path to pretrained model weights')
 parser.add_argument('--save_weights', default=None, type=str, metavar='PATH',
                     help='path to save model weights')
+parser.add_argument('--finetune', action='store_true', help='finetune from baseline model')
 
 best_acc1 = 0
 
@@ -273,6 +276,11 @@ def main_worker(gpu, ngpus_per_node, args):
 
     else:
         model = models.__dict__[args.arch](pretrained=args.pretrained)
+
+    if args.finetune: # finetune from baseline "aliased" model
+        print("=> copying over pretrained weights from [%s]"%args.arch[:-5])
+        model_baseline = models.__dict__[args.arch[:-5]](pretrained=True)
+        antialiased_cnns.copy_params_buffers(model_baseline, model)
 
     if args.weights is not None:
         print("=> using saved weights [%s]"%args.weights)
@@ -701,7 +709,7 @@ class AverageMeter(object):
 
 def adjust_learning_rate(optimizer, epoch, args):
     """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
-    lr = args.lr * (0.1 ** (epoch // 30))
+    lr = args.lr * (0.1 ** (epoch // args.lr_step))
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
 

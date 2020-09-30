@@ -15,7 +15,17 @@ model = antialiased_cnns.resnet50(pretrained=True)
 ```
 <!-- model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0 -->
 
-Now you are antialiased! If you want to antialias your own model, use the BlurPool layer.
+Now you are antialiased!
+
+If you have a model trained and don't want to retrain the antialiased model from scratch, no problem! Simply load your old weights and fine-tune:
+
+``` python
+import torchvision.models as models
+old_model = models.resnet50(pretrained=True) # old (aliased) model
+antialiased_cnns.copy_params_buffers(old_model, model) # copy the weights over
+```
+
+If you want to antialias your own model, use the BlurPool layer.
 
 ```python
 C = 10 # example feature channel size
@@ -88,6 +98,18 @@ antialiased = antialiased_cnns.BlurPool(C, filt_size=M, stride=2)
 ```
 
 We assume incoming tensor has `C` channels. Computing a layer at stride 1 instead of stride 2 adds memory and run-time. As such, we typically skip antialiasing at the highest-resolution (early in the network), to prevent large increases.
+
+If you already trained a model, and then add antialiasing, you can fine-tune from that old model:
+
+``` python
+antialiased_cnns.copy_params_buffers(old_model, antialiased_model)
+```
+
+If this doesn't work, you can just copy the parameters (and not buffers). Adding antialiasing doesn't add any parameters, so the parameter lists are identical. (It does add buffers, so some heuristic is used to match the buffers, which may throw an error.)
+
+``` python
+antialiased_cnns.copy_params(old_model, antialiased_model)
+```
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/antialias_mod.jpg' width=800><br>
 

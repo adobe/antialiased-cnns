@@ -308,27 +308,30 @@ def resnet101(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     return model
 
 
-def resnet152(filter_size=4, pool_only=True, **kwargs):
+def resnet152(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """Constructs a ResNet-152 model.
     Args:
         filter_size (int): Antialiasing filter size
         pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
     """
     model = ResNet(Bottleneck, [3, 8, 36, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # model.load_state_dict(model_zoo.load_url(model_urls['resnet152']))
     return model
 
 
-def resnext50_32x4d(filter_size=4, pool_only=True, **kwargs):
+def resnext50_32x4d(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = ResNet(Bottleneck, [3, 4, 6, 3], groups=32, width_per_group=4, filter_size=filter_size, pool_only=pool_only, **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
     #     model.load_state_dict(model_zoo.load_url(model_urls['resnext50_32x4d']))
     return model
 
 
-def resnext101_32x8d(filter_size=4, pool_only=True, **kwargs):
+def resnext101_32x8d(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = ResNet(Bottleneck, [3, 4, 23, 3], groups=32, width_per_group=8, filter_size=filter_size, pool_only=pool_only, **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
     #     model.load_state_dict(model_zoo.load_url(model_urls['resnext101_32x8d']))
     return model
