@@ -1,3 +1,2 @@
-IPython
 torch
 torchvision

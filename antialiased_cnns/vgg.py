@@ -127,7 +127,7 @@ cfg = {
     'E': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512, 'M'],
 }
 
-def vgg11(filter_size=4, **kwargs):
+def vgg11(pretrained=False, filter_size=4, **kwargs):
     """VGG 11-layer model (configuration "A")
 
     Args:
@@ -136,12 +136,13 @@ def vgg11(filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['A'], filter_size=filter_size), **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # model.load_state_dict(model_zoo.load_url(model_urls['vgg11']))
     return model
 
 
-def vgg11_bn(filter_size=4, **kwargs):
+def vgg11_bn(pretrained=False, filter_size=4, **kwargs):
     """VGG 11-layer model (configuration "A") with batch normalization
 
     Args:
@@ -150,12 +151,13 @@ def vgg11_bn(filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['A'], filter_size=filter_size, batch_norm=True), **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # model.load_state_dict(model_zoo.load_url(model_urls['vgg11_bn']))
     return model
 
 
-def vgg13(filter_size=4, **kwargs):
+def vgg13(pretrained=False, filter_size=4, **kwargs):
     """VGG 13-layer model (configuration "B")
 
     Args:
@@ -164,12 +166,13 @@ def vgg13(filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['B'], filter_size=filter_size), **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # model.load_state_dict(model_zoo.load_url(model_urls['vgg13']))
     return model
 
 
-def vgg13_bn(filter_size=4, **kwargs):
+def vgg13_bn(pretrained=False, filter_size=4, **kwargs):
     """VGG 13-layer model (configuration "B") with batch normalization
 
     Args:
@@ -178,7 +181,8 @@ def vgg13_bn(filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['B'], filter_size=filter_size, batch_norm=True), **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # model.load_state_dict(model_zoo.load_url(model_urls['vgg13_bn']))
     return model
 
