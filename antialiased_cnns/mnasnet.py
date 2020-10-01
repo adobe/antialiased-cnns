@@ -36,10 +36,10 @@ class _InvertedResidual(nn.Module):
             nn.ReLU(inplace=True),
             # Depthwise
             nn.Conv2d(mid_ch, mid_ch, kernel_size, padding=kernel_size // 2,
-                      stride=1, groups=mid_ch, bias=False),
+                      stride=stride, groups=mid_ch, bias=False),
             ]
-        if(stride==2):
-            layers +=[BlurPool(mid_ch, filt_size=filter_size, stride=2), ]
+        # if(stride==2):
+            # layers +=[BlurPool(mid_ch, filt_size=filter_size, stride=2), ]
         layers+=[nn.BatchNorm2d(mid_ch, momentum=bn_momentum),
             nn.ReLU(inplace=True),
             # Linear pointwise. Note that there's no activation.
