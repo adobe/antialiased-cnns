@@ -148,7 +148,7 @@ parser.add_argument('--weights', default=None, type=str, metavar='PATH',
 parser.add_argument('--save_weights', default=None, type=str, metavar='PATH',
                     help='path to save model weights')
 parser.add_argument('--finetune', action='store_true', help='finetune from baseline model')
-parser.add_argument('-mti', '--max-train-iters', default=None, type=int,
+parser.add_argument('-mti', '--max-train-iters', default=np.inf, type=int,
                     help='number of training iterations per epoch before cutting off (default: infinite)')
 
 best_acc1 = 0

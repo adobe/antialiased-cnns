@@ -36,92 +36,92 @@ finetune_resnet152:
 finetune_alexnet:
 	NETWORK='alexnet'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --gpu 0 --lr .001 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar --gpu 0 -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --gpu 0 --lr .001 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar --gpu 0 -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar --gpu 0 -es > finetune_${NETWORK}/con
 
 finetune_vgg11:
 	NETWORK='vgg11'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .001 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .001 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_vgg11_bn:
 	NETWORK='vgg11_bn'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .005 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .005 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_vgg13:
 	NETWORK='vgg13'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .001 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .001 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_vgg13_bn:
 	NETWORK='vgg13_bn'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .005 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .005 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_vgg16:
 	NETWORK='vgg16'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .001 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .001 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_vgg16_bn:
 	NETWORK='vgg16_bn'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .005 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .005 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_vgg19:
 	NETWORK='vgg19'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .001 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .001 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_vgg19_bn:
 	NETWORK='vgg19_bn'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .005 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .005 -b 128 -ba 2 -ep 60 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_densenet121:
 	NETWORK='densenet121'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} -ep 60 --lr .01 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} -ep 60 --lr .01 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_densenet169:
 	NETWORK='densenet169'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} -ep 60 --lr .01 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} -ep 60 --lr .01 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_densenet161:
 	NETWORK='densenet161'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} -ep 60 --lr .01 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} -ep 60 --lr .01 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 finetune_mobilenet_v2:
 	NETWORK='mobilenet_v2'
 	mkdir finetune_${NETWORK}
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --finetune --out-dir finetune_${NETWORK} --lr .05 --cos_lr --wd 4e-5 --ep 150 --start-epoch 50 > finetune_${NETWORK}/log
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --finetune --out-dir finetune_${NETWORK} --lr .05 --cos_lr --wd 4e-5 --ep 150 --start-epoch 50 > finetune_${NETWORK}/log
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -e > finetune_${NETWORK}/acc
 	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 8 -j 16 --resume finetune_${NETWORK}/model_best.pth.tar -es > finetune_${NETWORK}/con
 
 
