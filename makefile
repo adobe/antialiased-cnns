@@ -1,4 +1,4 @@
-test:
+finetune_test:
 	NETWORK='resnet18'
 	mkdir finetune_test
 	echo finetune_test
