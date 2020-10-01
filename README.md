@@ -29,9 +29,9 @@ If you want to antialias your own model, use the BlurPool layer.
 
 ```python
 C = 10 # example feature channel size
-blurpool = antialiased_cnns.BlurPool(C, filt_size=4, stride=2) # BlurPool layer; use to downsample a feature map
+blurpool = antialiased_cnns.BlurPool(C, stride=2) # BlurPool layer; use to downsample a feature map
 ex_tens = torch.Tensor(1,C,128,128)
-print blurpool(ex_tens).shape # 1xCx64x64 tensor
+print(blurpool(ex_tens).shape) # 1xCx64x64 tensor
 ```
 
 More information about our provided models and how to use BlurPool is below.
