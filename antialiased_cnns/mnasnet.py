@@ -30,21 +30,33 @@ class _InvertedResidual(nn.Module):
         mid_ch = in_ch * expansion_factor
         self.apply_residual = (in_ch == out_ch and stride == 1)
 
-        layers = [# Pointwise
-            nn.Conv2d(in_ch, mid_ch, 1, bias=False),
-            nn.BatchNorm2d(mid_ch, momentum=bn_momentum),
-            nn.ReLU(inplace=True),
-            # Depthwise
-            nn.Conv2d(mid_ch, mid_ch, kernel_size, padding=kernel_size // 2,
-                      stride=stride, groups=mid_ch, bias=False),
-            ]
-        # if(stride==2):
-            # layers +=[BlurPool(mid_ch, filt_size=filter_size, stride=2), ]
-        layers+=[nn.BatchNorm2d(mid_ch, momentum=bn_momentum),
-            nn.ReLU(inplace=True),
-            # Linear pointwise. Note that there's no activation.
-            nn.Conv2d(mid_ch, out_ch, 1, bias=False),
-            nn.BatchNorm2d(out_ch, momentum=bn_momentum)]
+        if(stride==2):
+            layers = [# Pointwise
+                nn.Conv2d(in_ch, mid_ch, 1, bias=False),
+                nn.BatchNorm2d(mid_ch, momentum=bn_momentum),
+                nn.ReLU(inplace=True),
+                # Depthwise
+                nn.Conv2d(mid_ch, mid_ch, kernel_size, padding=kernel_size // 2,
+                          stride=1, groups=mid_ch, bias=False),
+                BlurPool(mid_ch, filt_size=filter_size, stride=2),
+                nn.BatchNorm2d(mid_ch, momentum=bn_momentum),
+                nn.ReLU(inplace=True),
+                # Linear pointwise. Note that there's no activation.
+                nn.Conv2d(mid_ch, out_ch, 1, bias=False),
+                nn.BatchNorm2d(out_ch, momentum=bn_momentum)]
+        elif(stride==1):
+            layers = [# Pointwise
+                nn.Conv2d(in_ch, mid_ch, 1, bias=False),
+                nn.BatchNorm2d(mid_ch, momentum=bn_momentum),
+                nn.ReLU(inplace=True),
+                # Depthwise
+                nn.Conv2d(mid_ch, mid_ch, kernel_size, padding=kernel_size // 2,
+                          stride=1, groups=mid_ch, bias=False),
+                nn.BatchNorm2d(mid_ch, momentum=bn_momentum),
+                nn.ReLU(inplace=True),
+                # Linear pointwise. Note that there's no activation.
+                nn.Conv2d(mid_ch, out_ch, 1, bias=False),
+                nn.BatchNorm2d(out_ch, momentum=bn_momentum)]
 
         self.layers = nn.Sequential(*layers)
 
