@@ -2,7 +2,7 @@ finetune_test:
 	NETWORK='resnet18'
 	mkdir finetune_test
 	echo finetune_test
-	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 256 -j 16 -p 1000 --finetune --lr .01 -ep 60 --out-dir finetune_test > finetune_${NETWORK}_test
+	~/anaconda3/bin/python main.py --data /mnt/ssd/tmp/rzhang/ILSVRC2012 -a ${NETWORK}_lpf4 -b 256 -j 16 -p 1000 --finetune --lr .01 -ep 60 --out-dir finetune_test
 
 finetune_resnet18:
 	NETWORK='resnet18'
