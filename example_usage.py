@@ -23,3 +23,5 @@ model = antialiased_cnns.densenet121(pretrained=pretrained, filter_size=filter_s
 
 model = antialiased_cnns.mobilenet_v2(pretrained=pretrained, filter_size=filter_size)
 
+
+

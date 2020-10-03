@@ -206,7 +206,7 @@ def densenet121(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     return model
 
 
-def densenet169(filter_size=4, pool_only=True, **kwargs):
+def densenet169(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-169 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -215,12 +215,13 @@ def densenet169(filter_size=4, pool_only=True, **kwargs):
     """
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 32, 32),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # _load_state_dict(model, model_urls['densenet169'])
     return model
 
 
-def densenet201(filter_size=4, pool_only=True, **kwargs):
+def densenet201(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-201 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -229,12 +230,13 @@ def densenet201(filter_size=4, pool_only=True, **kwargs):
     """
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # _load_state_dict(model, model_urls['densenet201'])
     return model
 
 
-def densenet161(filter_size=4, pool_only=True, **kwargs):
+def densenet161(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     r"""Densenet-161 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -243,6 +245,7 @@ def densenet161(filter_size=4, pool_only=True, **kwargs):
     """
     model = DenseNet(num_init_features=96, growth_rate=48, block_config=(6, 12, 36, 24),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # _load_state_dict(model, model_urls['densenet161'])
     return model

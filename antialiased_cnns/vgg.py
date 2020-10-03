@@ -219,7 +219,7 @@ def vgg16_bn(pretrained=False, filter_size=4, **kwargs):
     return model
 
 
-def vgg19(filter_size=4, **kwargs):
+def vgg19(pretrained=False, filter_size=4, **kwargs):
     """VGG 19-layer model (configuration "E")
 
     Args:
@@ -228,12 +228,13 @@ def vgg19(filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['E'], filter_size=filter_size), **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # model.load_state_dict(model_zoo.load_url(model_urls['vgg19']))
     return model
 
 
-def vgg19_bn(filter_size=4, **kwargs):
+def vgg19_bn(pretrained=False, filter_size=4, **kwargs):
     """VGG 19-layer model (configuration 'E') with batch normalization
 
     Args:
@@ -242,7 +243,8 @@ def vgg19_bn(filter_size=4, **kwargs):
     if pretrained:
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['E'], filter_size=filter_size, batch_norm=True), **kwargs)
-    # if pretrained:
+    if pretrained:
+        raise ValueError('No pretrained model available')
         # model.load_state_dict(model_zoo.load_url(model_urls['vgg19_bn']))
     return model
 
