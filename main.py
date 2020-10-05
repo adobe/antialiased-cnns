@@ -471,6 +471,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
                    data_time=data_time, loss=losses, top1=top1, top5=top5))
 
             if(args.wandb):
+                import wandb
                 global_step = i + (epoch * len(train_loader))
                 wandb.log(
                     {
@@ -526,6 +527,7 @@ def validate(val_loader, model, criterion, args):
                        top1=top1, top5=top5))
 
         if args.wandb:
+            import wandb
             wandb.log(
                 {
                     'val_avg_loss': losses.avg,
