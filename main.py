@@ -151,6 +151,7 @@ parser.add_argument('--finetune', action='store_true', help='finetune from basel
 parser.add_argument('-mti', '--max-train-iters', default=np.inf, type=int,
                     help='number of training iterations per epoch before cutting off (default: infinite)')
 
+parser.add_argument('--wandb', action='store_true', help='use wandb logging')
 best_acc1 = 0
 
 
@@ -211,63 +212,17 @@ def main_worker(gpu, ngpus_per_node, args):
 
     # create model
     print("=> creating model '{}'".format(args.arch))
-    
-    import antialiased_cnns.alexnet
-    import antialiased_cnns.resnet
-    import antialiased_cnns.vgg
-    import antialiased_cnns.mobilenet
-    import antialiased_cnns.densenet
-
-    if(args.arch[:-1]=='alexnet_lpf'):
-        model = antialiased_cnns.alexnet(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-
-    elif(args.arch[:-1]=='vgg11_bn_lpf'):
-        model = antialiased_cnns.vgg11_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='vgg13_bn_lpf'):
-        model = antialiased_cnns.vgg13_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='vgg16_bn_lpf'):
-        model = antialiased_cnns.vgg16_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='vgg19_bn_lpf'):
-        model = antialiased_cnns.vgg19_bn(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-
-    elif(args.arch[:-1]=='vgg11_lpf'):
-        model = antialiased_cnns.vgg11(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='vgg13_lpf'):
-        model = antialiased_cnns.vgg13(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='vgg16_lpf'):
-        model = antialiased_cnns.vgg16(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='vgg19_lpf'):
-        model = antialiased_cnns.vgg19(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-
-    elif(args.arch[:-1]=='resnet18_lpf'):
-        model = antialiased_cnns.resnet.resnet18(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='resnet34_lpf'):
-        model = antialiased_cnns.resnet34(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='resnet50_lpf'):
-        model = antialiased_cnns.resnet50(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='resnet101_lpf'):
-        model = antialiased_cnns.resnet101(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='resnet152_lpf'):
-        model = antialiased_cnns.resnet152(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='resnext50_32x4d_lpf'):
-        model = antialiased_cnns.resnext50_32x4d(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='resnext101_32x8d_lpf'):
-        model = antialiased_cnns.resnext101_32x8d(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-
-    elif(args.arch[:-1]=='densenet121_lpf'):
-        model = antialiased_cnns.densenet121(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='densenet169_lpf'):
-        model = antialiased_cnns.densenet169(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='densenet201_lpf'):
-        model = antialiased_cnns.densenet201(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-    elif(args.arch[:-1]=='densenet161_lpf'):
-        model = antialiased_cnns.densenet161(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-
-    elif(args.arch[:-1]=='mobilenet_v2_lpf'):
-        model = antialiased_cnns.mobilenet_v2(pretrained=args.pretrained, filter_size=int(args.arch[-1]))
-
-    else:
+    if(args.arch.split('_')[-1][:-1]=='lpf'): # antialiased model
+        model = antialiased_cnns.__dict__[args.arch[:-5]](pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+    else: # baseline model
         model = models.__dict__[args.arch](pretrained=args.pretrained)
+
+    # instrumentation
+    if(args.wandb):
+        import wandb
+        wandb.init(proj='antialiased-cnns')
+        wandb.config.update(args)
+        wandb.watch(model)
 
     if args.finetune: # finetune from baseline "aliased" model
         print("=> copying over pretrained weights from [%s]"%args.arch[:-5])
@@ -436,6 +391,10 @@ def main_worker(gpu, ngpus_per_node, args):
             scheduler.step()
             print('[%03d] %.5f'%(epoch, scheduler.get_lr()[0]))
 
+        if(args.wandb):
+            wandb.log({'learning_rate': optimizer.param_groups[0]['lr']},
+                      commit=False)
+
         # train for one epoch
         train(train_loader, model, criterion, optimizer, epoch, args)
 
@@ -511,6 +470,19 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
                    epoch, i, len(train_loader), batch_time=batch_time,
                    data_time=data_time, loss=losses, top1=top1, top5=top5))
 
+            if(args.wandb):
+                global_step = i + (epoch * len(train_loader))
+                wandb.log(
+                    {
+                        'train_loss': losses.val,
+                        'train_avg_loss': losses.avg,
+                        'train_acc@1': top1.val,
+                        'train_avg_acc@1': top1.avg,
+                        'train_acc@5': top5.val,
+                        'train_avg_acc@5': top5.avg
+                    },
+                    step=global_step)
+
         if(i > args.max_train_iters):
             break
 
@@ -552,6 +524,15 @@ def validate(val_loader, model, criterion, args):
                       'Acc@5 {top5.val:.3f} ({top5.avg:.3f})'.format(
                        i, len(val_loader), batch_time=batch_time, loss=losses,
                        top1=top1, top5=top5))
+
+                if args.wandb:
+                    wandb.log(
+                        {
+                            'val_avg_loss': losses.avg,
+                            'val_avg_acc@1': top1.avg,
+                            'val_avg_acc@5': top5.avg
+                        },
+                        commit=False)
 
         print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
               .format(top1=top1, top5=top5))
