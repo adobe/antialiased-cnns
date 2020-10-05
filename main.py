@@ -220,7 +220,7 @@ def main_worker(gpu, ngpus_per_node, args):
     # instrumentation
     if(args.wandb):
         import wandb
-        wandb.init(proj='antialiased-cnns')
+        wandb.init(project='antialiased-cnns')
         wandb.config.update(args)
         wandb.watch(model)
 
