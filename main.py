@@ -472,7 +472,7 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
 
             if(args.wandb):
                 import wandb
-                global_step = i + (epoch * len(train_loader))
+                global_step = epoch + 1.*i/len(train_loader)
                 wandb.log(
                     {
                         'train_loss': losses.val,
