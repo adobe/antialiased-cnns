@@ -525,14 +525,14 @@ def validate(val_loader, model, criterion, args):
                        i, len(val_loader), batch_time=batch_time, loss=losses,
                        top1=top1, top5=top5))
 
-                if args.wandb:
-                    wandb.log(
-                        {
-                            'val_avg_loss': losses.avg,
-                            'val_avg_acc@1': top1.avg,
-                            'val_avg_acc@5': top5.avg
-                        },
-                        commit=False)
+        if args.wandb:
+            wandb.log(
+                {
+                    'val_avg_loss': losses.avg,
+                    'val_avg_acc@1': top1.avg,
+                    'val_avg_acc@5': top5.avg
+                },
+                commit=False)
 
         print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
               .format(top1=top1, top5=top5))
