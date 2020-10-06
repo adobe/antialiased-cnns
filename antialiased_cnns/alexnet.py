@@ -42,7 +42,6 @@ import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 import numpy as np
 from antialiased_cnns import *
-from IPython import embed
 
 __all__ = ['AlexNet', 'alexnet']
 
@@ -153,7 +152,6 @@ class AlexNetNMP(nn.Module):
         )
 
     def forward(self, x):
-        # embed()
         x = self.features(x)
         x = self.avgpool(x)
         x = x.view(x.size(0), 256 * 6 * 6)

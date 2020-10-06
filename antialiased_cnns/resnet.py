@@ -40,7 +40,6 @@
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 from antialiased_cnns import *
-from IPython import embed
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
            'resnet152', 'resnext50_32x4d', 'resnext101_32x8d']

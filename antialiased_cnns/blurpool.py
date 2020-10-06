@@ -9,7 +9,6 @@ import torch.nn.parallel
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
-from IPython import embed
 
 class BlurPool(nn.Module):
     def __init__(self, channels, pad_type='reflect', filt_size=4, stride=2, pad_off=0):

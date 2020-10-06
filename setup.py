@@ -8,7 +8,7 @@ setuptools.setup(
      author_email="rizhang@adobe.com",
      description="Antialiased models and pooling layer from Zhang. Making Convnets Shift-Invariant Again. ICML 2019.",
      long_description=long_description,
-   long_description_content_type="text/markdown",
+     long_description_content_type="text/markdown",
      url="https://github.com/adobe/antialiased-cnns",
      packages=setuptools.find_packages(),
      classifiers=[
@@ -17,3 +17,5 @@ setuptools.setup(
          "Operating System :: OS Independent",
      ],
  )
+
+     # install_requires=[], 
