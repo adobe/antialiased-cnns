@@ -115,8 +115,8 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 ## (3) ImageNet Evaluation, Results, and Training code
 
+**Accuracy** How often the image is classified correctly
 
-**Accuracy**
 |          | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
 | AlexNet | 56.55 | 56.72 | +0.17 |
@@ -129,8 +129,8 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 | DenseNet121 | 74.43 | 75.29 | +0.86 |
 | MobileNetv2 | 71.88 | 72.72 | +0.84 |
 
+**Consistency** How often two shifts of the same image are classified the same
 
-**Consistency**
 |          | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
 | AlexNet | 78.18 | 82.54 | +4.36 |
