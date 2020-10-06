@@ -115,7 +115,36 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 ## (3) ImageNet Evaluation, Results, and Training code
 
-To reduce clutter, this is linked [here](README_IMAGENET.md). Help improve the results!
+**Accuracy** How often the image is classified correctly
+
+|          | Baseline | Antialiased | Delta |
+| :------: | :------: | :-------: | :-------: |
+| AlexNet | 56.55 | 56.72 | +0.17 |
+| VGG16 | 71.59 | 72.43 | +0.84 |
+| VGG16bn | 73.36 | 74.12 | +0.76 |
+| Resnet18 | 69.74 | 71.48 | +1.74 |
+| Resnet34 | 73.30 | 74.38 | +1.08 |
+| Resnet50 | 76.16 | 77.23 | +1.07 |
+| Resnet101 | 77.37 | 78.22 | +0.85 |
+| DenseNet121 | 74.43 | 75.29 | +0.86 |
+| MobileNetv2 | 71.88 | 72.72 | +0.84 |
+
+**Consistency** How often two shifts of the same image are classified the same
+
+|          | Baseline | Antialiased | Delta |
+| :------: | :------: | :-------: | :-------: |
+| AlexNet | 78.18 | 82.54 | +4.36 |
+| VGG16 | 88.52 | 89.92  | +1.40 |
+| VGG16bn | 89.24 | 91.22 | +1.98 |
+| Resnet18 | 85.11 | 88.07 | +2.96 |
+| Resnet34 | 87.56 | 89.53 | +1.97 |
+| Resnet50 | 89.20 | 91.29 | +2.09 |
+| Resnet101 | 89.81 | 91.85 | +2.04 |
+| DenseNet121 | 88.81 | 90.29 | +1.48 |
+| MobileNetv2 | 86.50 | 87.72 | +1.22 |
+
+
+To reduce clutter, extended results are [here](README_IMAGENET.md). Help improve the results!
 
 ## Licenses
 
