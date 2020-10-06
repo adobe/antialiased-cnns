@@ -62,8 +62,6 @@ import torchvision.datasets as datasets
 import antialiased_cnns
 import torchvision.models as models
 
-from IPython import embed
-
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
@@ -345,6 +343,7 @@ def main_worker(gpu, ngpus_per_node, args):
         train_loader = val_loader
 
     if(args.embed):
+        from IPython import embed
         embed()
 
     if args.save_weights is not None: # "deparallelize" saved weights
