@@ -480,7 +480,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
                         'train_acc@1': top1.val,
                         'train_avg_acc@1': top1.avg,
                         'train_acc@5': top5.val,
-                        'train_avg_acc@5': top5.avg
+                        'train_avg_acc@5': top5.avg,
+                        'epoch': 1.*global_step/len(train_loader), 
                     },
                     step=global_step)
 
