@@ -118,7 +118,7 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 **Accuracy**
 |          | Baseline | Antialiased | Delta |
-| :------: | :------: | :---------: | :---------: |
+| :------: | :------: | :-------: | :-------: |
 | AlexNet | 56.55 | 56.72 | +0.17 |
 | VGG16 | 71.59 | 72.43 | +0.84 |
 | VGG16bn | 73.36 | 74.12 | +0.76 |
@@ -132,7 +132,7 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 **Consistency**
 |          | Baseline | Antialiased | Delta |
-| :------: | :------: | :---------: | :---------: |
+| :------: | :------: | :-------: | :-------: |
 | AlexNet | 78.18 | 82.54 | +4.36 |
 | VGG16 | 88.52 | 89.92  | +1.40 |
 | VGG16bn | 89.24 | 91.22 | +1.98 |
