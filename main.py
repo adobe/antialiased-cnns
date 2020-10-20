@@ -350,13 +350,13 @@ def main_worker(gpu, ngpus_per_node, args):
         print("=> saving 'deparallelized' weights [%s]"%args.save_weights)
         # TO-DO: automatically save this during training
         if args.gpu is not None:
-            torch.save({'state_dict': model.state_dict()}, args.save_weights)
+            torch.save({'state_dict': model.state_dict()}, args.save_weights, _use_new_zipfile_serialization=True)
         else:
             if(args.arch[:7]=='alexnet' or args.arch[:3]=='vgg'):
                 model.features = model.features.module
-                torch.save({'state_dict': model.state_dict()}, args.save_weights)
+                torch.save({'state_dict': model.state_dict()}, args.save_weights, _use_new_zipfile_serialization=True)
             else:
-                torch.save({'state_dict': model.module.state_dict()}, args.save_weights)
+                torch.save({'state_dict': model.module.state_dict()}, args.save_weights, _use_new_zipfile_serialization=True)
         return
 
     if args.evaluate:
