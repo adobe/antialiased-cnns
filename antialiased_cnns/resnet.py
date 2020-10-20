@@ -63,6 +63,7 @@ model_urls = {
     'resnet101_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf3-928f1444.pth',
     'resnet101_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf4-f8a116ff.pth',
     'resnet101_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf5-1f3745af.pth',
+    'resnet18_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet18_lpf4_finetune-8cc58f59.pth',
 }
 
 
@@ -276,7 +277,7 @@ class ResNet(nn.Module):
         return x
 
 
-def resnet18(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def resnet18(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     """Constructs a ResNet-18 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
@@ -285,7 +286,10 @@ def resnet18(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     """
     model = ResNet(BasicBlock, [2, 2, 2, 2], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet18_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
+        if(filter_size==4 and not _force_nonfinetuned):
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet18_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet18_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
