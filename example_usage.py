@@ -6,20 +6,33 @@
 
 import antialiased_cnns
 
-filter_size = 4 # can be 2,3,4,5
-pretrained = True
 
-model = antialiased_cnns.resnet18(pretrained=pretrained, filter_size=filter_size)
-model = antialiased_cnns.resnet34(pretrained=pretrained, filter_size=filter_size)
-model = antialiased_cnns.resnet50(pretrained=pretrained, filter_size=filter_size)
-model = antialiased_cnns.resnet101(pretrained=pretrained, filter_size=filter_size)
+model = antialiased_cnns.alexnet(pretrained=True)
 
-model = antialiased_cnns.alexnet(pretrained=pretrained, filter_size=filter_size)
+model = antialiased_cnns.vgg11(pretrained=True)
+model = antialiased_cnns.vgg11_bn(pretrained=True)
+model = antialiased_cnns.vgg13(pretrained=True)
+model = antialiased_cnns.vgg13_bn(pretrained=True)
+model = antialiased_cnns.vgg16(pretrained=True)
+model = antialiased_cnns.vgg16_bn(pretrained=True)
+model = antialiased_cnns.vgg19(pretrained=True)
+model = antialiased_cnns.vgg19_bn(pretrained=True)
 
-model = antialiased_cnns.vgg16(pretrained=pretrained, filter_size=filter_size)
-model = antialiased_cnns.vgg16_bn(pretrained=pretrained, filter_size=filter_size)
+model = antialiased_cnns.resnet18(pretrained=True)
+model = antialiased_cnns.resnet34(pretrained=True)
+model = antialiased_cnns.resnet50(pretrained=True)
+model = antialiased_cnns.resnet101(pretrained=True)
+model = antialiased_cnns.resnet152(pretrained=True)
 
-model = antialiased_cnns.densenet121(pretrained=pretrained, filter_size=filter_size)
+model = antialiased_cnns.wide_resnet50_2(pretrained=True)
+model = antialiased_cnns.wide_resnet101_2(pretrained=True)
 
-model = antialiased_cnns.mobilenet_v2(pretrained=pretrained, filter_size=filter_size)
+model = antialiased_cnns.resnext50_32x4d(pretrained=True)
+model = antialiased_cnns.resnext101_32x8d(pretrained=True)
 
+model = antialiased_cnns.densenet121(pretrained=True)
+model = antialiased_cnns.densenet169(pretrained=True)
+model = antialiased_cnns.densenet201(pretrained=True)
+model = antialiased_cnns.densenet161(pretrained=True)
+
+model = antialiased_cnns.mobilenet_v2(pretrained=True)

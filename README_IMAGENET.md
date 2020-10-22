@@ -15,15 +15,15 @@ We provide models with filter sizes 2,3,4,5 for AlexNet, VGG16, VGG16bn, ResNet1
 ### Evaluating accuracy
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --pretrained --gpu 0 -e 
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf4 --pretrained -e 
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf4 --pretrained -e 
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet18_lpf4 --pretrained -e 
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet34_lpf4 --pretrained -e 
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --pretrained -e 
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf4 --pretrained -e 
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --pretrained -e 
-python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --pretrained -e 
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --pretrained --gpu 0 -e
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet18_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet34_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --pretrained -e
 ```
 
 <!-- **Ensembling**
@@ -62,6 +62,8 @@ Some notes:
 We show consistency (y-axis) vs accuracy (x-axis) for various networks. Up and to the right is good. Training and testing instructions are [here](README_IMAGENET.md).
 
 We *italicize* a variant if it is not on the Pareto front -- that is, it is strictly dominated in both aspects by another variant. We **bold** a variant if it is on the Pareto front. We **bold** highest values per column.
+
+These results are all trained from scratch. Add a `--force_nonfinetuned` flag to reproduce them.
 
 **AlexNet [(plot)](https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind_AlexNet_v2.jpg)**
 
@@ -162,7 +164,7 @@ Antialiasing requires extra computation (but no extra parameters). Below, we mea
 
 ## (2) Training antialiased models
 
-The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 5. Best checkpoint will be saved `[[OUT_DIR]]/model_best.pth.tar`.
+The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 4. Best checkpoint will be saved `[[OUT_DIR]]/model_best.pth.tar`.
 
 ```bash
 python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --out-dir alexnet_lpf4 --gpu 0 --lr .01
@@ -174,6 +176,12 @@ python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --out-dir resnet50_lpf
 python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf4 --out-dir resnet101_lpf4
 python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --out-dir densenet121_lpf4
 python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --out-dir mobilenet_v2_lpf4 --lr .05 --cos_lr --wd 4e-5 --ep 150
+```
+
+**New (Oct 2020) Fine-tuning antialiased models from baseline weights** The commands above train *from scratch*. You can fine-tune antialiased models starting from baseline model weights. I do this by turning on the `--finetune` flag, and performing the last 2/3 of training (by default, this means `lr` lowered by 10 times and `60 epochs`). This gets better results than training from scratch.
+
+```bash
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --out-dir resnet50_lpf4 --lr .01 -ep 60 --finetune
 ```
 
 Some notes:

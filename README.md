@@ -36,7 +36,13 @@ print(blurpool(ex_tens).shape) # 1xCx64x64 tensor
 
 More information about our provided models and how to use BlurPool is below.
 
-**Update (Sept 2020)** You can also now `pip install antialiased-cnns` and load models with the `pretrained=True` flag. I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
+**Update (Oct 2020) Fine-tuning and many more models**
+- **Finetune** If you have a model and want to add antialiasing, you don't have to start over. I initialize the antialiased model with weights from baseline model, and finetune. Before, I was training from scratch. The results are better.
+- **Additional models** We now have 23 total model variants. I added variants of vgg, densenet, resnext, wide resnet varieties! The same conclusions hold.
+
+**Update (Sept 2020) Pip install, kernel size 4**
+- **Pip install** You can also now `pip install antialiased-cnns` and load models with the `pretrained=True` flag.
+- **Kernel 4** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
 
 ### Table of contents
 
@@ -119,32 +125,59 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 |          | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
-| AlexNet | 56.55 | 56.72 | +0.17 |
-| VGG16 | 71.59 | 72.43 | +0.84 |
-| VGG16bn | 73.36 | 74.12 | +0.76 |
-| Resnet18 | 69.74 | 71.48 | +1.74 |
-| Resnet34 | 73.30 | 74.38 | +1.08 |
-| Resnet50 | 76.16 | 77.23 | +1.07 |
-| Resnet101 | 77.37 | 78.22 | +0.85 |
-| DenseNet121 | 74.43 | 75.29 | +0.86 |
-| MobileNetv2 | 71.88 | 72.72 | +0.84 |
+| alexnet | 56.55 | 56.94 | +0.39 |
+| vgg11 | 69.02 | 70.51 | +1.49 |
+| vgg13 | 69.93 | 71.52 | +1.59 |
+| vgg16 | 71.59 | 72.96 | +1.37 |
+| vgg19 | 72.38 | 73.54 | +1.16 |
+| vgg11_bn | 70.38 | 72.63 | +2.25 |
+| vgg13_bn | 71.55 | 73.61 | +2.06 |
+| vgg16_bn | 73.36 | 75.13 | +1.77 |
+| vgg19_bn | 74.24 | 75.68 | +1.44 |
+| resnet18 | 69.74 | 71.67 | +1.93 |
+| resnet34 | 73.30 | 74.60 | +1.30 |
+| resnet50 | 76.16 | 77.41 | +1.25 |
+| resnet101 | 77.37 | 78.38 | +1.01 |
+| resnet152 | 78.31 | 79.07 | +0.76 |
+| resnext50 | 77.62 | 77.93 | +0.31 |
+| resnext101 | 79.31 | 79.33 | +0.02 |
+| wide_resnet50_2 | 78.47 | 78.70 | +0.23 |
+| wide_resnet101_2 | 78.85 | 78.99 | +0.14 |
+| densenet121 | 74.43 | 75.79 | +1.36 |
+| densenet169 | 75.60 | 76.73 | +1.13 |
+| densenet201 | 76.90 | 77.31 | +0.41 |
+| densenet161 | 77.14 | 77.88 | +0.74 |
+| mobilenet_v2 | 71.88 | 72.72 | +0.84 |
 
 **Consistency** How often two shifts of the same image are classified the same
 
 |          | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
-| AlexNet | 78.18 | 82.54 | +4.36 |
-| VGG16 | 88.52 | 89.92  | +1.40 |
-| VGG16bn | 89.24 | 91.22 | +1.98 |
-| Resnet18 | 85.11 | 88.07 | +2.96 |
-| Resnet34 | 87.56 | 89.53 | +1.97 |
-| Resnet50 | 89.20 | 91.29 | +2.09 |
-| Resnet101 | 89.81 | 91.85 | +2.04 |
-| DenseNet121 | 88.81 | 90.29 | +1.48 |
-| MobileNetv2 | 86.50 | 87.72 | +1.22 |
+| alexnet | 78.18 | 83.31 | +5.13 |
+| vgg11 | 86.58 | 90.09 | +3.51 |
+| vgg13 | 86.92 | 90.31 | +3.39 |
+| vgg16 | 88.52 | 90.91 | +2.39 |
+| vgg19 | 89.17 | 91.08 | +1.91 |
+| vgg11_bn | 87.16 | 90.67 | +3.51 |
+| vgg13_bn | 88.03 | 91.09 | +3.06 |
+| vgg16_bn | 89.24 | 91.58 | +2.34 |
+| vgg19_bn | 89.59 | 91.60 | +2.01 |
+| resnet18 | 85.11 | 88.36 | +3.25 |
+| resnet34 | 87.56 | 89.77 | +2.21 |
+| resnet50 | 89.20 | 91.32 | +2.12 |
+| resnet101 | 89.81 | 91.97 | +2.16 |
+| resnet152 | 90.92 | 92.42 | +1.50 |
+| resnext50 | 90.17 | 91.48 | +1.31 |
+| resnext101 | 91.33 |  |  |
+| wide_resnet50_2 | 90.77 | 92.46 | +1.69 |
+| wide_resnet101_2 | 90.93 | 92.10 | +1.17 |
+| densenet121 | 88.81 | 90.35 | +1.54 |
+| densenet169 | 89.68 | 90.61 | +0.93 |
+| densenet201 | 90.36 | 91.32 | +0.96 |
+| densenet161 | 90.82 | 91.66 | +0.84 |
+| mobilenet_v2 | 86.50 | 87.73 | +1.23 |
 
-
-To reduce clutter, extended results are [here](README_IMAGENET.md). Help improve the results!
+To reduce clutter, extended results (different filter sizes) are [here](README_IMAGENET.md). Help improve the results!
 
 ## Licenses
 
