@@ -15,9 +15,9 @@ model = antialiased_cnns.resnet50(pretrained=True)
 ```
 <!-- model.load_state_dict(torch.load('resnet50_lpf4-994b528f.pth.tar')['state_dict']) # load weights; download it beforehand from https://www.dropbox.com/s/zqsudi0oz5ym8w8/resnet50_lpf4-994b528f.pth.tar?dl=0 -->
 
-Now you are antialiased!
+<!-- Now you are --> antialiased!
 
-If you have a model trained and don't want to retrain the antialiased model from scratch, no problem! Simply load your old weights and fine-tune:
+If you have a model and don't want to retrain the antialiased model from scratch, no problem! Simply load your old weights and fine-tune:
 
 ``` python
 import torchvision.models as models
@@ -25,7 +25,7 @@ old_model = models.resnet50(pretrained=True) # old (aliased) model
 antialiased_cnns.copy_params_buffers(old_model, model) # copy the weights over
 ```
 
-If you want to antialias your own model, use the BlurPool layer.
+If you want to modify your own model, use the BlurPool layer.
 
 ```python
 C = 10 # example feature channel size
@@ -36,13 +36,11 @@ print(blurpool(ex_tens).shape) # 1xCx64x64 tensor
 
 More information about our provided models and how to use BlurPool is below.
 
-**Update (Oct 2020) Fine-tuning and many more models**
-- **Finetune** If you have a model and want to add antialiasing, you don't have to start over. I initialize the antialiased model with weights from baseline model, and finetune. Before, I was training from scratch. The results are better.
-- **Additional models** We now have 23 total model variants. I added variants of vgg, densenet, resnext, wide resnet varieties! The same conclusions hold.
-
-**Update (Sept 2020) Pip install, kernel size 4**
-- **Pip install** You can also now `pip install antialiased-cnns` and load models with the `pretrained=True` flag.
-- **Kernel 4** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
+**Updates**
+- **(Oct 2020) Finetune** If you have a model and want to add antialiasing, you don't have to start over. I initialize the antialiased model with weights from baseline model, and finetune. Before, I was training from scratch. The results are better.
+- **(Oct 2020) Additional models** We now have 23 total model variants. I added variants of vgg, densenet, resnext, wide resnet varieties! The same conclusions hold.
+- **(Sept 2020) Pip install** You can also now `pip install antialiased-cnns` and load models with the `pretrained=True` flag.
+- **(Sept 2020) Kernel 4** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
 
 ### Table of contents
 
