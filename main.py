@@ -99,6 +99,8 @@ parser.add_argument('-p', '--print-freq', default=100, type=int,
                     metavar='N', help='print frequency (default: 10)')
 parser.add_argument('--pretrained', dest='pretrained', action='store_true',
                     help='use pre-trained model')
+parser.add_argument('--force_nonfinetuned', dest='force_nonfinetuned', action='store_true',
+                    help='if pretrained, load the model that is pretrained from scratch (if available)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
 parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
@@ -211,7 +213,9 @@ def main_worker(gpu, ngpus_per_node, args):
     # create model
     print("=> creating model '{}'".format(args.arch))
     if(args.arch.split('_')[-1][:-1]=='lpf'): # antialiased model
-        model = antialiased_cnns.__dict__[args.arch[:-5]](pretrained=args.pretrained, filter_size=int(args.arch[-1]))
+        model = antialiased_cnns.__dict__[args.arch[:-5]](pretrained=args.pretrained, 
+                                                          filter_size=int(args.arch[-1], 
+                                                          _force_nonfinetuned=args.force_nonfinetuned))
     else: # baseline model
         model = models.__dict__[args.arch](pretrained=args.pretrained)
 
