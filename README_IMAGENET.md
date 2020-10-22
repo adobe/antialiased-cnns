@@ -10,19 +10,31 @@ We describe how to evaluate models for shift-invariance.
 
 ## (1) Evaluating models
 
-We provide models with filter sizes 2,3,4,5 for AlexNet, VGG16, VGG16bn, ResNet18,34,50,101, DenseNet121, and MobileNetv2.
-
 ### Evaluating accuracy
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --pretrained --gpu 0 -e
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --pretrained -e --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg11_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg13_lpf4 --pretrained -e
 python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg19_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg11_bn_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg13_bn_lpf4 --pretrained -e
 python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg19_bn_lpf4 --pretrained -e
 python main.py --data /PTH/TO/ILSVRC2012 -a resnet18_lpf4 --pretrained -e
 python main.py --data /PTH/TO/ILSVRC2012 -a resnet34_lpf4 --pretrained -e
 python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --pretrained -e
 python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet152_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a resnext50_32x4d --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a resnext101_32x8d --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a wide_resnet50_2_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a wide_resnet101_2_lpf4 --pretrained -e
 python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet169_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet201_lpf4 --pretrained -e
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet161_lpf4 --pretrained -e
 python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --pretrained -e
 ```
 
@@ -40,22 +52,38 @@ python main.py --data /PTH/TO/ILSVRC2012 -e  -ens 5 -ens_sm -a resnet34_lpf4 --w
 Same as above, but flag `-es` evaluates the shift-consistency -- how often two random `224x224` crops are classified the same.
 
 ```bash
-python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --pretrained --gpu 0 -es -b 8 
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf4 --pretrained -es -b 8 
-python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf4 --pretrained -es -b 8 
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet18_lpf4 --pretrained -es -b 8 
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet34_lpf4 --pretrained -es -b 8 
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --pretrained -es -b 8 
-python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf4 --pretrained -es -b 8 
-python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --pretrained -es -b 8 
-python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --pretrained -es -b 8 
+python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --pretrained -es -b 8 --gpu 0
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg11_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg13_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg19_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg11_bn_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg13_bn_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a vgg19_bn_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet18_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet34_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet101_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a resnet152_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a resnext50_32x4d --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a resnext101_32x8d --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a wide_resnet50_2_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a wide_resnet101_2_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet169_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet201_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a densenet161_lpf4 --pretrained -es -b 8
+python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --pretrained -es -b 8
 ```
 
 Some notes:
 - These line commands are very similar to the base PyTorch [repository](https://github.com/pytorch/examples/tree/master/imagenet). Change `_lpf#` with filter size (2,3,4,5).
 - The example commands use our pretrained. You can them from your own training checkpoints by subsituting `--pretrained` for `--resume PTH/TO/CHECKPOINT`.
 
-### Imagenet Results
+### Filter size
+
+In the paper, we experimented with filter size. For AlexNet, VGG16, VGG16bn, ResNet18,34,50,101, DenseNet121, and MobileNetv2, we provide models with filter sizes 2, 3, 4 (default), 5.
 
 <img src='https://richzhang.github.io/antialiased-cnns/resources/imagenet_ind2_noalex_v2.jpg' align="right" width=380>
 
@@ -164,9 +192,10 @@ Antialiasing requires extra computation (but no extra parameters). Below, we mea
 
 ## (2) Training antialiased models
 
-The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 4. Best checkpoint will be saved `[[OUT_DIR]]/model_best.pth.tar`.
+The following commands train antialiased AlexNet, VGG16, VGG16bn, ResNet18,34,50, and Densenet121 models with filter size 4 from scratch. Best checkpoint will be saved `[[OUT_DIR]]/model_best.pth.tar`.
 
 ```bash
+# Training from scratch
 python main.py --data /PTH/TO/ILSVRC2012 -a alexnet_lpf4 --out-dir alexnet_lpf4 --gpu 0 --lr .01
 python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_lpf4 --out-dir vgg16_lpf4 --lr .01 -b 128 -ba 2
 python main.py --data /PTH/TO/ILSVRC2012 -a vgg16_bn_lpf4 --out-dir vgg16_bn_lpf4 --lr .05 -b 128 -ba 2
@@ -178,9 +207,10 @@ python main.py --data /PTH/TO/ILSVRC2012 -a densenet121_lpf4 --out-dir densenet1
 python main.py --data /PTH/TO/ILSVRC2012 -a mobilenet_v2_lpf4 --out-dir mobilenet_v2_lpf4 --lr .05 --cos_lr --wd 4e-5 --ep 150
 ```
 
-**New (Oct 2020) Fine-tuning antialiased models from baseline weights** The commands above train *from scratch*. You can fine-tune antialiased models starting from baseline model weights. I do this by turning on the `--finetune` flag, and performing the last 2/3 of training (by default, this means `lr` lowered by 10 times and `60 epochs`). This gets better results than training from scratch.
+**New (Oct 2020)** The commands above train *from scratch*. You can now fine-tune antialiased models starting from baseline model weights. I do this by turning on the `--finetune` flag, and performing the last 2/3 of training; by default, this means `lr` lowered by 10 times and we use 60 `epochs`. This gets better results than training from scratch.
 
 ```bash
+# Training from baseline weights
 python main.py --data /PTH/TO/ILSVRC2012 -a resnet50_lpf4 --out-dir resnet50_lpf4 --lr .01 -ep 60 --finetune
 ```
 
