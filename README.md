@@ -25,7 +25,7 @@ old_model = models.resnet50(pretrained=True) # old (aliased) model
 antialiased_cnns.copy_params_buffers(old_model, model) # copy the weights over
 ```
 
-If you want to modify your own model, use the BlurPool layer.
+If you want to modify your own model, use the BlurPool layer. More information about our provided models and how to use BlurPool is below.
 
 ```python
 C = 10 # example feature channel size
@@ -33,8 +33,6 @@ blurpool = antialiased_cnns.BlurPool(C, stride=2) # BlurPool layer; use to downs
 ex_tens = torch.Tensor(1,C,128,128)
 print(blurpool(ex_tens).shape) # 1xCx64x64 tensor
 ```
-
-More information about our provided models and how to use BlurPool is below.
 
 **Updates**
     - **(Oct 2020) Finetune** If you have a model and want to add antialiasing, you don't have to start over. I initialize the antialiased model with weights from baseline model, and finetune. Before, I was training from scratch. The results are better.
