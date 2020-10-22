@@ -119,7 +119,7 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 We observe improvements in both **accuracy** (how often the image is classified correctly) and **consistency** (how often two shifts of the same image are classified the same).
 
-**Accuracy [(plot)](plots/plots2_acc.png)**
+<img src='plots/plots2_acc.png' align="right" width=500>
 
 |  | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
@@ -147,7 +147,7 @@ We observe improvements in both **accuracy** (how often the image is classified 
 | densenet161 | 77.14 | 77.88 | +0.74 |
 | mobilenet_v2 | 71.88 | 72.72 | +0.84 |
 
-**Consistency [(plot)](plots/plots2_acc.png)**
+<img src='plots/plots2_con.png' align="right" width=500>
 
 |  | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
