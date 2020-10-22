@@ -214,8 +214,8 @@ def main_worker(gpu, ngpus_per_node, args):
     print("=> creating model '{}'".format(args.arch))
     if(args.arch.split('_')[-1][:-1]=='lpf'): # antialiased model
         model = antialiased_cnns.__dict__[args.arch[:-5]](pretrained=args.pretrained, 
-                                                          filter_size=int(args.arch[-1], 
-                                                          _force_nonfinetuned=args.force_nonfinetuned))
+                                                          filter_size=int(args.arch[-1]), 
+                                                          _force_nonfinetuned=args.force_nonfinetuned)
     else: # baseline model
         model = models.__dict__[args.arch](pretrained=args.pretrained)
 
