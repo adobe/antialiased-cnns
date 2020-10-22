@@ -119,9 +119,11 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 We observe improvements in both **accuracy** (how often the image is classified correctly) and **consistency** (how often two shifts of the same image are classified the same).
 
-<img src='plots/plots2_acc.png' align="right" width=500>
+<img src='plots/plots2_acc.png' align="left" width=750>
 
-|  | Baseline | Antialiased | Delta |
+<img src='plots/plots2_con.png' align="left" width=750>
+
+| ACCURACY | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
 | alexnet | 56.55 | 56.94 | +0.39 |
 | vgg11 | 69.02 | 70.51 | +1.49 |
@@ -147,9 +149,7 @@ We observe improvements in both **accuracy** (how often the image is classified 
 | densenet161 | 77.14 | 77.88 | +0.74 |
 | mobilenet_v2 | 71.88 | 72.72 | +0.84 |
 
-<img src='plots/plots2_con.png' align="right" width=500>
-
-|  | Baseline | Antialiased | Delta |
+| CONSISTENCY | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
 | alexnet | 78.18 | 83.31 | +5.13 |
 | vgg11 | 86.58 | 90.09 | +3.51 |
