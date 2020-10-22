@@ -6,6 +6,8 @@
 
 import antialiased_cnns
 
+
+
 model = antialiased_cnns.resnet18(pretrained=True)
 model = antialiased_cnns.resnet34(pretrained=True)
 model = antialiased_cnns.resnet50(pretrained=True)
@@ -13,6 +15,8 @@ model = antialiased_cnns.resnet101(pretrained=True)
 model = antialiased_cnns.resnet152(pretrained=True)
 model = antialiased_cnns.wide_resnet50_2(pretrained=True)
 model = antialiased_cnns.wide_resnet101_2(pretrained=True)
+model = antialiased_cnns.resnext50_32x4d(pretrained=True)
+model = antialiased_cnns.resnext101_32x8d(pretrained=True)
 model = antialiased_cnns.alexnet(pretrained=True)
 model = antialiased_cnns.vgg11(pretrained=True)
 model = antialiased_cnns.vgg11_bn(pretrained=True)
