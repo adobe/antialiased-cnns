@@ -35,10 +35,10 @@ print(blurpool(ex_tens).shape) # 1xCx64x64 tensor
 ```
 
 **Updates**
-    * **(Oct 2020) Finetune** If you have a model and want to add antialiasing, you don't have to start over. I initialize the antialiased model with weights from baseline model, and finetune. Before, I was training from scratch. The results are better.
-    * **(Oct 2020) Additional models** We now have 23 total model variants. I added variants of vgg, densenet, resnext, wide resnet varieties! The same conclusions hold.
-    * **(Sept 2020) Pip install** You can also now `pip install antialiased-cnns` and load models with the `pretrained=True` flag.
-    * **(Sept 2020) Kernel 4** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
+* **(Oct 2020) Finetune** If you have a model and want to add antialiasing, you don't have to start over. I initialize the antialiased model with weights from baseline model, and finetune. Before, I was training from scratch. The results are better.
+* **(Oct 2020) Additional models** We now have 23 total model variants. I added variants of vgg, densenet, resnext, wide resnet varieties! The same conclusions hold.
+* **(Sept 2020) Pip install** You can also now `pip install antialiased-cnns` and load models with the `pretrained=True` flag.
+* **(Sept 2020) Kernel 4** I have added kernel size 4 experiments. When downsampling an even sized feature map (e.g., a 128x128-->64x64), this is actually the correct size to use to keep the indices from drifting.
 
 ### Table of contents
 
