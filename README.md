@@ -117,7 +117,7 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 ## (3) ImageNet Evaluation, Results, and Training code
 
-We observe improvements in both **accuracy** (how often the image is classified correctly) and **consistency** how often two shifts of the same image are classified the same.
+We observe improvements in both **accuracy** (how often the image is classified correctly) and **consistency** (how often two shifts of the same image are classified the same).
 
 | ACCURACY | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
