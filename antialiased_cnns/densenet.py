@@ -53,6 +53,10 @@ model_urls = {
     'densenet121_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet121_lpf3-0f267ad8.pth',
     'densenet121_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet121_lpf4-edeaab00.pth',
     'densenet121_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet121_lpf5-ebc7880c.pth',
+    'densenet121_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet121_lpf4_finetune-eceaa619.pth',
+    'densenet161_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet161_lpf4_finetune-a5e0f328.pth',
+    'densenet169_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet169_lpf4_finetune-992131e6.pth',
+    'densenet201_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/densenet201_lpf4_finetune-736979b2.pth',
 }
 
 
@@ -191,7 +195,7 @@ def _load_state_dict(model, model_url):
     model.load_state_dict(state_dict)
 
 
-def densenet121(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def densenet121(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     r"""Densenet-121 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -202,11 +206,14 @@ def densenet121(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 24, 16),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        _load_state_dict(model, model_urls['densenet121_lpf%i'%filter_size])
+        if(filter_size==4 and not _force_nonfinetuned):
+            _load_state_dict(model, model_urls['densenet121_lpf4_finetune'])
+        else:
+            _load_state_dict(model, model_urls['densenet121_lpf%i'%filter_size])
     return model
 
 
-def densenet169(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def densenet169(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     r"""Densenet-169 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -216,12 +223,14 @@ def densenet169(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 32, 32),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # _load_state_dict(model, model_urls['densenet169'])
+        if(filter_size==4):
+            _load_state_dict(model, model_urls['densenet169_lpf4_finetune'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def densenet201(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def densenet201(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     r"""Densenet-201 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -231,12 +240,14 @@ def densenet201(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 48, 32),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # _load_state_dict(model, model_urls['densenet201'])
+        if(filter_size==4):
+            _load_state_dict(model, model_urls['densenet201_lpf4_finetune'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def densenet161(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def densenet161(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     r"""Densenet-161 model from
     `"Densely Connected Convolutional Networks" <https://arxiv.org/pdf/1608.06993.pdf>`_
     Args:
@@ -246,6 +257,8 @@ def densenet161(pretrained=False, filter_size=4, pool_only=True, **kwargs):
     model = DenseNet(num_init_features=96, growth_rate=48, block_config=(6, 12, 36, 24),
                     filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # _load_state_dict(model, model_urls['densenet161'])
+        if(filter_size==4):
+            _load_state_dict(model, model_urls['densenet161_lpf4_finetune'])
+        else:
+            raise ValueError('No pretrained model available')
     return model

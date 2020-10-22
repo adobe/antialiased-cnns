@@ -56,7 +56,16 @@ model_urls = {
     'vgg16_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_lpf3-e9b0ce42.pth',
     'vgg16_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_lpf4-de9267ac.pth',
     'vgg16_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_lpf5-1391f70c.pth',
+    'vgg11_bn_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg11_bn_lpf4_finetune-5d60b5e4.pth',
+    'vgg11_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg11_lpf4_finetune-35eab449.pth',
+    'vgg13_bn_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg13_bn_lpf4_finetune-45e2a72f.pth',
+    'vgg13_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg13_lpf4_finetune-d8ff02c4.pth',
+    'vgg16_bn_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_bn_lpf4_finetune-1dd798d1.pth',
+    'vgg16_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg16_lpf4_finetune-79c9dff7.pth',
+    'vgg19_bn_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg19_bn_lpf4_finetune-d0114293.pth',
+    'vgg19_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/vgg19_lpf4_finetune-7ab2cf45.pth'
 }
+
 
 
 class VGG(nn.Module):
@@ -127,7 +136,7 @@ cfg = {
     'E': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512, 'M'],
 }
 
-def vgg11(pretrained=False, filter_size=4, **kwargs):
+def vgg11(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """VGG 11-layer model (configuration "A")
 
     Args:
@@ -137,12 +146,14 @@ def vgg11(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['A'], filter_size=filter_size), **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # model.load_state_dict(model_zoo.load_url(model_urls['vgg11']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg11_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def vgg11_bn(pretrained=False, filter_size=4, **kwargs):
+def vgg11_bn(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """VGG 11-layer model (configuration "A") with batch normalization
 
     Args:
@@ -152,12 +163,14 @@ def vgg11_bn(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['A'], filter_size=filter_size, batch_norm=True), **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # model.load_state_dict(model_zoo.load_url(model_urls['vgg11_bn']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg11_bn_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def vgg13(pretrained=False, filter_size=4, **kwargs):
+def vgg13(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """VGG 13-layer model (configuration "B")
 
     Args:
@@ -167,12 +180,14 @@ def vgg13(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['B'], filter_size=filter_size), **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # model.load_state_dict(model_zoo.load_url(model_urls['vgg13']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg13_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def vgg13_bn(pretrained=False, filter_size=4, **kwargs):
+def vgg13_bn(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """VGG 13-layer model (configuration "B") with batch normalization
 
     Args:
@@ -182,12 +197,14 @@ def vgg13_bn(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['B'], filter_size=filter_size, batch_norm=True), **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # model.load_state_dict(model_zoo.load_url(model_urls['vgg13_bn']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg13_bn_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def vgg16(pretrained=False, filter_size=4, **kwargs):
+def vgg16(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """VGG 16-layer model (configuration "D")
 
     Args:
@@ -198,12 +215,14 @@ def vgg16(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['D'], filter_size=filter_size), **kwargs)
     if pretrained:
-        # model.load_state_dict(model_zoo.load_url(model_urls['vgg16']))
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg16_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
+        if(filter_size==4 and not _force_nonfinetuned):
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg16_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg16_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
-def vgg16_bn(pretrained=False, filter_size=4, **kwargs):
+def vgg16_bn(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """VGG 16-layer model (configuration "D") with batch normalization
 
     Args:
@@ -214,12 +233,14 @@ def vgg16_bn(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['D'], filter_size=filter_size, batch_norm=True), **kwargs)
     if pretrained:
-        # model.load_state_dict(model_zoo.load_url(model_urls['vgg16_bn']))
-        model.load_state_dict(model_zoo.load_url(model_urls['vgg16_bn_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg16_bn_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg16_bn_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
-def vgg19(pretrained=False, filter_size=4, **kwargs):
+def vgg19(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """VGG 19-layer model (configuration "E")
 
     Args:
@@ -229,12 +250,14 @@ def vgg19(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['E'], filter_size=filter_size), **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # model.load_state_dict(model_zoo.load_url(model_urls['vgg19']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg19_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def vgg19_bn(pretrained=False, filter_size=4, **kwargs):
+def vgg19_bn(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """VGG 19-layer model (configuration 'E') with batch normalization
 
     Args:
@@ -244,7 +267,9 @@ def vgg19_bn(pretrained=False, filter_size=4, **kwargs):
         kwargs['init_weights'] = False
     model = VGG(make_layers(cfg['E'], filter_size=filter_size, batch_norm=True), **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # model.load_state_dict(model_zoo.load_url(model_urls['vgg19_bn']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['vgg19_bn_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 

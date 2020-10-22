@@ -51,6 +51,7 @@ model_urls = {
     'alexnet_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/alexnet_lpf3-f9bbc410.pth',
     'alexnet_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/alexnet_lpf4-0114fe25.pth',
     'alexnet_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/alexnet_lpf5-4fa3706a.pth',
+    'alexnet_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/alexnet_lpf4_finetune-20598a7a.pth',
 }
 
 
@@ -106,7 +107,7 @@ class AlexNet(nn.Module):
         return x
 
 
-def alexnet(pretrained=False, filter_size=4, **kwargs):
+def alexnet(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """AlexNet model architecture from the
     `"One weird trick..." <https://arxiv.org/abs/1404.5997>`_ paper.
 
@@ -116,7 +117,10 @@ def alexnet(pretrained=False, filter_size=4, **kwargs):
     """
     model = AlexNet(filter_size=filter_size, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['alexnet_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
+        if(filter_size==4 and not _force_nonfinetuned):
+            model.load_state_dict(model_zoo.load_url(model_urls['alexnet_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            model.load_state_dict(model_zoo.load_url(model_urls['alexnet_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 

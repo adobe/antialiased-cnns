@@ -64,8 +64,15 @@ model_urls = {
     'resnet101_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf4-f8a116ff.pth',
     'resnet101_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf5-1f3745af.pth',
     'resnet18_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet18_lpf4_finetune-8cc58f59.pth',
+    'resnet34_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet34_lpf4_finetune-db622952.pth',
+    'resnet50_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet50_lpf4_finetune-cad66808.pth',
+    'resnet101_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet101_lpf4_finetune-9280acb0.pth',
+    'resnet152_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnet152_lpf4_finetune-7f67d9ae.pth',
+    'resnext50_32x4d_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnext50_32x4d_lpf4_finetune-9106e549.pth',
+    'resnext101_32x8d_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/resnext101_32x8d_lpf4_finetune-8f13a25d.pth',
+    'wide_resnet50_2_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/wide_resnet50_2_lpf4_finetune-02a183f7.pth',
+    'wide_resnet101_2_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/wide_resnet101_2_lpf4_finetune-da4eae04.pth',
 }
-
 
 def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1):
     """3x3 convolution with padding"""
@@ -293,75 +300,94 @@ def resnet18(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetune
     return model
 
 
-def resnet34(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def resnet34(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     """Constructs a ResNet-34 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         filter_size (int): Antialiasing filter size
         pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
+        _force_nonfinetuned (bool): [False] If True, load the trained-from scratch pretrained model (if available)
     """
     model = ResNet(BasicBlock, [3, 4, 6, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet34_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
+        if(filter_size==4 and not _force_nonfinetuned):
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet34_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet34_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
-def resnet50(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def resnet50(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     """Constructs a ResNet-50 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         filter_size (int): Antialiasing filter size
         pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
+        _force_nonfinetuned (bool): [False] If True, load the trained-from scratch pretrained model (if available)
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet50_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
+        if(filter_size==4 and not _force_nonfinetuned):
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet50_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet50_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
-def resnet101(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def resnet101(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     """Constructs a ResNet-101 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         filter_size (int): Antialiasing filter size
         pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
+        _force_nonfinetuned (bool): [False] If True, load the trained-from scratch pretrained model (if available)
     """
     model = ResNet(Bottleneck, [3, 4, 23, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['resnet101_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
+        if(filter_size==4 and not _force_nonfinetuned):
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet101_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet101_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
 
 
-def resnet152(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def resnet152(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     """Constructs a ResNet-152 model.
     Args:
         filter_size (int): Antialiasing filter size
         pool_only (bool): [True] don't antialias the first downsampling operation (which is costly to antialias)
+        _force_nonfinetuned (bool): [False] If True, load the trained-from scratch pretrained model (if available)
     """
     model = ResNet(Bottleneck, [3, 8, 36, 3], filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        # model.load_state_dict(model_zoo.load_url(model_urls['resnet152']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['resnet152_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def resnext50_32x4d(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def resnext50_32x4d(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     model = ResNet(Bottleneck, [3, 4, 6, 3], groups=32, width_per_group=4, filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-    #     model.load_state_dict(model_zoo.load_url(model_urls['resnext50_32x4d']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['resnext50_32x4d_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def resnext101_32x8d(pretrained=False, filter_size=4, pool_only=True, **kwargs):
+def resnext101_32x8d(pretrained=False, filter_size=4, pool_only=True, _force_nonfinetuned=False, **kwargs):
     model = ResNet(Bottleneck, [3, 4, 23, 3], groups=32, width_per_group=8, filter_size=filter_size, pool_only=pool_only, **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-    #     model.load_state_dict(model_zoo.load_url(model_urls['resnext101_32x8d']))
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['resnext101_32x8d_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
 
-def wide_resnet50_2(pretrained=False, filter_size=4, **kwargs):
+def wide_resnet50_2(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """Wide ResNet-50-2 model from
     `"Wide Residual Networks" <https://arxiv.org/pdf/1605.07146.pdf>`_
 
@@ -376,11 +402,13 @@ def wide_resnet50_2(pretrained=False, filter_size=4, **kwargs):
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3], width_per_group=64*2, filter_size=filter_size, **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        model.load_state_dict(state_dict)
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['wide_resnet50_2_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model
 
-def wide_resnet101_2(pretrained=False, filter_size=4, **kwargs):
+def wide_resnet101_2(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """Wide ResNet-101-2 model from
     `"Wide Residual Networks" <https://arxiv.org/pdf/1605.07146.pdf>`_
 
@@ -395,6 +423,8 @@ def wide_resnet101_2(pretrained=False, filter_size=4, **kwargs):
     """
     model = ResNet(Bottleneck, [3, 4, 23, 3], width_per_group=64*2, filter_size=filter_size, **kwargs)
     if pretrained:
-        raise ValueError('No pretrained model available')
-        model.load_state_dict(state_dict)
+        if(filter_size==4):
+            model.load_state_dict(model_zoo.load_url(model_urls['wide_resnet101_2_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            raise ValueError('No pretrained model available')
     return model

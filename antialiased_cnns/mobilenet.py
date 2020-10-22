@@ -49,6 +49,7 @@ model_urls = {
     'mobilenet_v2_lpf3': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf3-23b2e2ee.pth',
     'mobilenet_v2_lpf4': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf4-2e0b9cb9.pth',
     'mobilenet_v2_lpf5': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf5-ab8fe968.pth',
+    'mobilenet_v2_lpf4_finetune': 'https://antialiased-cnns.s3.us-east-2.amazonaws.com/weights_v0.1/mobilenet_v2_lpf4_finetune-7eed94b1.pth',
 }
 
 
@@ -160,7 +161,7 @@ class MobileNetV2(nn.Module):
         return x
 
 
-def mobilenet_v2(pretrained=False, filter_size=4, **kwargs):
+def mobilenet_v2(pretrained=False, filter_size=4, _force_nonfinetuned=False, **kwargs):
     """
     Constructs a MobileNetV2 architecture from
     `"MobileNetV2: Inverted Residuals and Linear Bottlenecks" <https://arxiv.org/abs/1801.04381>`_.
@@ -170,9 +171,9 @@ def mobilenet_v2(pretrained=False, filter_size=4, **kwargs):
     """
     model = MobileNetV2(filter_size=filter_size, **kwargs)
     if pretrained:
-        model.load_state_dict(model_zoo.load_url(model_urls['mobilenet_v2_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
-        # state_dict = load_state_dict_from_url(model_urls['mobilenet_v2'],
-                                              # progress=progress)
-        # model.load_state_dict(state_dict)
+        if(filter_size==4 and not _force_nonfinetuned):
+            model.load_state_dict(model_zoo.load_url(model_urls['mobilenet_v2_lpf4_finetune'], map_location='cpu', check_hash=True)['state_dict'])
+        else:
+            model.load_state_dict(model_zoo.load_url(model_urls['mobilenet_v2_lpf%i'%filter_size], map_location='cpu', check_hash=True)['state_dict'])
     return model
     
