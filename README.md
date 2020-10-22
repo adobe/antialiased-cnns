@@ -81,7 +81,7 @@ We also provide weights for antialiased `AlexNet`, `VGG16(bn)`, `Resnet18,34,50,
 
 The `antialiased_cnns` module contains the `BlurPool` [class](antialiased_cnns/downsample.py), which does blur+subsampling. Run `pip install antialiased-cnns` or copy the `antialiased_cnns` subdirectory.
 
-The methodology is simple -- first evaluate with stride 1, and then use our `BlurPool` layer to do antialiased downsampling. Make the following architectural changes. Typically, blur kernel `M` is 4.
+**Methodology** The methodology is simple -- first evaluate with stride 1, and then use our `BlurPool` layer to do antialiased downsampling. Make the following architectural changes.
 
 ```python
 import antialiased_cnns
@@ -89,23 +89,23 @@ import antialiased_cnns
 # MaxPool --> MaxBlurPool
 baseline = nn.MaxPool2d(kernel_size=2, stride=2)
 antialiased = [nn.MaxPool2d(kernel_size=2, stride=1), 
-    antialiased_cnns.BlurPool(C, filt_size=M, stride=2)]
+    antialiased_cnns.BlurPool(C, stride=2)]
     
 # Conv --> ConvBlurPool
 baseline = [nn.Conv2d(Cin, C, kernel_size=3, stride=2, padding=1), 
     nn.ReLU(inplace=True)]
 antialiased = [nn.Conv2d(Cin, C, kernel_size=3, stride=1, padding=1),
     nn.ReLU(inplace=True),
-    antialiased_cnns.BlurPool(C, filt_size=M, stride=2)]
+    antialiased_cnns.BlurPool(C, stride=2)]
 
 # AvgPool --> BlurPool
 baseline = nn.AvgPool2d(kernel_size=2, stride=2)
-antialiased = antialiased_cnns.BlurPool(C, filt_size=M, stride=2)
+antialiased = antialiased_cnns.BlurPool(C, stride=2)
 ```
 
 We assume incoming tensor has `C` channels. Computing a layer at stride 1 instead of stride 2 adds memory and run-time. As such, we typically skip antialiasing at the highest-resolution (early in the network), to prevent large increases.
 
-If you already trained a model, and then add antialiasing, you can fine-tune from that old model:
+**Add antialiasing and then continue training** If you already trained a model, and then add antialiasing, you can fine-tune from that old model:
 
 ``` python
 antialiased_cnns.copy_params_buffers(old_model, antialiased_model)
@@ -121,9 +121,9 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 
 ## (3) ImageNet Evaluation, Results, and Training code
 
-**Accuracy** How often the image is classified correctly
+We observe improvements in both **accuracy** (how often the image is classified correctly) and **consistency** how often two shifts of the same image are classified the same.
 
-|          | Baseline | Antialiased | Delta |
+| ACCURACY | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
 | alexnet | 56.55 | 56.94 | +0.39 |
 | vgg11 | 69.02 | 70.51 | +1.49 |
@@ -139,8 +139,8 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 | resnet50 | 76.16 | 77.41 | +1.25 |
 | resnet101 | 77.37 | 78.38 | +1.01 |
 | resnet152 | 78.31 | 79.07 | +0.76 |
-| resnext50 | 77.62 | 77.93 | +0.31 |
-| resnext101 | 79.31 | 79.33 | +0.02 |
+| resnext50_32x4d | 77.62 | 77.93 | +0.31 |
+| resnext101_32x8d | 79.31 | 79.33 | +0.02 |
 | wide_resnet50_2 | 78.47 | 78.70 | +0.23 |
 | wide_resnet101_2 | 78.85 | 78.99 | +0.14 |
 | densenet121 | 74.43 | 75.79 | +1.36 |
@@ -149,9 +149,7 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 | densenet161 | 77.14 | 77.88 | +0.74 |
 | mobilenet_v2 | 71.88 | 72.72 | +0.84 |
 
-**Consistency** How often two shifts of the same image are classified the same
-
-|          | Baseline | Antialiased | Delta |
+| CONSISTENCY | Baseline | Antialiased | Delta |
 | :------: | :------: | :-------: | :-------: |
 | alexnet | 78.18 | 83.31 | +5.13 |
 | vgg11 | 86.58 | 90.09 | +3.51 |
@@ -167,8 +165,8 @@ antialiased_cnns.copy_params(old_model, antialiased_model)
 | resnet50 | 89.20 | 91.32 | +2.12 |
 | resnet101 | 89.81 | 91.97 | +2.16 |
 | resnet152 | 90.92 | 92.42 | +1.50 |
-| resnext50 | 90.17 | 91.48 | +1.31 |
-| resnext101 | 91.33 |  |  |
+| resnext50_32x4d | 90.17 | 91.48 | +1.31 |
+| resnext101_32x8d | 91.33 | 92.67 | +1.34 |
 | wide_resnet50_2 | 90.77 | 92.46 | +1.69 |
 | wide_resnet101_2 | 90.93 | 92.10 | +1.17 |
 | densenet121 | 88.81 | 90.35 | +1.54 |
